@@ -1,0 +1,53 @@
+[
+  {
+    "slug": "jakarta",
+    "nama_kota": "Jakarta",
+    "provinsi": "DKI Jakarta",
+    "jumlah_cabang": 12,
+    "estimasi_pencairan_min": 5000000,
+    "estimasi_pencairan_max": 500000000,
+    "waktu_proses_jam": 2,
+    "nama_marketing_lokal": "Budi Santoso",
+    "testimoni": "Prosesnya cepat banget, dana cair dalam 2 jam di cabang Kelapa Gading.",
+    "alamat_cabang_utama": "Jl. Boulevard Raya, Kelapa Gading, Jakarta Utara",
+    "kendaraan_populer": [
+      "Toyota Avanza",
+      "Honda Beat",
+      "Mitsubishi Xpander"
+    ]
+  },
+  {
+    "slug": "bekasi",
+    "nama_kota": "Bekasi",
+    "provinsi": "Jawa Barat",
+    "jumlah_cabang": 5,
+    "estimasi_pencairan_min": 4000000,
+    "estimasi_pencairan_max": 300000000,
+    "waktu_proses_jam": 3,
+    "nama_marketing_lokal": "Siti Rahayu",
+    "testimoni": "Marketingnya ramah, jelasin simulasi angsuran sampai paham.",
+    "alamat_cabang_utama": "Jl. Ahmad Yani, Bekasi Selatan",
+    "kendaraan_populer": [
+      "Honda Vario",
+      "Daihatsu Xenia",
+      "Yamaha NMAX"
+    ]
+  },
+  {
+    "slug": "bandung",
+    "nama_kota": "Bandung",
+    "provinsi": "Jawa Barat",
+    "jumlah_cabang": 12,
+    "estimasi_pencairan_min": 5000000,
+    "estimasi_pencairan_max": 500000000,
+    "waktu_proses_jam": 2,
+    "nama_marketing_lokal": "Budi Santoso",
+    "testimoni": "Prosesnya cepat banget, dana cair dalam 2 jam di cabang Kelapa Gading.",
+    "alamat_cabang_utama": "Jl. Boulevard Raya, Kelapa Gading, Jakarta Utara",
+    "kendaraan_populer": [
+      "Toyota Avanza",
+      "Honda Beat",
+      "Mitsubishi Xpander"
+    ]
+  }
+]
