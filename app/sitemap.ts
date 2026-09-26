@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllKota } from "@/lib/kota";
 
-const BASE_URL = "https://contoh-domain-kamu.com";
+const BASE_URL = "https://gadai.pojokberkah.online";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const kotaList = await getAllKota();
