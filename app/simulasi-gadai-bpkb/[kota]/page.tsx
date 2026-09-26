@@ -25,9 +25,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const title = `Simulasi Gadai BPKB di ${kota.nama_kota} - Cair ${kota.waktu_proses_jam} Jam`;
   const assignedArticle = kota.assignedArticleId ? await getArticleById(kota.assignedArticleId) : null;
-  const description = assignedArticle?.metaDesc || `Simulasi gadai BPKB kendaraan di ${kota.nama_kota}, ${kota.provinsi}. ${kota.jumlah_cabang} cabang aktif, dana cair mulai ${formatRupiah(
+  const descriptionTemplate = assignedArticle?.metaDesc || `Simulasi gadai BPKB kendaraan di [NAMA_KOTA], ${kota.provinsi}. [JUMLAH_CABANG] cabang aktif, dana cair mulai ${formatRupiah(
     kota.estimasi_pencairan_min
   )} hingga ${formatRupiah(kota.estimasi_pencairan_max)}.`;
+  
+  const description = descriptionTemplate
+    .replace(/\[NAMA_KOTA\]/gi, kota.nama_kota)
+    .replace(/\[JUMLAH_CABANG\]/gi, kota.jumlah_cabang.toString());
 
   return {
     title,
@@ -166,7 +170,11 @@ export default async function KotaPage({ params }: Props) {
         <article className="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
           {assignedArticle ? (
             <div className="prose prose-slate prose-blue max-w-none text-slate-700">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{assignedArticle.content}</ReactMarkdown>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {assignedArticle.content
+                  .replace(/\[NAMA_KOTA\]/gi, kota.nama_kota)
+                  .replace(/\[JUMLAH_CABANG\]/gi, kota.jumlah_cabang.toString())}
+              </ReactMarkdown>
             </div>
           ) : (
             <>

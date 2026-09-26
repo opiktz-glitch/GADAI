@@ -177,26 +177,45 @@ export async function generateArticleAI(formData: FormData) {
   const panjang = formData.get("panjang")?.toString() || "800-1200 kata";
   const tone = formData.get("tone")?.toString() || "edukatif netral";
 
-  const prompt = `Buatkan saya artikel profesional dan informatif dengan topik "Gadai BPKB" untuk ${targetPembaca}.
+  const prompt = `Buatkan/revisi konten halaman web untuk Pojok Berkah, sebuah platform informasi dan rujukan gadai BPKB, dengan ketentuan berikut:
 
-Ketentuan artikel:
-- Judul: Buat judul yang menarik, SEO-friendly, dan mencerminkan isi artikel.
-- Panjang: ${panjang}.
-- Gaya bahasa: Formal namun mudah dipahami, hindari jargon berlebihan, cocok untuk pembaca awam.
-- Struktur konten, mencakup:
-  1. Pengertian gadai BPKB (apa itu, bedanya dengan jual-beli kendaraan atau leasing).
-  2. Cara kerja gadai BPKB (proses pengajuan, syarat dokumen, estimasi pencairan dana).
-  3. Keuntungan dan risiko gadai BPKB.
-  4. Syarat dan dokumen yang dibutuhkan (KTP, STNK, BPKB asli, dll).
-  5. Tips memilih lembaga gadai BPKB yang legal dan terdaftar OJK.
-  6. Perbedaan gadai BPKB di bank, leasing, dan pegadaian.
-  7. Kesimpulan dan ajakan bertindak (call-to-action) jika untuk keperluan promosi/bisnis.
-- Tone: ${tone}.
-- SEO: Buatkan meta description singkat (maks 160 karakter).
-- Sumber: Pastikan informasi sesuai regulasi OJK terkait fintech/lembaga pembiayaan di Indonesia, tanpa menyebutkan klaim yang menyesatkan.
+Positioning (wajib, tidak bisa ditawar):
+- Pojok Berkah adalah platform rujukan/perbandingan, BUKAN lembaga pemberi pinjaman, bukan penyimpan BPKB, dan tidak mencairkan dana.
+- Semua proses pengajuan, verifikasi, dan pencairan dana dilakukan oleh lembaga mitra yang berizin OJK, bukan oleh Pojok Berkah.
+- Jangan gunakan klaim kepemilikan proses seperti "kami cairkan dana", "BPKB Anda kami simpan", "hubungi layanan pelanggan kami" (untuk hal yang sebenarnya dilakukan lembaga mitra).
+- Boleh gunakan: "kami bantu Anda menemukan/membandingkan", "mitra kami akan...", "lembaga rujukan kami".
+
+Elemen yang wajib ada di setiap halaman:
+- Satu H1 saja per halaman (headline utama, spesifik pada isi halaman).
+- Badge/kalimat disclosure singkat: platform rujukan, bukan pemberi pinjaman.
+- Ajakan untuk mengecek legalitas lembaga di ojk.go.id atau kontak OJK 157, sebelum CTA.
+- CTA yang jujur: mengarahkan ke bantuan mencari mitra, bukan "ajukan pinjaman sekarang".
+
+Yang harus dihindari:
+- Klaim jaminan seperti "100% Aman", "Pencairan Maksimal", "Dijamin Cair" tanpa syarat.
+- Testimoni atau angka (jumlah nasabah, rating) yang tidak bisa diverifikasi.
+- Bahasa yang menyiratkan Pojok Berkah adalah lembaga jasa keuangan berizin.
+
+Struktur konten (sesuaikan dengan target pembaca):
+- Hero: judul + sublead + disclosure badge
+- Bagian edukatif: cara kerja gadai BPKB, dokumen yang dibutuhkan
+- Bagian kehati-hatian: cek legalitas sebelum lanjut
+- CTA akhir: WhatsApp untuk bantuan mencari mitra
+
+Gaya bahasa: ${tone}. Mudah dipahami, edukatif, protektif terhadap konsumen, dan BUKAN hard-selling.
+
+PENTING UNTUK TEKNIS SHUFFLE KONTEN:
+Sistem kami akan merotasi artikel ini ke ratusan halaman kota. Oleh karena itu, JANGAN pernah tulis nama kota asli (seperti Jakarta/Bandung). 
+Sebagai gantinya, Anda WAJIB menggunakan variabel kode persis seperti ini (termasuk kurung sikunya):
+- [NAMA_KOTA] (untuk menyebutkan nama kota, misal: "Simulasi Gadai BPKB di [NAMA_KOTA]")
+- [JUMLAH_CABANG] (untuk menyebutkan jumlah mitra cabang)
+Gunakan kata kunci SEO seperti "gadai BPKB [NAMA_KOTA]", "simulasi gadai BPKB [NAMA_KOTA]" secara natural.
+
+Target pembaca: ${targetPembaca}
+Panjang artikel: ${panjang}
 
 PENTING! Berikan respons Anda dengan format baku seperti ini:
-META_DESC: [isi meta description di sini]
+META_DESC: [isi meta description di sini, maks 160 karakter, gunakan [NAMA_KOTA]]
 CONTENT: [isi artikel lengkap format Markdown di sini]`;
 
   let text = "";

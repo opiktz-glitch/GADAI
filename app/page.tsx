@@ -94,7 +94,11 @@ export default async function HomePage() {
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Mengapa Memilih Layanan Gadai BPKB Kami?</h2>
           {assignedArticle ? (
             <div className="prose prose-slate max-w-none text-slate-700">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{assignedArticle.content}</ReactMarkdown>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {assignedArticle.content
+                  .replace(/\[NAMA_KOTA\]/gi, "Seluruh Indonesia")
+                  .replace(/\[JUMLAH_CABANG\]/gi, "berbagai")}
+              </ReactMarkdown>
             </div>
           ) : config.artikel_homepage ? (
             <div className="text-slate-700 leading-relaxed whitespace-pre-line">
