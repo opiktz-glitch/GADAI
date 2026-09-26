@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllKota, getKotaBySlug, formatRupiah, getConfig, getArticleById } from "@/lib/kota";
 import { MapPin, Clock, CheckCircle2, MessageCircle, Map, Quote } from "lucide-react";
@@ -48,6 +49,15 @@ export default async function KotaPage({ params }: Props) {
   
   const config = await getConfig();
   const assignedArticle = kota.assignedArticleId ? await getArticleById(kota.assignedArticleId) : null;
+
+  // Internal Linking Logic
+  const semuaKota = await getAllKota();
+  const otherCities = semuaKota.filter(k => k.slug !== kota.slug);
+  // Prioritaskan provinsi yang sama
+  let sameProvince = otherCities.filter(k => k.provinsi === kota.provinsi);
+  let relatedCities = sameProvince.length > 0 ? sameProvince : otherCities;
+  // Acak dan ambil maksimal 4 kota
+  relatedCities = relatedCities.sort(() => 0.5 - Math.random()).slice(0, 4);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -210,6 +220,26 @@ export default async function KotaPage({ params }: Props) {
           )}
         </article>
       </div>
+
+      {/* Internal Linking (SEO Booster) */}
+      {relatedCities.length > 0 && (
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 mt-4 mb-16">
+          <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+            <h2 className="text-xl font-bold text-slate-900 mb-4">Jelajahi Layanan di Cabang Lainnya</h2>
+            <div className="flex flex-wrap gap-3">
+              {relatedCities.map((rc) => (
+                <Link 
+                  key={rc.slug} 
+                  href={`/simulasi-gadai-bpkb/${rc.slug}`} 
+                  className="px-4 py-2 bg-slate-100 text-slate-700 hover:bg-blue-600 hover:text-white rounded-lg text-sm font-medium transition-colors"
+                >
+                  Gadai BPKB {rc.nama_kota}
+                </Link>
+              ))}
+            </div>
+          </section>
+        </div>
+      )}
 
       {/* Floating CTA */}
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 p-4 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] sm:bg-transparent sm:border-none sm:shadow-none sm:p-0 sm:bottom-8 sm:right-8 sm:left-auto">
