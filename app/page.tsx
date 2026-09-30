@@ -128,7 +128,8 @@ export default async function HomePage() {
               >
                 {assignedArticle.content
                   .replace(/\[NAMA_KOTA\]/gi, "Seluruh Indonesia")
-                  .replace(/\[JUMLAH_CABANG\]/gi, "berbagai")}
+                  .replace(/\[JUMLAH_CABANG\]/gi, "berbagai")
+                  .replace(/\]\(([^)]+)\)/g, (match, url) => `](${url.replace(/ /g, "%20")})`)}
               </ReactMarkdown>
             </div>
           ) : config.artikel_homepage ? (

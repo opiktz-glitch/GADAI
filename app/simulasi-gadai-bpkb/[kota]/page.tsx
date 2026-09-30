@@ -215,7 +215,8 @@ export default async function KotaPage({ params }: Props) {
               >
                 {assignedArticle.content
                   .replace(/\[NAMA_KOTA\]/gi, kota.nama_kota)
-                  .replace(/\[JUMLAH_CABANG\]/gi, kota.jumlah_cabang.toString())}
+                  .replace(/\[JUMLAH_CABANG\]/gi, kota.jumlah_cabang.toString())
+                  .replace(/\]\(([^)]+)\)/g, (match, url) => `](${url.replace(/ /g, "%20")})`)}
               </ReactMarkdown>
             </div>
           ) : (
