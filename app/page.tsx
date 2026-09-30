@@ -12,8 +12,27 @@ export default async function HomePage() {
   const assignedArticle = config.assignedArticleId ? await getArticleById(config.assignedArticleId) : null;
   const waMessageTemplate = "Halo Admin [host], saya ingin bertanya mengenai prosedur gadai BPKB.";
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Gadai Pojok Berkah",
+    url: "https://gadai.pojokberkah.online",
+    logo: "https://gadai.pojokberkah.online/logo.jpg",
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: `+${config.whatsapp_pusat}`,
+      contactType: "Customer Service",
+      areaServed: "ID",
+      availableLanguage: "Indonesian"
+    }
+  };
+
   return (
     <main className="min-h-screen bg-slate-50 font-sans pb-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {assignedArticle && <ViewTracker location="pusat" />}
       
       {/* Hero Section */}
