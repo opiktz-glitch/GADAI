@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import Link from "next/link";
 import Image from "next/image";
 import "./globals.css";
+
+const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://gadai.pojokberkah.online"),
@@ -28,7 +31,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id">
-      <body className="bg-white text-slate-900 antialiased flex flex-col min-h-screen">
+      <body className={`${inter.className} bg-white text-slate-900 antialiased flex flex-col min-h-screen`}>
         <div className="flex-grow">
           {/* Global Header */}
           <header className="bg-white shadow-sm border-b border-slate-100">
