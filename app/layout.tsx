@@ -1,11 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://gadai.pojokberkah.online"),
   title: {
-    default: "Simulasi Gadai BPKB per Kota",
-    template: "%s",
+    default: "Gadai BPKB Kendaraan | Gadai Pojok Berkah",
+    template: "%s | Gadai Pojok Berkah",
+  },
+  description: "Layanan gadai BPKB mobil dan motor terpercaya, proses cepat, aman, dan pencairan maksimal. Temukan simulasi dan cabang terdekat di kota Anda.",
+  keywords: ["gadai bpkb", "pinjaman dana tunai", "gadai bpkb mobil", "gadai bpkb motor", "pinjaman cepat cair", "dana tunai", "gadai bpkb terdekat"],
+  openGraph: {
+    title: "Gadai BPKB Kendaraan Proses Cepat & Aman",
+    description: "Proses pencairan dana kilat, tanpa ribet, dan dijamin aman. Temukan cabang terdekat di kota Anda sekarang.",
+    url: "https://gadai.pojokberkah.online",
+    siteName: "Gadai Pojok Berkah",
+    locale: "id_ID",
+    type: "website",
   },
 };
 
@@ -18,6 +30,22 @@ export default function RootLayout({
     <html lang="id">
       <body className="bg-white text-slate-900 antialiased flex flex-col min-h-screen">
         <div className="flex-grow">
+          {/* Global Header */}
+          <header className="bg-white shadow-sm border-b border-slate-100">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center">
+              <Link href="/" className="flex items-center space-x-3 group">
+                <Image 
+                  src="/logo.jpg" 
+                  alt="Logo Gadai Pojok Berkah" 
+                  width={36} 
+                  height={36} 
+                  className="rounded-lg group-hover:scale-105 transition-transform"
+                />
+                <span className="font-bold text-lg text-slate-900">Gadai Pojok Berkah</span>
+              </Link>
+            </div>
+          </header>
+          
           {children}
         </div>
         

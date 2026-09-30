@@ -37,21 +37,21 @@ export default async function HomePage() {
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-100 text-blue-600 mb-4">
               <Clock className="h-7 w-7" />
             </div>
-            <h3 className="font-bold text-slate-900">Proses Kilat</h3>
+            <h2 className="text-lg font-bold text-slate-900">Proses Kilat</h2>
             <p className="mt-2 text-sm text-slate-500">Dana cair dalam hitungan jam setelah survei selesai.</p>
           </div>
           <div className="rounded-2xl bg-white p-6 shadow-xl shadow-slate-200/50 flex flex-col items-center text-center ring-1 ring-slate-100">
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-100 text-green-600 mb-4">
               <Banknote className="h-7 w-7" />
             </div>
-            <h3 className="font-bold text-slate-900">Pencairan Maksimal</h3>
+            <h2 className="text-lg font-bold text-slate-900">Pencairan Maksimal</h2>
             <p className="mt-2 text-sm text-slate-500">Dapatkan nilai pinjaman tertinggi untuk kendaraan Anda.</p>
           </div>
           <div className="rounded-2xl bg-white p-6 shadow-xl shadow-slate-200/50 flex flex-col items-center text-center ring-1 ring-slate-100">
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-purple-100 text-purple-600 mb-4">
               <ShieldCheck className="h-7 w-7" />
             </div>
-            <h3 className="font-bold text-slate-900">100% Aman</h3>
+            <h2 className="text-lg font-bold text-slate-900">100% Aman</h2>
             <p className="mt-2 text-sm text-slate-500">BPKB Anda disimpan dengan aman dan terjamin.</p>
           </div>
         </div>

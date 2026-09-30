@@ -230,7 +230,7 @@ export default async function KotaPage({ params }: Props) {
               {relatedCities.map((rc) => (
                 <Link 
                   key={rc.slug} 
-                  href={`/simulasi-gadai-bpkb/${rc.slug}`} 
+                  href={`/simulasi-gadai-bpkb-${rc.slug}`} 
                   className="px-4 py-2 bg-slate-100 text-slate-700 hover:bg-blue-600 hover:text-white rounded-lg text-sm font-medium transition-colors"
                 >
                   Gadai BPKB {rc.nama_kota}
