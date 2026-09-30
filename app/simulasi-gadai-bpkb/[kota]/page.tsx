@@ -59,17 +59,37 @@ export default async function KotaPage({ params }: Props) {
   // Acak dan ambil maksimal 4 kota
   relatedCities = relatedCities.sort(() => 0.5 - Math.random()).slice(0, 4);
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: `Gadai BPKB - Cabang ${kota.nama_kota}`,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: kota.alamat_cabang_utama,
-      addressLocality: kota.nama_kota,
-      addressRegion: kota.provinsi,
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      name: `Gadai BPKB - Cabang ${kota.nama_kota}`,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: kota.alamat_cabang_utama,
+        addressLocality: kota.nama_kota,
+        addressRegion: kota.provinsi,
+      },
     },
-  };
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Beranda",
+          item: "https://gadai.pojokberkah.online/"
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: `Gadai BPKB ${kota.nama_kota}`,
+          item: `https://gadai.pojokberkah.online/simulasi-gadai-bpkb-${kota.slug}`
+        }
+      ]
+    }
+  ];
 
   const waMessageTemplate = `Halo ${kota.nama_marketing_lokal} [host], saya ingin simulasi gadai BPKB untuk wilayah ${kota.nama_kota}.`;
 
@@ -180,7 +200,19 @@ export default async function KotaPage({ params }: Props) {
         <article className="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
           {assignedArticle ? (
             <div className="prose prose-slate prose-blue max-w-none text-slate-700">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  img: ({ node, ...props }: any) => (
+                    <img 
+                      {...props} 
+                      alt={props.alt || `Ilustrasi Gadai BPKB ${kota.nama_kota}`} 
+                      loading="lazy" 
+                      className="rounded-lg shadow-sm"
+                    />
+                  )
+                }}
+              >
                 {assignedArticle.content
                   .replace(/\[NAMA_KOTA\]/gi, kota.nama_kota)
                   .replace(/\[JUMLAH_CABANG\]/gi, kota.jumlah_cabang.toString())}

@@ -94,7 +94,19 @@ export default async function HomePage() {
           <h2 className="text-2xl font-bold text-slate-900 mb-4">Mengapa Memilih Layanan Gadai BPKB Kami?</h2>
           {assignedArticle ? (
             <div className="prose prose-slate max-w-none text-slate-700">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  img: ({ node, ...props }: any) => (
+                    <img 
+                      {...props} 
+                      alt={props.alt || "Ilustrasi Gadai BPKB Kendaraan Aman dan Cepat"} 
+                      loading="lazy" 
+                      className="rounded-lg shadow-sm"
+                    />
+                  )
+                }}
+              >
                 {assignedArticle.content
                   .replace(/\[NAMA_KOTA\]/gi, "Seluruh Indonesia")
                   .replace(/\[JUMLAH_CABANG\]/gi, "berbagai")}
