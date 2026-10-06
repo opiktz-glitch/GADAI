@@ -23,7 +23,7 @@ export default async function HomePage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "AXI Agen Adira Beraxi",
+    name: "AXI Marketing Adira Beraxi",
     url: "https://adira.pojokberkah.online",
     contactPoint: {
       "@type": "ContactPoint",
@@ -42,33 +42,33 @@ export default async function HomePage() {
       />
       {assignedArticle && <ViewTracker location="pusat" />}
       
-      {/* Hero Section dengan desain khusus Adira Agent */}
+      {/* Hero Section dengan desain khusus Adira Marketing */}
       <section className="bg-yellow-400 px-6 py-12 text-slate-900 border-b-4 border-slate-900">
         <div className="mx-auto max-w-5xl text-center">
           <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl lg:text-5xl uppercase">
             Butuh Dana Cepat Atau Kredit Kendaraan?
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg font-medium text-slate-800 sm:text-xl">
-            Solusi tepat dari Agen Resmi AXI Adira Finance. Kami bantu proses Anda sampai tuntas!
+            Solusi tepat dari Marketing Resmi AXI Adira Finance. Kami bantu proses Anda sampai tuntas!
           </p>
         </div>
       </section>
 
-      {/* Artikel Perkenalan Agent */}
+      {/* Artikel Perkenalan Marketing */}
       <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 -mt-6 relative z-10">
         <div className="bg-white rounded-[2rem] p-6 sm:p-10 shadow-xl shadow-slate-200/60 ring-1 ring-slate-100">
           <article>
             {/* Badge */}
             <div className="flex justify-center mb-6">
               <span className="bg-yellow-400 text-slate-900 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
-                ✦ Agen Resmi Adira Finance
+                ✦ Marketing Resmi Adira Finance
               </span>
             </div>
 
             {/* Judul & Nomor */}
             <div className="text-center mb-8">
               <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0B1E36] mb-2 leading-tight">
-                Halo! Saya Agen AXI Adira Finance
+                Halo! Saya Marketing AXI Adira Finance
               </h1>
               <p className="text-slate-500 text-base mb-4">Siap membantu kebutuhan pembiayaan Anda dengan proses cepat &amp; aman</p>
               <a
@@ -82,10 +82,10 @@ export default async function HomePage() {
             {/* Artikel Perkenalan Sesuai Standar OJK */}
             <div className="prose prose-slate max-w-none text-slate-700 mb-10 space-y-4">
               <p className="text-base leading-relaxed">
-                Selamat datang! Saya adalah <strong>Agen Resmi AXI Adira Finance</strong>. Sebagai mitra representatif dari PT Adira Dinamika Multi Finance Tbk, saya hadir untuk membantu memfasilitasi kebutuhan pembiayaan Anda secara profesional.
+                Selamat datang! Saya adalah <strong>Marketing Resmi AXI Adira Finance</strong>. Sebagai mitra representatif dari PT Adira Dinamika Multi Finance Tbk, saya hadir untuk membantu memfasilitasi kebutuhan pembiayaan Anda secara profesional.
               </p>
               <p className="text-base leading-relaxed">
-                Sebagai agen berpengalaman, saya akan mendampingi proses pengajuan Anda dari awal hingga selesai. Cukup hubungi saya, dan saya bisa membantu penjemputan dokumen di lokasi Anda.
+                Sebagai marketing berpengalaman, saya akan mendampingi proses pengajuan Anda dari awal hingga selesai. Cukup hubungi saya, dan saya bisa membantu penjemputan dokumen di lokasi Anda.
               </p>
 
               <h2 className="text-xl font-bold text-[#0B1E36] pt-2">Layanan yang Saya Fasilitasi</h2>
@@ -196,14 +196,14 @@ export default async function HomePage() {
           </div>
           <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm ring-1 ring-slate-100 hover:shadow-md transition-shadow">
             <h3 className="font-bold text-[#0B1E36] text-lg mb-2">Apakah saya bisa melakukan Take Over (Pindah Kredit) dari leasing lain?</h3>
-            <p className="text-slate-600 leading-relaxed">Bisa! Sebagai agen, saya melayani fasilitas <em>Take Over</em> kredit dari institusi pembiayaan atau leasing lain. Anda bisa mendapatkan berbagai keuntungan seperti cicilan yang lebih ringan, hingga tambahan dana (Top Up) jika diperlukan.</p>
+            <p className="text-slate-600 leading-relaxed">Bisa! Sebagai marketing, saya melayani fasilitas <em>Take Over</em> kredit dari institusi pembiayaan atau leasing lain. Anda bisa mendapatkan berbagai keuntungan seperti cicilan yang lebih ringan, hingga tambahan dana (Top Up) jika diperlukan.</p>
           </div>
         </div>
       </section>
 
       {/* Floating CTA (Original Style from App) */}
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 p-4 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] sm:bg-transparent sm:border-none sm:shadow-none sm:p-0 sm:bottom-8 sm:right-8 sm:left-auto">
-        <WhatsAppButton noWa="6287823651470" messageTemplate={waMessageTemplate} buttonText="Chat Agen Adira" />
+        <WhatsAppButton noWa="6287823651470" messageTemplate={waMessageTemplate} buttonText="Chat Marketing Adira" />
       </div>
     </main>
   );

@@ -8,10 +8,10 @@ export default function Header() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group" aria-label="Beranda AXI Agen Adira">
+          <Link href="/" className="flex items-center space-x-3 group" aria-label="Beranda AXI Marketing Adira">
             <Image 
               src="/logo-axi-v3-web.png" 
-              alt="Logo AXI Agen Adira Beraxi" 
+              alt="Logo AXI Marketing Adira Beraxi" 
               width={240} 
               height={120} 
               priority

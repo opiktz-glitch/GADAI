@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import WhatsAppButton from "@/app/components/WhatsAppButton";
 
 export const metadata: Metadata = {
-  title: 'Tentang Kami - Agen Resmi AXI Adira Finance',
-  description: 'Kami adalah Agen Resmi AXI Adira Finance yang siap membantu memfasilitasi pengajuan Gadai BPKB Motor & Mobil dengan proses cepat, aman, dan transparan.',
+  title: 'Tentang Kami - Marketing Resmi AXI Adira Finance',
+  description: 'Kami adalah Marketing Resmi AXI Adira Finance yang siap membantu memfasilitasi pengajuan Gadai BPKB Motor & Mobil dengan proses cepat, aman, dan transparan.',
 };
 
 export default function TentangKami() {
@@ -16,7 +16,7 @@ export default function TentangKami() {
         <article className="prose prose-slate lg:prose-lg bg-white p-8 md:p-12 rounded-[2rem] shadow-xl shadow-slate-200/60 ring-1 ring-slate-100 mx-auto">
           <div className="flex justify-center mb-6">
             <span className="bg-yellow-400 text-slate-900 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
-              ✦ Profil Agen Resmi
+              ✦ Profil Marketing Resmi
             </span>
           </div>
           
@@ -25,7 +25,7 @@ export default function TentangKami() {
           </h1>
           
           <p className="lead text-xl text-slate-700 font-medium text-center mb-10">
-            Kami adalah <strong>Agen Resmi AXI Adira Finance</strong> yang berdedikasi untuk membantu Anda mendapatkan solusi finansial terbaik.
+            Kami adalah <strong>Marketing Resmi AXI Adira Finance</strong> yang berdedikasi untuk membantu Anda mendapatkan solusi finansial terbaik.
           </p>
 
           <h2 className="text-2xl font-bold text-[#0B1E36] mb-4">Siapa Kami?</h2>
@@ -39,7 +39,7 @@ export default function TentangKami() {
           <div className="not-prose bg-slate-50 border-l-4 border-yellow-400 p-6 my-8 rounded-r-lg">
             <p className="font-bold text-[#0B1E36] m-0 mb-2">Penting untuk Anda ketahui:</p>
             <p className="text-slate-600 m-0 leading-relaxed text-sm">
-              Seluruh proses persetujuan kredit, pencairan dana, hingga penetapan suku bunga mutlak berada di bawah kewenangan kantor pusat/cabang <strong>PT Adira Dinamika Multi Finance Tbk</strong>. Kami selaku Agen AXI bertugas sebagai fasilitator yang membantu merapikan dokumen, memberikan simulasi, dan mempercepat alur pengajuan Anda ke sistem Adira secara resmi.
+              Seluruh proses persetujuan kredit, pencairan dana, hingga penetapan suku bunga mutlak berada di bawah kewenangan kantor pusat/cabang <strong>PT Adira Dinamika Multi Finance Tbk</strong>. Kami selaku Marketing AXI bertugas sebagai fasilitator yang membantu merapikan dokumen, memberikan simulasi, dan mempercepat alur pengajuan Anda ke sistem Adira secara resmi.
             </p>
           </div>
 
@@ -78,7 +78,7 @@ export default function TentangKami() {
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 p-4 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] sm:bg-transparent sm:border-none sm:shadow-none sm:p-0 sm:bottom-8 sm:right-8 sm:left-auto">
-        <WhatsAppButton noWa="6287823651470" messageTemplate={waMessageTemplate} buttonText="Konsultasi Agen" />
+        <WhatsAppButton noWa="6287823651470" messageTemplate={waMessageTemplate} buttonText="Konsultasi Marketing" />
       </div>
     </div>
   );

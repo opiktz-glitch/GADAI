@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAllKota, getConfig, getArticleById } from "@/lib/kota";
+import { getAllKota, getKotaBySlug, getConfig, getArticleById } from "@/lib/kota";
 import { ChevronRight, ShieldCheck, Banknote, Clock, MapPin, MapPinned } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -9,27 +9,33 @@ import WhatsAppButton from "@/app/components/WhatsAppButton";
 export default async function CityPage({ params }: { params: { slug: string } }) {
   const cityName = params.slug.charAt(0).toUpperCase() + params.slug.slice(1);
   
-  const semuaKota = await getAllKota();
+  const kota = await getKotaBySlug(params.slug);
   const config = await getConfig();
-  const assignedArticle = config.assignedArticleId ? await getArticleById(config.assignedArticleId) : null;
-  const waMessageTemplate = `Halo Admin AXI Adira, saya ingin bertanya mengenai prosedur gadai BPKB / Kredit Kendaraan di ${cityName}.`;
+  
+  // Ambil artikel dinamis (Prioritas: Artikel Kota -> Artikel Config Global)
+  let assignedArticle = null;
+  if (kota?.assignedArticleId) {
+    assignedArticle = await getArticleById(kota.assignedArticleId) || null;
+  } else if (config.assignedArticleId) {
+    assignedArticle = await getArticleById(config.assignedArticleId) || null;
+  }
 
-  // Data Spesifik Cabang dari Gambar
-  const cabangUtama = {
-    nama: "Adira Finance Cabang Pungkur Bandung",
-    noHp: "+6287823651470",
-    deskripsi: "Adira terdekat di dekat kamu yaitu Adira Finance Cabang Pungkur Bandung, siap melayani gadai BPKB motor & mobil, kredit motor & mobil bekas, top up, dan take over untuk warga Kota Bandung dan sekitarnya.",
-    patokan: "Kantor Cabang Adira Finance Bandung 6 - Pungkur patokan jalan dekat dengan Toko listrik sinar kencana."
-  };
+  // Fallback ke data kota jika tidak ada di database
+  const namaKota = kota?.nama_kota || cityName;
+  const alamatCabang = kota?.alamat_cabang_utama || `Kantor Cabang Adira Finance ${namaKota}`;
+  const namaMarketing = kota?.nama_marketing_lokal || "AXI Adira Finance";
+  const noWa = config.whatsapp_pusat || "6287823651470";
+  
+  const waMessageTemplate = `Halo Admin AXI Adira, saya ingin bertanya mengenai prosedur gadai BPKB / Kredit Kendaraan di ${namaKota}.`;
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "AXI Agen Adira Beraxi",
+    name: `AXI Marketing Adira Beraxi ${namaKota}`,
     url: "https://adira.pojokberkah.online",
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: cabangUtama.noHp,
+      telephone: `+${noWa}`,
       contactType: "Customer Service",
       areaServed: "ID",
       availableLanguage: "Indonesian"
@@ -44,50 +50,56 @@ export default async function CityPage({ params }: { params: { slug: string } })
       />
       {assignedArticle && <ViewTracker location="pusat" />}
       
-      {/* Hero Section dengan desain khusus Adira Agent */}
+      {/* Hero Section dengan desain khusus Adira Marketing */}
       <section className="bg-yellow-400 px-6 py-12 text-slate-900 border-b-4 border-slate-900">
         <div className="mx-auto max-w-5xl text-center">
           <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl lg:text-5xl uppercase">
             Butuh Dana Cepat Atau Kredit Kendaraan?
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg font-medium text-slate-800 sm:text-xl">
-            Solusi tepat dari Agen Resmi AXI Adira Finance. Kami bantu proses Anda sampai tuntas!
+            Solusi tepat dari Marketing Resmi AXI Adira Finance. Kami bantu proses Anda sampai tuntas!
           </p>
         </div>
       </section>
 
-      {/* Artikel Perkenalan Agent */}
+      {/* Artikel Perkenalan Marketing */}
       <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 -mt-6 relative z-10">
         <div className="bg-white rounded-[2rem] p-6 sm:p-10 shadow-xl shadow-slate-200/60 ring-1 ring-slate-100">
           <article>
             {/* Badge */}
             <div className="flex justify-center mb-6">
               <span className="bg-yellow-400 text-slate-900 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
-                ✦ Agen Resmi Adira Finance
+                ✦ Marketing Resmi Adira Finance
               </span>
             </div>
 
             {/* Judul & Nomor */}
             <div className="text-center mb-8">
               <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0B1E36] mb-2 leading-tight">
-                Agen AXI Adira Finance Cabang {cityName}
+                Marketing AXI Adira Finance Cabang {namaKota}
               </h1>
-              <p className="text-slate-500 text-base mb-4">Siap membantu kebutuhan pembiayaan Anda di wilayah Kota {cityName} & sekitarnya</p>
+              <p className="text-slate-500 text-base mb-4">Siap membantu kebutuhan pembiayaan Anda di wilayah {namaKota} & sekitarnya</p>
               <a
-                href={`tel:${cabangUtama.noHp}`}
+                href={`tel:+${noWa}`}
                 className="inline-block text-2xl sm:text-3xl font-extrabold text-[#0B1E36] hover:text-yellow-600 transition-colors border-b-4 border-yellow-400 pb-1"
               >
-                {cabangUtama.noHp}
+                +{noWa}
               </a>
             </div>
 
-            {/* Artikel Perkenalan Sesuai Standar OJK */}
+            {/* Artikel Dinamis atau Sesuai Standar OJK */}
             <div className="prose prose-slate max-w-none text-slate-700 mb-10 space-y-4">
+              {assignedArticle ? (
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {assignedArticle.content.replace(/{{kota}}/gi, namaKota)}
+                </ReactMarkdown>
+              ) : (
+                <>
               <p className="text-base leading-relaxed">
-                Selamat datang! Saya adalah <strong>Agen Resmi AXI Adira Finance</strong>. Sebagai mitra representatif dari PT Adira Dinamika Multi Finance Tbk, saya hadir untuk membantu memfasilitasi kebutuhan pembiayaan Anda di wilayah {cityName} secara profesional.
+                Selamat datang! Saya adalah <strong>Marketing Resmi AXI Adira Finance</strong>. Sebagai mitra representatif dari PT Adira Dinamika Multi Finance Tbk, saya hadir untuk membantu memfasilitasi kebutuhan pembiayaan Anda di wilayah {cityName} secara profesional.
               </p>
               <p className="text-base leading-relaxed">
-                Sebagai agen berpengalaman, saya akan mendampingi proses pengajuan Anda dari awal hingga selesai. Cukup hubungi saya, dan saya bisa membantu penjemputan dokumen di lokasi Anda.
+                Sebagai marketing berpengalaman, saya akan mendampingi proses pengajuan Anda dari awal hingga selesai. Cukup hubungi saya, dan saya bisa membantu penjemputan dokumen di lokasi Anda.
               </p>
 
               <h2 className="text-xl font-bold text-[#0B1E36] pt-2">Layanan yang Saya Fasilitasi</h2>
@@ -106,13 +118,15 @@ export default async function CityPage({ params }: { params: { slug: string } })
               <div className="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200 text-sm text-slate-500 italic text-center">
                 PT Adira Dinamika Multi Finance Tbk berizin dan diawasi oleh Otoritas Jasa Keuangan (OJK).
               </div>
+                </>
+              )}
             </div>
 
             {/* CTA Hubungi */}
             <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
               <p className="text-slate-700 font-semibold mb-4">📞 Hubungi saya sekarang untuk konsultasi <span className="text-yellow-600">GRATIS</span></p>
               <a
-                href={`https://wa.me/${cabangUtama.noHp.replace('+', '')}`}
+                href={`https://wa.me/${noWa}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
@@ -198,14 +212,14 @@ export default async function CityPage({ params }: { params: { slug: string } })
           </div>
           <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm ring-1 ring-slate-100 hover:shadow-md transition-shadow">
             <h3 className="font-bold text-[#0B1E36] text-lg mb-2">Apakah saya bisa melakukan Take Over (Pindah Kredit) dari leasing lain?</h3>
-            <p className="text-slate-600 leading-relaxed">Bisa! Sebagai agen, saya melayani fasilitas <em>Take Over</em> kredit dari institusi pembiayaan atau leasing lain. Anda bisa mendapatkan berbagai keuntungan seperti cicilan yang lebih ringan, hingga tambahan dana (Top Up) jika diperlukan.</p>
+            <p className="text-slate-600 leading-relaxed">Bisa! Sebagai marketing, saya melayani fasilitas <em>Take Over</em> kredit dari institusi pembiayaan atau leasing lain. Anda bisa mendapatkan berbagai keuntungan seperti cicilan yang lebih ringan, hingga tambahan dana (Top Up) jika diperlukan.</p>
           </div>
         </div>
       </section>
 
       {/* Floating CTA (Original Style from App) */}
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 p-4 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] sm:bg-transparent sm:border-none sm:shadow-none sm:p-0 sm:bottom-8 sm:right-8 sm:left-auto">
-        <WhatsAppButton noWa="6287823651470" messageTemplate={waMessageTemplate} buttonText="Chat Agen Adira" />
+        <WhatsAppButton noWa={noWa} messageTemplate={waMessageTemplate} buttonText="Chat Marketing Adira" />
       </div>
     </main>
   );

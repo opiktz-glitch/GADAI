@@ -37,7 +37,7 @@ const layananData: Record<string, { title: string, subtitle: string, waText: str
       <>
         <h2 className="text-2xl font-bold text-[#0B1E36] mb-4">Langkah-Langkah Pengajuan</h2>
         <p className="text-base leading-relaxed mb-6">
-          Sebagai Agen Resmi AXI Adira Finance, saya hadir untuk mempermudah seluruh proses pengajuan Anda agar Anda tidak perlu repot bolak-balik ke kantor cabang. Ikuti langkah mudah berikut:
+          Sebagai Marketing Resmi AXI Adira Finance, saya hadir untuk mempermudah seluruh proses pengajuan Anda agar Anda tidak perlu repot bolak-balik ke kantor cabang. Ikuti langkah mudah berikut:
         </p>
         
         <div className="space-y-6 mb-8 mt-6">
@@ -150,7 +150,7 @@ export default function LayananPage({ params }: { params: { slug: string } }) {
       </section>
 
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 p-4 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] sm:bg-transparent sm:border-none sm:shadow-none sm:p-0 sm:bottom-8 sm:right-8 sm:left-auto">
-        <WhatsAppButton noWa="6287823651470" messageTemplate={layanan.waText} buttonText="Konsultasi Agen" />
+        <WhatsAppButton noWa="6287823651470" messageTemplate={layanan.waText} buttonText="Konsultasi Marketing" />
       </div>
     </main>
   );

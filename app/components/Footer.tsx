@@ -22,7 +22,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
             {/* Column 1: Info Brand */}
             <div>
-              <h3 className="text-white text-lg font-bold mb-4">AXI Agen Adira Beraxi</h3>
+              <h3 className="text-white text-lg font-bold mb-4">AXI Marketing Adira Beraxi</h3>
               <p className="text-sm leading-relaxed mb-6 text-slate-400">
                 Layanan resmi gadai BPKB mobil dan motor terpercaya, proses cepat, aman, dan pencairan maksimal dari Adira Finance.
               </p>
@@ -46,7 +46,7 @@ export default function Footer() {
 
             {/* Column 3: Contact */}
             <address className="not-italic">
-              <h3 className="text-white text-lg font-bold mb-4">Hubungi Agen</h3>
+              <h3 className="text-white text-lg font-bold mb-4">Hubungi Marketing</h3>
               <ul className="space-y-3 text-sm">
                 <li>Telepon / WA: +62 878-2365-1470</li>
                 <li>Layanan Seluruh Indonesia</li>
@@ -55,7 +55,7 @@ export default function Footer() {
           </div>
           
           <div className="pt-8 border-t border-slate-800 text-center text-sm text-slate-500 flex flex-col md:flex-row justify-between items-center">
-            <p>&copy; {new Date().getFullYear()} AXI Agen Adira Beraxi. Hak Cipta Dilindungi.</p>
+            <p>&copy; {new Date().getFullYear()} AXI Marketing Adira Beraxi. Hak Cipta Dilindungi.</p>
           </div>
         </div>
       </footer>

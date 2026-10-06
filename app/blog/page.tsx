@@ -7,29 +7,10 @@ export const metadata: Metadata = {
   description: "Daftar informasi dan simulasi pencairan di berbagai kota cabang Gadai Pojok Berkah.",
 };
 
-// Data dummy sesuai dengan gambar
-const cities = [
-  {
-    province: "JAWA BARAT",
-    name: "Bandung",
-    branches: "10 Cabang Aktif",
-    slug: "bandung"
-  },
-  {
-    province: "JAWA BARAT",
-    name: "Bekasi",
-    branches: "5 Cabang Aktif",
-    slug: "bekasi"
-  },
-  {
-    province: "DKI JAKARTA",
-    name: "Jakarta",
-    branches: "12 Cabang Aktif",
-    slug: "jakarta"
-  }
-];
+import { getAllKota } from "@/lib/kota";
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const cities = await getAllKota();
   return (
     <div className="bg-slate-50 min-h-screen py-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,13 +36,13 @@ export default function BlogPage() {
               {/* Card Header */}
               <div className="flex items-center text-slate-400 mb-4">
                 <MapPin className="w-4 h-4 mr-2" />
-                <span className="text-xs font-semibold tracking-wider uppercase">{city.province}</span>
+                <span className="text-xs font-semibold tracking-wider uppercase">{city.provinsi}</span>
               </div>
               
               {/* Card Body */}
               <div className="flex-grow">
-                <h2 className="text-2xl font-bold text-slate-900 mb-2">{city.name}</h2>
-                <p className="text-slate-500 text-sm">{city.branches}</p>
+                <h2 className="text-2xl font-bold text-slate-900 mb-2">{city.nama_kota}</h2>
+                <p className="text-slate-500 text-sm">{city.jumlah_cabang} Cabang Aktif</p>
               </div>
 
               {/* Card Footer */}

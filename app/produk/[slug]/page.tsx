@@ -167,7 +167,7 @@ export default function ProdukPage({ params }: { params: { slug: string } }) {
             </p>
 
             <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-8">
-               <h3 className="text-lg font-bold text-[#0B1E36] mb-3">Keuntungan Lewat Agen Resmi AXI:</h3>
+               <h3 className="text-lg font-bold text-[#0B1E36] mb-3">Keuntungan Lewat Marketing Resmi AXI:</h3>
                <ul className="space-y-2 text-base list-none p-0 m-0">
                  <li className="flex items-start gap-2"><span className="text-green-500 font-bold mt-0.5">✔</span> Proses didampingi dari awal sampai cair.</li>
                  <li className="flex items-start gap-2"><span className="text-green-500 font-bold mt-0.5">✔</span> Tidak perlu antre lama di kantor cabang.</li>
@@ -215,7 +215,7 @@ export default function ProdukPage({ params }: { params: { slug: string } }) {
       </section>
 
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 p-4 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] sm:bg-transparent sm:border-none sm:shadow-none sm:p-0 sm:bottom-8 sm:right-8 sm:left-auto">
-        <WhatsAppButton noWa="6287823651470" messageTemplate={product.waText} buttonText="Chat Agen Adira" />
+        <WhatsAppButton noWa="6287823651470" messageTemplate={product.waText} buttonText="Chat Marketing Adira" />
       </div>
     </main>
   );
