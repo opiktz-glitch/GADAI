@@ -119,8 +119,14 @@ const productData: Record<string, { title: string, subtitle: string, desc: strin
     waText: "Halo Admin AXI Adira, saya ingin konsultasi pengajuan Gadai BPKB Motor.",
     table: tableMotor
   },
+  "kredit-baru": {
+    title: "Kredit Motor dan Mobil Baru",
+    subtitle: "Fasilitas kredit kendaraan baru dengan DP ringan.",
+    desc: "Ingin membeli mobil atau motor baru impian Anda? Kami menyediakan fasilitas kredit kendaraan baru dari berbagai merek dengan cicilan ringan, syarat mudah, dan proses cepat. Dapatkan kendaraan baru Anda sekarang juga bersama Adira Finance.",
+    waText: "Halo Admin AXI Adira, saya ingin konsultasi mengenai Kredit Kendaraan Baru."
+  },
   "kredit-bekas": {
-    title: "Kredit Kendaraan Bekas",
+    title: "Kredit Motor dan Mobil Bekas",
     subtitle: "Fasilitas kredit motor dan mobil bekas terpercaya.",
     desc: "Ingin membeli mobil atau motor impian tapi budget terbatas? Kami menyediakan fasilitas kredit kendaraan bekas berkualitas. Dengan Adira Finance, Anda bisa mendapatkan kendaraan impian dengan cicilan ringan, syarat mudah, dan BPKB yang aman.",
     waText: "Halo Admin AXI Adira, saya ingin konsultasi mengenai Kredit Kendaraan Bekas."

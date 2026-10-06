@@ -35,7 +35,8 @@ export default function Header() {
                 <ul className="py-2">
                   <li><Link href="/produk/gadai-bpkb-mobil" className="block px-5 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-red-600 transition-colors border-b border-slate-50">Gadai BPKB Mobil</Link></li>
                   <li><Link href="/produk/gadai-bpkb-motor" className="block px-5 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-red-600 transition-colors border-b border-slate-50">Gadai BPKB Motor</Link></li>
-                  <li><Link href="/produk/kredit-bekas" className="block px-5 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-red-600 transition-colors border-b border-slate-50">Kredit Bekas</Link></li>
+                  <li><Link href="/produk/kredit-baru" className="block px-5 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-red-600 transition-colors border-b border-slate-50">Kredit Motor dan Mobil Baru</Link></li>
+                  <li><Link href="/produk/kredit-bekas" className="block px-5 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-red-600 transition-colors border-b border-slate-50">Kredit Motor dan Mobil Bekas</Link></li>
                   <li><Link href="/produk/take-over-top-up" className="block px-5 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-red-600 transition-colors">Take Over &amp; Top Up</Link></li>
                 </ul>
               </div>

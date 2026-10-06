@@ -40,7 +40,7 @@ if (!getApps().length) {
   }
 }
 
-export let db: any;
+export let db: ReturnType<typeof getFirestore>;
 try {
   db = getFirestore();
 } catch (e) {

@@ -125,7 +125,7 @@ export default async function HomePage() {
       {/* Services Grid */}
       <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mt-20">
         <h2 className="text-2xl font-bold text-center text-slate-900 mb-10">Layanan Utama AXI Adira</h2>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <div className="bg-white p-6 rounded-xl shadow-sm text-center border-t-4 border-yellow-400">
             <h3 className="font-bold text-lg mb-2">Gadai BPKB Mobil</h3>
             <p className="text-sm text-slate-600">Pencairan tinggi untuk kebutuhan dana besar Anda.</p>
@@ -135,7 +135,11 @@ export default async function HomePage() {
             <p className="text-sm text-slate-600">Proses kilat, dana cair tanpa potong biaya survei.</p>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-sm text-center border-t-4 border-yellow-400">
-            <h3 className="font-bold text-lg mb-2">Kredit Bekas</h3>
+            <h3 className="font-bold text-lg mb-2">Kredit Motor dan Mobil Baru</h3>
+            <p className="text-sm text-slate-600">Fasilitas kredit kendaraan baru dengan DP ringan.</p>
+          </div>
+          <div className="bg-white p-6 rounded-xl shadow-sm text-center border-t-4 border-yellow-400">
+            <h3 className="font-bold text-lg mb-2">Kredit Motor dan Mobil Bekas</h3>
             <p className="text-sm text-slate-600">Fasilitas kredit motor dan mobil bekas terpercaya.</p>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-sm text-center border-t-4 border-yellow-400">
