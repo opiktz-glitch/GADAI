@@ -16,7 +16,7 @@ export default function Header() {
   return (
     <header className="bg-white border-b border-slate-100 sticky top-0 z-50 shadow-sm">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-24">
+        <div className="flex justify-between items-center h-20">
           {/* Mobile Toggle & Logo */}
           <div className="flex items-center gap-2">
             <button 
@@ -33,7 +33,7 @@ export default function Header() {
                 width={240} 
                 height={120} 
                 priority
-                className="h-14 sm:h-20 w-auto object-contain group-hover:opacity-90 transition-opacity"
+                className="h-14 sm:h-20 w-auto object-contain scale-110 sm:scale-125 origin-left group-hover:opacity-90 transition-all"
               />
             </Link>
           </div>
