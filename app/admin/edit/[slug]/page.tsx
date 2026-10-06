@@ -47,41 +47,9 @@ export default async function EditKotaPage({ params }: { params: Promise<{ slug:
               <label className="block text-sm font-medium">Provinsi</label>
               <input required type="text" name="provinsi" defaultValue={kota.provinsi} className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
             </div>
-            <div>
-              <label className="block text-sm font-medium">Jumlah Cabang</label>
-              <input required type="number" name="jumlah_cabang" defaultValue={kota.jumlah_cabang} className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium">Estimasi Pencairan Minimal</label>
-              <input required type="number" name="estimasi_pencairan_min" defaultValue={kota.estimasi_pencairan_min} className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium">Estimasi Pencairan Maksimal</label>
-              <input required type="number" name="estimasi_pencairan_max" defaultValue={kota.estimasi_pencairan_max} className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium">Waktu Proses (Jam)</label>
-              <input required type="number" name="waktu_proses_jam" defaultValue={kota.waktu_proses_jam} className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium">Nama Marketing Lokal</label>
-              <input required type="text" name="nama_marketing_lokal" defaultValue={kota.nama_marketing_lokal} className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
-            </div>
             <div className="sm:col-span-2">
               <label className="block text-sm font-medium">Alamat Cabang Utama</label>
               <input required type="text" name="alamat_cabang_utama" defaultValue={kota.alamat_cabang_utama} className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
-            </div>
-            <div className="sm:col-span-2">
-              <label className="block text-sm font-medium">Testimoni Lokal</label>
-              <textarea required name="testimoni" rows={3} defaultValue={kota.testimoni} className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2"></textarea>
-            </div>
-            <div className="sm:col-span-2">
-              <label className="block text-sm font-medium">Kendaraan Populer (Pisahkan dengan koma)</label>
-              <input required type="text" name="kendaraan_populer" defaultValue={kota.kendaraan_populer.join(", ")} className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
-            </div>
-            <div className="sm:col-span-2">
-              <label className="block text-sm font-medium text-blue-700">Artikel SEO Khusus Kota Ini (Opsional)</label>
-              <textarea name="artikel_seo" rows={4} defaultValue={kota.artikel_seo || ""} className="mt-1 block w-full rounded-md border border-blue-300 px-3 py-2 bg-blue-50"></textarea>
             </div>
             
             <div className="sm:col-span-2 border-t pt-4">

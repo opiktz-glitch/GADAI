@@ -1,7 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
+import { getConfig } from "@/lib/kota";
 
-export default function Footer() {
+export default async function Footer() {
+  const config = await getConfig();
   return (
     <>
       {/* Trust & Partnership Logos - Banner */}
@@ -48,7 +50,7 @@ export default function Footer() {
             <address className="not-italic">
               <h3 className="text-white text-lg font-bold mb-4">Hubungi Marketing</h3>
               <ul className="space-y-3 text-sm">
-                <li>Telepon / WA: +62 878-2365-1470</li>
+                <li>Telepon / WA: +{config.whatsapp_pusat}</li>
                 <li>Layanan Seluruh Indonesia</li>
               </ul>
             </address>

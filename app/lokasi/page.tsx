@@ -3,13 +3,13 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blog & Informasi Kota",
+  title: "Lokasi Cabang",
   description: "Daftar informasi dan simulasi pencairan di berbagai kota cabang Gadai BPKB Syariah.",
 };
 
 import { getAllKota } from "@/lib/kota";
 
-export default async function BlogPage() {
+export default async function LokasiPage() {
   const cities = await getAllKota();
   return (
     <div className="bg-slate-50 min-h-screen py-16">
@@ -29,7 +29,7 @@ export default async function BlogPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {cities.map((city, index) => (
             <Link 
-              href={`/blog/${city.slug}`} 
+              href={`/simulasi-gadai-bpkb/${city.slug}`} 
               key={index}
               className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group flex flex-col h-full"
             >

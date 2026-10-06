@@ -49,7 +49,7 @@ export default function AllArticlesTable({ articles }: { articles: Article[] }) 
             <tr>
               <th className="px-4 py-3 text-center font-medium text-slate-700 w-12 whitespace-nowrap">No</th>
               <th className="px-4 py-3 text-center font-medium text-slate-700 whitespace-nowrap">ID Artikel</th>
-              <th className="px-4 py-3 text-center font-medium text-slate-700 min-w-[300px]">Isi Artikel</th>
+              <th className="px-4 py-3 text-center font-medium text-slate-700 max-w-[200px] w-full">Isi Artikel</th>
               <th className="px-4 py-3 text-center font-medium text-slate-700 w-24 whitespace-nowrap">Pembuat</th>
               <th className="px-4 py-3 text-center font-medium text-slate-700 w-40 whitespace-nowrap">Tanggal Buat</th>
               <th className="px-4 py-3 text-center font-medium text-slate-700 w-32 sticky right-0 bg-slate-50 z-10 whitespace-nowrap shadow-[inset_1px_0_0_#e2e8f0]">Aksi</th>
@@ -86,7 +86,7 @@ export default function AllArticlesTable({ articles }: { articles: Article[] }) 
                     <td className="px-4 py-3 font-medium text-slate-500 align-top text-center whitespace-nowrap">
                       {a.shortId ? `A-${a.shortId}` : '-'}
                     </td>
-                    <td className="px-4 py-3 text-slate-700 align-top min-w-[300px]">
+                    <td className="px-4 py-3 text-slate-700 align-top max-w-[200px] w-full">
                       {isEditing ? (
                         <textarea
                           value={editContent}
@@ -106,7 +106,7 @@ export default function AllArticlesTable({ articles }: { articles: Article[] }) 
                         {a.source === 'AI' ? '✨ AI' : '👤 Admin'}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-slate-500 align-top text-center text-xs whitespace-nowrap">
+                    <td suppressHydrationWarning className="px-4 py-3 text-slate-500 align-top text-center text-xs whitespace-nowrap">
                       {dateStr}
                     </td>
                     <td className="px-4 py-3 align-top sticky right-0 bg-white group-hover:bg-slate-50 z-10 shadow-[inset_1px_0_0_#e2e8f0]">

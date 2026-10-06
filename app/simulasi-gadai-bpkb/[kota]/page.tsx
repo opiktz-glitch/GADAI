@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: `/simulasi-gadai-bpkb-${kota.slug}` },
+    alternates: { canonical: `/simulasi-gadai-bpkb/${kota.slug}` },
     openGraph: { title, description },
   };
 }
@@ -103,17 +103,17 @@ export default async function KotaPage({ params }: Props) {
       />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-700 to-indigo-900 px-6 py-16 text-white sm:py-24">
+      <section className="relative overflow-hidden bg-slate-900 px-6 py-16 text-white sm:py-24 border-b-4 border-yellow-400">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
         <div className="relative mx-auto max-w-4xl text-center">
-          <div className="mb-4 flex items-center justify-center space-x-2 text-blue-200">
+          <div className="mb-4 flex items-center justify-center space-x-2 text-yellow-400">
             <MapPin className="h-5 w-5" />
-            <span className="text-sm font-medium uppercase tracking-wider">Layanan Khusus {kota.provinsi}</span>
+            <span className="text-sm font-bold uppercase tracking-wider">Layanan Khusus {kota.provinsi}</span>
           </div>
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-white">
             Gadai BPKB Kendaraan di <span className="text-yellow-400">{kota.nama_kota}</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-blue-100 sm:text-xl">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-300 sm:text-xl">
             Proses cepat, aman, dan transparan. Dapatkan dana tunai dengan jaminan BPKB Mobil atau Motor Anda.
           </p>
         </div>
@@ -124,9 +124,9 @@ export default async function KotaPage({ params }: Props) {
         
         {/* Highlight Stats Card (Floating) */}
         <div className="relative -mt-10 mb-12 grid grid-cols-1 gap-4 sm:-mt-12 sm:grid-cols-3">
-          <div className="rounded-xl bg-white p-6 shadow-xl shadow-blue-900/5 ring-1 ring-slate-100 transition hover:shadow-2xl">
+          <div className="rounded-xl bg-white p-6 shadow-xl shadow-slate-900/10 ring-1 ring-slate-100 transition hover:shadow-2xl">
             <div className="flex items-center space-x-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100 text-yellow-600">
                 <Map className="h-6 w-6" />
               </div>
               <div>
@@ -135,7 +135,7 @@ export default async function KotaPage({ params }: Props) {
               </div>
             </div>
           </div>
-          <div className="rounded-xl bg-white p-6 shadow-xl shadow-blue-900/5 ring-1 ring-slate-100 transition hover:shadow-2xl sm:col-span-2">
+          <div className="rounded-xl bg-white p-6 shadow-xl shadow-slate-900/10 ring-1 ring-slate-100 transition hover:shadow-2xl sm:col-span-2">
             <div className="flex items-center space-x-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-green-600">
                 <Clock className="h-6 w-6" />
@@ -203,6 +203,7 @@ export default async function KotaPage({ params }: Props) {
               <ReactMarkdown 
                 remarkPlugins={[remarkGfm]}
                 components={{
+                  h1: ({ node, ...props }: any) => <h1 className="text-center" {...props} />,
                   img: ({ node, ...props }: any) => (
                     <img 
                       {...props} 

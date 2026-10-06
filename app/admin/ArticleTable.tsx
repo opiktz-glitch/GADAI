@@ -5,7 +5,7 @@ import { Article, Kota, Config } from "@/lib/kota";
 import { Pencil, Trash2, Check, X, Eye, Shuffle } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { editArticle, deleteArticle, shuffleArticles, toggleRandomLocation } from "./actions";
+import { editArticle, deleteArticle } from "./actions";
 
 export default function ArticleTable({ articles, kotaList, config }: { articles: Article[], kotaList: Kota[], config: Config }) {
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -43,11 +43,10 @@ export default function ArticleTable({ articles, kotaList, config }: { articles:
             <tr>
               <th className="px-4 py-3 text-center font-medium text-slate-700 w-12 whitespace-nowrap">No</th>
               <th className="px-4 py-3 text-center font-medium text-slate-700 whitespace-nowrap">ID Artikel</th>
-              <th className="px-4 py-3 text-center font-medium text-slate-700 min-w-[300px]">Artikel</th>
+              <th className="px-4 py-3 text-center font-medium text-slate-700 max-w-[200px] w-full">Artikel</th>
               <th className="px-4 py-3 text-center font-medium text-slate-700 w-32 whitespace-nowrap">Lokasi</th>
               <th className="px-4 py-3 text-center font-medium text-slate-700 w-24 whitespace-nowrap">Pembuat</th>
               <th className="px-4 py-3 text-center font-medium text-slate-700 w-16 whitespace-nowrap">Klik</th>
-              <th className="px-4 py-3 text-center font-medium text-slate-700 w-16 whitespace-nowrap">Random</th>
               <th className="px-4 py-3 text-center font-medium text-slate-700 w-40 whitespace-nowrap">Tanggal Buat</th>
               <th className="px-4 py-3 text-center font-medium text-slate-700 w-32 sticky right-0 bg-slate-50 z-10 whitespace-nowrap shadow-[inset_1px_0_0_#e2e8f0]">Aksi</th>
             </tr>
@@ -112,7 +111,7 @@ export default function ArticleTable({ articles, kotaList, config }: { articles:
                       <td className="px-4 py-3 font-medium text-slate-500 align-top text-center whitespace-nowrap">
                         {a.shortId ? `A-${a.shortId}` : '-'}
                       </td>
-                      <td className="px-4 py-3 text-slate-700 align-top min-w-[300px]">
+                      <td className="px-4 py-3 text-slate-700 align-top max-w-[200px] w-full">
                         {isEditing ? (
                           <textarea
                             value={editContent}
@@ -148,20 +147,7 @@ export default function ArticleTable({ articles, kotaList, config }: { articles:
                           <span>{loc.views}</span>
                         )}
                       </td>
-                      <td className="px-4 py-3 align-top text-center whitespace-nowrap">
-                        {!loc ? (
-                          <span className="text-slate-300">-</span>
-                        ) : (
-                          <input 
-                            type="checkbox" 
-                            title={`Centang untuk ikut diacak (${loc.name})`}
-                            checked={loc.allowRandom !== false} 
-                            onChange={(e) => toggleRandomLocation(loc.slug, e.target.checked)}
-                            className="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500 cursor-pointer"
-                          />
-                        )}
-                      </td>
-                      <td className="px-4 py-3 text-slate-500 align-top text-center text-xs whitespace-nowrap">
+                      <td suppressHydrationWarning className="px-4 py-3 text-slate-500 align-top text-center text-xs whitespace-nowrap">
                         {dateStr}
                       </td>
                       <td className="px-4 py-3 align-top sticky right-0 bg-white group-hover:bg-slate-50 z-10 shadow-[inset_1px_0_0_#e2e8f0]">
@@ -227,18 +213,6 @@ export default function ArticleTable({ articles, kotaList, config }: { articles:
             )}
           </tbody>
         </table>
-      </div>
-
-      <div className="mt-4 flex justify-end">
-        <form action={shuffleArticles}>
-          <button
-            type="submit"
-            className="flex items-center px-4 py-2 bg-slate-900 text-white rounded-md hover:bg-slate-800 transition-colors text-sm font-medium shadow-sm"
-          >
-            <Shuffle className="w-4 h-4 mr-2" />
-            Acak Ulang Posisi Artikel
-          </button>
-        </form>
       </div>
 
       {/* Modal Preview */}

@@ -5,6 +5,22 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import ViewTracker from "@/app/components/ViewTracker";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const config = await getConfig();
+  const assignedArticle = config.assignedArticleId ? await getArticleById(config.assignedArticleId) : null;
+  
+  return {
+    title: "Gadai BPKB Syariah - Marketing Resmi AXI Adira Finance",
+    description: assignedArticle?.metaDesc || "Layanan resmi pengajuan simulasi gadai BPKB motor dan mobil seluruh Indonesia bersama marketing AXI Adira Finance. Proses cepat, pencairan tinggi.",
+    alternates: { canonical: "/" },
+    openGraph: {
+      title: "Gadai BPKB Syariah - Marketing Resmi AXI Adira Finance",
+      description: assignedArticle?.metaDesc || "Layanan resmi pengajuan simulasi gadai BPKB motor dan mobil seluruh Indonesia bersama marketing AXI Adira Finance. Proses cepat, pencairan tinggi.",
+    }
+  };
+}
 
 export default async function HomePage() {
   const semuaKota = await getAllKota();
@@ -15,7 +31,7 @@ export default async function HomePage() {
   // Data Spesifik Cabang dari Gambar
   const cabangUtama = {
     nama: "Adira Finance Cabang Pungkur Bandung",
-    noHp: "+6287823651470",
+    noHp: "+6287724039666",
     deskripsi: "Adira terdekat di dekat kamu yaitu Adira Finance Cabang Pungkur Bandung, siap melayani gadai BPKB motor & mobil, kredit motor & mobil bekas, top up, dan take over untuk warga Kota Bandung dan sekitarnya.",
     patokan: "Kantor Cabang Adira Finance Bandung 6 - Pungkur patokan jalan dekat dengan Toko listrik sinar kencana."
   };
@@ -79,32 +95,49 @@ export default async function HomePage() {
               </a>
             </div>
 
-            {/* Artikel Perkenalan Sesuai Standar OJK */}
+            {/* Artikel Utama (Dari AI, Pengaturan, atau Bawaan) */}
             <div className="prose prose-slate max-w-none text-slate-700 mb-10 space-y-4">
-              <p className="text-base leading-relaxed">
-                Selamat datang! Saya adalah <strong>Marketing Resmi AXI Adira Finance</strong>. Sebagai mitra representatif dari PT Adira Dinamika Multi Finance Tbk, saya hadir untuk membantu memfasilitasi kebutuhan pembiayaan Anda secara profesional.
-              </p>
-              <p className="text-base leading-relaxed">
-                Sebagai marketing berpengalaman, saya akan mendampingi proses pengajuan Anda dari awal hingga selesai. Cukup hubungi saya, dan saya bisa membantu penjemputan dokumen di lokasi Anda.
-              </p>
+              {assignedArticle ? (
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    h1: ({ node, ...props }: any) => <h1 className="text-center" {...props} />
+                  }}
+                >
+                  {assignedArticle.content
+                    .replace(/\[NAMA_KOTA\]/gi, "Seluruh Indonesia")
+                    .replace(/\[NAMA_KOTA_KAPITAL\]/gi, "SELURUH INDONESIA")}
+                </ReactMarkdown>
+              ) : config.artikel_homepage ? (
+                <div className="whitespace-pre-wrap">{config.artikel_homepage}</div>
+              ) : (
+                <>
+                  <p className="text-base leading-relaxed">
+                    Selamat datang! Saya adalah <strong>Marketing Resmi AXI Adira Finance</strong>. Sebagai mitra representatif dari PT Adira Dinamika Multi Finance Tbk, saya hadir untuk membantu memfasilitasi kebutuhan pembiayaan Anda secara profesional.
+                  </p>
+                  <p className="text-base leading-relaxed">
+                    Sebagai marketing berpengalaman, saya akan mendampingi proses pengajuan Anda dari awal hingga selesai. Cukup hubungi saya, dan saya bisa membantu penjemputan dokumen di lokasi Anda.
+                  </p>
 
-              <h2 className="text-xl font-bold text-[#0B1E36] pt-2">Layanan yang Saya Fasilitasi</h2>
-              <ul className="space-y-2 text-base">
-                <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span><span><strong>Gadai BPKB Mobil &amp; Motor</strong> — Solusi dana tunai dengan jaminan BPKB.</span></li>
-                <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span><span><strong>Kredit Motor &amp; Mobil Baru</strong> — Fasilitas pembiayaan kendaraan baru dengan proses mudah.</span></li>
-                <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span><span><strong>Kredit Motor &amp; Mobil Bekas</strong> — Pembiayaan kendaraan bekas dengan proses transparan.</span></li>
-                <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span><span><strong>Top Up Pinjaman</strong> — Tambahan dana untuk nasabah aktif Adira Finance.</span></li>
-                <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span><span><strong>Take Over Kredit</strong> — Pemindahan fasilitas kredit ke Adira Finance.</span></li>
-              </ul>
+                  <h2 className="text-xl font-bold text-[#0B1E36] pt-2">Layanan yang Saya Fasilitasi</h2>
+                  <ul className="space-y-2 text-base">
+                    <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span><span><strong>Gadai BPKB Mobil &amp; Motor</strong> — Solusi dana tunai dengan jaminan BPKB.</span></li>
+                    <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span><span><strong>Kredit Motor &amp; Mobil Baru</strong> — Fasilitas pembiayaan kendaraan baru dengan proses mudah.</span></li>
+                    <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span><span><strong>Kredit Motor &amp; Mobil Bekas</strong> — Pembiayaan kendaraan bekas dengan proses transparan.</span></li>
+                    <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span><span><strong>Top Up Pinjaman</strong> — Tambahan dana untuk nasabah aktif Adira Finance.</span></li>
+                    <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span><span><strong>Take Over Kredit</strong> — Pemindahan fasilitas kredit ke Adira Finance.</span></li>
+                  </ul>
 
-              <h2 className="text-xl font-bold text-[#0B1E36] pt-2">Mengapa Mengajukan Melalui Saya?</h2>
-              <p className="text-base leading-relaxed">
-                Saya berkomitmen memberikan informasi yang jelas dan <strong>transparan mengenai rincian angsuran, biaya administrasi, dan asuransi</strong> (Syarat &amp; Ketentuan Berlaku). Data pribadi serta dokumen pengajuan Anda dijamin kerahasiaannya dan hanya diproses langsung ke sistem resmi Adira Finance.
-              </p>
+                  <h2 className="text-xl font-bold text-[#0B1E36] pt-2">Mengapa Mengajukan Melalui Saya?</h2>
+                  <p className="text-base leading-relaxed">
+                    Saya berkomitmen memberikan informasi yang jelas dan <strong>transparan mengenai rincian angsuran, biaya administrasi, dan asuransi</strong> (Syarat &amp; Ketentuan Berlaku). Data pribadi serta dokumen pengajuan Anda dijamin kerahasiaannya dan hanya diproses langsung ke sistem resmi Adira Finance.
+                  </p>
 
-              <div className="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200 text-sm text-slate-500 italic text-center">
-                PT Adira Dinamika Multi Finance Tbk berizin dan diawasi oleh Otoritas Jasa Keuangan (OJK).
-              </div>
+                  <div className="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200 text-sm text-slate-500 italic text-center">
+                    PT Adira Dinamika Multi Finance Tbk berizin dan diawasi oleh Otoritas Jasa Keuangan (OJK).
+                  </div>
+                </>
+              )}
             </div>
 
             {/* CTA Hubungi */}
@@ -216,7 +249,7 @@ export default async function HomePage() {
 
       {/* Floating CTA (Original Style from App) */}
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 p-4 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] sm:bg-transparent sm:border-none sm:shadow-none sm:p-0 sm:bottom-8 sm:right-8 sm:left-auto">
-        <WhatsAppButton noWa="6287823651470" messageTemplate={waMessageTemplate} buttonText="Chat Marketing Adira" />
+        <WhatsAppButton noWa={config.whatsapp_pusat || "6287724039666"} messageTemplate={waMessageTemplate} buttonText="Chat Marketing Adira" />
       </div>
     </main>
   );

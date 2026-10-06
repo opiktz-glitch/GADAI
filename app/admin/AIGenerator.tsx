@@ -3,12 +3,14 @@
 import { useState } from "react";
 import { generateArticleAI, addArticle } from "./actions";
 import { Loader2 } from "lucide-react";
+import { Kota } from "@/lib/kota";
 
-export default function AIGenerator() {
+export default function AIGenerator({ kotaList }: { kotaList: Kota[] }) {
   const [isLoading, setIsLoading] = useState(false);
   const [generatedText, setGeneratedText] = useState("");
   const [metaDesc, setMetaDesc] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [selectedKota, setSelectedKota] = useState("");
 
   const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,6 +19,8 @@ export default function AIGenerator() {
     setGeneratedText("");
 
     const formData = new FormData(e.currentTarget);
+    const targetKota = formData.get("kota")?.toString() || "";
+    setSelectedKota(targetKota);
     
     try {
       const result = await generateArticleAI(formData);
@@ -37,7 +41,7 @@ export default function AIGenerator() {
       {/* Form Generate AI */}
       <form onSubmit={handleGenerate} className="bg-purple-50 p-4 rounded-xl border border-purple-100">
         <h3 className="font-semibold text-purple-900 mb-3 flex items-center">
-          <span className="text-xl mr-2">✨</span> Pengaturan Penulis AI
+          <span className="text-xl mr-2">✨</span> Pembuat Artikel AI Spesifik Kota
         </h3>
         
         {errorMsg && (
@@ -46,14 +50,41 @@ export default function AIGenerator() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           <div>
-            <label className="block text-xs font-medium text-purple-700 mb-1">Target Pembaca</label>
-            <input type="text" name="target_pembaca" defaultValue="masyarakat umum yang membutuhkan dana cepat" className="w-full rounded-md border-purple-200 px-3 py-2 text-sm focus:border-purple-500 focus:ring-purple-500" disabled={isLoading} />
+            <label className="block text-xs font-medium text-purple-700 mb-1">Target Kota</label>
+            <select name="kota" className="w-full rounded-md border-purple-200 px-3 py-2 text-sm focus:border-purple-500 focus:ring-purple-500" disabled={isLoading}>
+              <option value="">-- Artikel Global (Tanpa Kota) --</option>
+              {kotaList.map(k => (
+                <option key={k.slug} value={k.slug}>{k.nama_kota}</option>
+              ))}
+            </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-purple-700 mb-1">Panjang Artikel</label>
-            <input type="text" name="panjang" defaultValue="800-1200 kata" className="w-full rounded-md border-purple-200 px-3 py-2 text-sm focus:border-purple-500 focus:ring-purple-500" disabled={isLoading} />
+            <label className="block text-xs font-medium text-purple-700 mb-1">Target Pembaca</label>
+            <select name="target_pembaca" className="w-full rounded-md border-purple-200 px-3 py-2 text-sm focus:border-purple-500 focus:ring-purple-500" disabled={isLoading}>
+              <option value="Masyarakat umum yang membutuhkan dana cepat">Masyarakat Umum (Dana Darurat)</option>
+              <option value="Pelaku UMKM dan pedagang yang butuh modal usaha">Pelaku UMKM (Modal Usaha)</option>
+              <option value="Karyawan swasta atau buruh pabrik yang butuh biaya tambahan">Karyawan (Biaya Tambahan)</option>
+              <option value="Keluarga yang membutuhkan biaya pendidikan atau renovasi rumah">Keluarga (Pendidikan/Renovasi)</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-purple-700 mb-1">Jenis Kendaraan</label>
+            <select name="jenis_kendaraan" className="w-full rounded-md border-purple-200 px-3 py-2 text-sm focus:border-purple-500 focus:ring-purple-500" disabled={isLoading}>
+              <option value="Motor dan Mobil">BPKB Motor & Mobil</option>
+              <option value="Hanya Mobil">Khusus BPKB Mobil</option>
+              <option value="Hanya Motor">Khusus BPKB Motor</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-purple-700 mb-1">Fokus Keunggulan</label>
+            <select name="fokus_keunggulan" className="w-full rounded-md border-purple-200 px-3 py-2 text-sm focus:border-purple-500 focus:ring-purple-500" disabled={isLoading}>
+              <option value="Proses cepat, syarat mudah, dan pencairan tinggi">Proses Cepat & Mudah</option>
+              <option value="Bunga sangat ringan dan kompetitif dari Adira Finance">Bunga Ringan / Kompetitif</option>
+              <option value="Pajak kendaraan mati bisa dibantu proses">Pajak Mati Bisa Dibantu</option>
+              <option value="BPKB atas nama orang lain masih bisa diproses">BPKB Atas Nama Orang Lain</option>
+            </select>
           </div>
           <div>
             <label className="block text-xs font-medium text-purple-700 mb-1">Tone / Gaya Bahasa</label>
@@ -62,6 +93,14 @@ export default function AIGenerator() {
               <option value="persuasif untuk promosi produk">Persuasif Promosi</option>
               <option value="netral jurnalistik">Netral Jurnalistik</option>
             </select>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-purple-700 mb-1">Panjang Artikel</label>
+            <input type="text" name="panjang" defaultValue="800-1200 kata" className="w-full rounded-md border-purple-200 px-3 py-2 text-sm focus:border-purple-500 focus:ring-purple-500" disabled={isLoading} />
+          </div>
+          <div className="sm:col-span-2 lg:col-span-3">
+            <label className="block text-xs font-medium text-purple-700 mb-1">Instruksi Khusus / Topik (Opsional)</label>
+            <input type="text" name="instruksi_tambahan" placeholder="Contoh: Fokuskan pada cerita Budi yang butuh dana renovasi rumah, atau tulis dengan sudut pandang agen lapangan..." className="w-full rounded-md border-purple-200 px-3 py-2 text-sm focus:border-purple-500 focus:ring-purple-500" disabled={isLoading} />
           </div>
         </div>
         
@@ -83,11 +122,12 @@ export default function AIGenerator() {
             <span className="text-xl mr-2">📝</span> Preview & Edit Hasil AI
           </h3>
           <p className="text-xs text-slate-500 mb-4">
-            Artikel telah selesai dibuat! Silakan baca, edit jika perlu, dan simpan ke Bank Artikel.
+            Artikel telah selesai dibuat! Silakan baca, edit jika perlu, dan simpan. Artikel ini akan {selectedKota ? "otomatis terpasang ke kota yang dipilih." : "tersimpan sebagai artikel global."}
           </p>
           
           <form action={addArticle}>
             <input type="hidden" name="source" value="AI" />
+            <input type="hidden" name="targetKota" value={selectedKota} />
             {metaDesc && (
               <div className="mb-4">
                 <label className="block text-sm font-semibold text-slate-700 mb-1">Meta Description (Otomatis untuk SEO):</label>
@@ -122,12 +162,11 @@ export default function AIGenerator() {
               <button 
                 type="submit" 
                 onClick={() => {
-                  // After submit, we can clear it or let the server action redirect
                   setTimeout(() => setGeneratedText(""), 100);
                 }}
                 className="px-6 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 font-medium shadow-md transition-colors"
               >
-                Simpan ke Bank Artikel
+                Simpan & Pasang Artikel
               </button>
             </div>
           </form>

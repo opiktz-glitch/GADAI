@@ -48,7 +48,7 @@ export async function getKotaBySlug(slug: string): Promise<Kota | undefined> {
 
 export async function getConfig(): Promise<Config> {
   const doc = await db.collection('config').doc('main').get();
-  if (!doc.exists) return { whatsapp_pusat: "6287823651470" };
+  if (!doc.exists) return { whatsapp_pusat: "6287724039666" };
   return doc.data() as Config;
 }
 

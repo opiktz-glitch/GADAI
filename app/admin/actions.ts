@@ -18,24 +18,24 @@ export async function updateConfig(formData: FormData) {
   await db.collection('config').doc('main').set(newConfig);
   
   revalidatePath("/", "layout");
-  redirect("/admin?tab=global&success=Pengaturan%20global%20berhasil%20disimpan!");
+  redirect("/admin?tab=pengaturan&success=Pengaturan%20global%20berhasil%20disimpan!");
 }
 
 export async function addKota(formData: FormData) {
   const slug = formData.get("slug")?.toString().toLowerCase().replace(/\s+/g, '-') || "";
   const nama_kota = formData.get("nama_kota")?.toString() || "";
   const provinsi = formData.get("provinsi")?.toString() || "";
-  const jumlah_cabang = parseInt(formData.get("jumlah_cabang")?.toString() || "0");
-  const estimasi_pencairan_min = parseInt(formData.get("estimasi_pencairan_min")?.toString() || "0");
-  const estimasi_pencairan_max = parseInt(formData.get("estimasi_pencairan_max")?.toString() || "0");
-  const waktu_proses_jam = parseInt(formData.get("waktu_proses_jam")?.toString() || "0");
-  const nama_marketing_lokal = formData.get("nama_marketing_lokal")?.toString() || "";
-  const testimoni = formData.get("testimoni")?.toString() || "";
+  const jumlah_cabang = parseInt(formData.get("jumlah_cabang")?.toString() || "1");
+  const estimasi_pencairan_min = parseInt(formData.get("estimasi_pencairan_min")?.toString() || "5000000");
+  const estimasi_pencairan_max = parseInt(formData.get("estimasi_pencairan_max")?.toString() || "500000000");
+  const waktu_proses_jam = parseInt(formData.get("waktu_proses_jam")?.toString() || "2");
+  const nama_marketing_lokal = formData.get("nama_marketing_lokal")?.toString() || "Tim Pusat Adira Finance";
+  const testimoni = formData.get("testimoni")?.toString() || "Proses gadai BPKB di sini sangat mudah dan cepat cair, adminnya juga ramah membimbing dari awal.";
   const alamat_cabang_utama = formData.get("alamat_cabang_utama")?.toString() || "";
   const artikel_seo = formData.get("artikel_seo")?.toString() || "";
   
   // Pisahkan berdasarkan koma untuk array kendaraan
-  const kendaraanRaw = formData.get("kendaraan_populer")?.toString() || "";
+  const kendaraanRaw = formData.get("kendaraan_populer")?.toString() || "Avanza, NMAX, Xenia";
   const kendaraan_populer = kendaraanRaw.split(",").map(v => v.trim()).filter(v => v);
 
   if (!slug || !nama_kota) throw new Error("Slug dan Nama Kota wajib diisi");
@@ -57,7 +57,7 @@ export async function addKota(formData: FormData) {
   await docRef.set(newKota);
   
   revalidatePath("/", "layout");
-  redirect("/admin?tab=kota&success=Kota%20baru%20berhasil%20ditambahkan!");
+  redirect("/admin?tab=pengaturan&success=Kota%20baru%20berhasil%20ditambahkan!");
 }
 
 export async function deleteKota(formData: FormData) {
@@ -67,27 +67,33 @@ export async function deleteKota(formData: FormData) {
   await db.collection('kota').doc(slug).delete();
   
   revalidatePath("/", "layout");
-  redirect("/admin?tab=kota&success=Kota%20berhasil%20dihapus!");
+  redirect("/admin?tab=pengaturan&success=Kota%20berhasil%20dihapus!");
 }
 
 export async function editKota(formData: FormData) {
   const originalSlug = formData.get("original_slug")?.toString();
   if (!originalSlug) throw new Error("Original slug missing");
 
+  const docRef = db.collection('kota').doc(originalSlug);
+  const doc = await docRef.get();
+  
+  if (!doc.exists) throw new Error("Kota tidak ditemukan");
+  const oldData = doc.data() as Kota;
+
   const slug = formData.get("slug")?.toString().toLowerCase().replace(/\s+/g, '-') || "";
   const nama_kota = formData.get("nama_kota")?.toString() || "";
   const provinsi = formData.get("provinsi")?.toString() || "";
-  const jumlah_cabang = parseInt(formData.get("jumlah_cabang")?.toString() || "0");
-  const estimasi_pencairan_min = parseInt(formData.get("estimasi_pencairan_min")?.toString() || "0");
-  const estimasi_pencairan_max = parseInt(formData.get("estimasi_pencairan_max")?.toString() || "0");
-  const waktu_proses_jam = parseInt(formData.get("waktu_proses_jam")?.toString() || "0");
-  const nama_marketing_lokal = formData.get("nama_marketing_lokal")?.toString() || "";
-  const testimoni = formData.get("testimoni")?.toString() || "";
-  const alamat_cabang_utama = formData.get("alamat_cabang_utama")?.toString() || "";
-  const artikel_seo = formData.get("artikel_seo")?.toString() || "";
+  const jumlah_cabang = parseInt(formData.get("jumlah_cabang")?.toString() || oldData.jumlah_cabang.toString());
+  const estimasi_pencairan_min = parseInt(formData.get("estimasi_pencairan_min")?.toString() || oldData.estimasi_pencairan_min.toString());
+  const estimasi_pencairan_max = parseInt(formData.get("estimasi_pencairan_max")?.toString() || oldData.estimasi_pencairan_max.toString());
+  const waktu_proses_jam = parseInt(formData.get("waktu_proses_jam")?.toString() || oldData.waktu_proses_jam.toString());
+  const nama_marketing_lokal = formData.get("nama_marketing_lokal")?.toString() || oldData.nama_marketing_lokal;
+  const testimoni = formData.get("testimoni")?.toString() || oldData.testimoni;
+  const alamat_cabang_utama = formData.get("alamat_cabang_utama")?.toString() || oldData.alamat_cabang_utama;
+  const artikel_seo = formData.get("artikel_seo")?.toString() || oldData.artikel_seo || "";
   
-  const kendaraanRaw = formData.get("kendaraan_populer")?.toString() || "";
-  const kendaraan_populer = kendaraanRaw.split(",").map(v => v.trim()).filter(v => v);
+  const kendaraanRaw = formData.get("kendaraan_populer")?.toString();
+  const kendaraan_populer = kendaraanRaw ? kendaraanRaw.split(",").map(v => v.trim()).filter(v => v) : oldData.kendaraan_populer;
 
   if (!slug || !nama_kota) throw new Error("Slug dan Nama Kota wajib diisi");
 
@@ -96,11 +102,6 @@ export async function editKota(formData: FormData) {
     estimasi_pencairan_max, waktu_proses_jam, nama_marketing_lokal, 
     testimoni, alamat_cabang_utama, kendaraan_populer, artikel_seo
   };
-
-  const docRef = db.collection('kota').doc(originalSlug);
-  const doc = await docRef.get();
-  
-  if (!doc.exists) throw new Error("Kota tidak ditemukan");
 
   if (slug !== originalSlug) {
     const newDoc = await db.collection('kota').doc(slug).get();
@@ -116,13 +117,15 @@ export async function editKota(formData: FormData) {
   }
   
   revalidatePath("/", "layout");
-  redirect("/admin?tab=kota&success=Perubahan%20kota%20berhasil%20disimpan!");
+  redirect("/admin?tab=pengaturan&success=Perubahan%20kota%20berhasil%20disimpan!");
 }
 
 export async function addArticle(formData: FormData) {
   const content = formData.get("content")?.toString() || "";
   const metaDesc = formData.get("metaDesc")?.toString() || "";
   const source = formData.get("source")?.toString() || "Admin"; // Default "Admin" jika tidak diisi
+  const targetKota = formData.get("targetKota")?.toString() || "";
+
   if (!content) throw new Error("Konten tidak boleh kosong");
 
   const counterRef = db.collection('config').doc('articleCounter');
@@ -146,6 +149,13 @@ export async function addArticle(formData: FormData) {
     source,
     createdAt: Date.now()
   });
+
+  if (targetKota) {
+    await db.collection('kota').doc(targetKota).update({
+      assignedArticleId: newId,
+      allowRandom: false
+    });
+  }
 
   revalidatePath("/", "layout");
   redirect("/admin?tab=artikel&success=Artikel%20berhasil%20ditambahkan!");
@@ -176,6 +186,32 @@ export async function generateArticleAI(formData: FormData) {
   const targetPembaca = formData.get("target_pembaca")?.toString() || "masyarakat umum yang membutuhkan dana cepat";
   const panjang = formData.get("panjang")?.toString() || "800-1200 kata";
   const tone = formData.get("tone")?.toString() || "edukatif netral";
+  const kotaSlug = formData.get("kota")?.toString() || "";
+  const jenisKendaraan = formData.get("jenis_kendaraan")?.toString() || "Motor dan Mobil";
+  const fokusKeunggulan = formData.get("fokus_keunggulan")?.toString() || "Proses cepat, syarat mudah, dan pencairan tinggi";
+  const instruksiTambahan = formData.get("instruksi_tambahan")?.toString() || "";
+
+  let kotaInstruksi = "";
+  if (kotaSlug) {
+    // Ambil nama kota dari slug
+    const kotaDoc = await db.collection('kota').doc(kotaSlug).get();
+    const namaKota = kotaDoc.exists ? kotaDoc.data()?.nama_kota || kotaSlug : kotaSlug;
+    
+    kotaInstruksi = `
+PENTING: Artikel ini dibuat KHUSUS untuk kota **${namaKota}**.
+- Anda WAJIB menyebutkan nama kota "${namaKota}" secara eksplisit dalam artikel (minimal 3-5 kali).
+- Sertakan ciri khas, nama daerah, landmark, atau budaya yang relevan dengan ${namaKota} agar artikel terasa lokal dan personal.
+- Gunakan kata kunci SEO seperti "gadai BPKB ${namaKota}", "simulasi gadai BPKB ${namaKota}" secara natural.
+- JANGAN gunakan variabel [NAMA_KOTA] sama sekali. Tulis nama kotanya secara langsung.`;
+  } else {
+    kotaInstruksi = `
+PENTING UNTUK TEKNIS SHUFFLE KONTEN:
+Sistem kami akan merotasi artikel ini ke ratusan halaman kota. Oleh karena itu, JANGAN pernah tulis nama kota asli (seperti Jakarta/Bandung). 
+Sebagai gantinya, Anda WAJIB menggunakan variabel kode persis seperti ini (termasuk kurung sikunya):
+- [NAMA_KOTA] (untuk menyebutkan nama kota, misal: "Simulasi Gadai BPKB di [NAMA_KOTA]")
+- [JUMLAH_CABANG] (untuk menyebutkan jumlah mitra cabang)
+Gunakan kata kunci SEO seperti "gadai BPKB [NAMA_KOTA]", "simulasi gadai BPKB [NAMA_KOTA]" secara natural.`;
+  }
 
   const prompt = `Buatkan/revisi konten halaman web untuk Gadai BPKB Syariah, dengan penekanan sebagai Marketing Resmi AXI Adira Finance, dengan ketentuan berikut:
 
@@ -194,26 +230,26 @@ Yang harus dihindari:
 - Klaim jaminan seperti "Pasti Cair", "Tanpa Survey", atau "Pencairan 100%" tanpa syarat ketentuan.
 - Menyebutkan bahwa website ini adalah website resmi Adira Finance (hanya Marketing Resmi AXI Adira).
 
+Fokus Konten Tambahan:
+- Jenis Kendaraan yang difokuskan: ${jenisKendaraan}
+- Keunggulan Utama (Selling Point): ${fokusKeunggulan}
+
 Struktur konten (sesuaikan dengan target pembaca):
 - Hero: judul + sublead + disclosure badge
 - Bagian edukatif: cara kerja gadai BPKB, dokumen yang dibutuhkan
+- Bagian penawaran: Tonjolkan keunggulan utama (${fokusKeunggulan}) untuk jenis kendaraan (${jenisKendaraan}).
 - Bagian kehati-hatian: cek legalitas sebelum lanjut
 - CTA akhir: WhatsApp untuk bantuan mencari mitra
 
 Gaya bahasa: ${tone}. Mudah dipahami, edukatif, protektif terhadap konsumen, dan BUKAN hard-selling.
-
-PENTING UNTUK TEKNIS SHUFFLE KONTEN:
-Sistem kami akan merotasi artikel ini ke ratusan halaman kota. Oleh karena itu, JANGAN pernah tulis nama kota asli (seperti Jakarta/Bandung). 
-Sebagai gantinya, Anda WAJIB menggunakan variabel kode persis seperti ini (termasuk kurung sikunya):
-- [NAMA_KOTA] (untuk menyebutkan nama kota, misal: "Simulasi Gadai BPKB di [NAMA_KOTA]")
-- [JUMLAH_CABANG] (untuk menyebutkan jumlah mitra cabang)
-Gunakan kata kunci SEO seperti "gadai BPKB [NAMA_KOTA]", "simulasi gadai BPKB [NAMA_KOTA]" secara natural.
+${instruksiTambahan ? `\nTopik/Instruksi Khusus dari Pengguna:\n- ${instruksiTambahan}\nPastikan instruksi khusus ini menjadi tema utama (angle) dari artikel yang dibuat, tanpa melanggar aturan utama (Positioning).\n` : ''}
+${kotaInstruksi}
 
 Target pembaca: ${targetPembaca}
 Panjang artikel: ${panjang}
 
 PENTING! Berikan respons Anda dengan format baku seperti ini:
-META_DESC: [isi meta description di sini, maks 160 karakter, gunakan [NAMA_KOTA]]
+META_DESC: [isi meta description di sini, maks 160 karakter]
 CONTENT: [isi artikel lengkap format Markdown di sini]`;
 
   let text = "";
@@ -297,4 +333,25 @@ export async function shuffleArticles() {
   await batch.commit();
   revalidatePath("/", "layout");
   redirect("/admin?tab=artikel&success=Penempatan%20artikel%20berhasil%20diacak%20ulang!");
+}
+
+export async function assignArticleToKota(formData: FormData) {
+  const kotaSlug = formData.get("kotaSlug")?.toString();
+  const articleId = formData.get("articleId")?.toString();
+
+  if (!kotaSlug || !articleId) return;
+
+  if (kotaSlug === "pusat") {
+    await db.collection('config').doc('main').set({
+      assignedArticleId: articleId
+    }, { merge: true });
+  } else {
+    await db.collection('kota').doc(kotaSlug).update({
+      assignedArticleId: articleId,
+      allowRandom: false
+    });
+  }
+
+  revalidatePath("/", "layout");
+  redirect("/admin?tab=artikel&success=Artikel%20berhasil%20dipasang!");
 }

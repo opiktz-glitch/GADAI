@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
 import Link from "next/link";
 import { TableMotor, TableMobil } from "@/app/components/TabelAngsuran";
+import { getConfig } from "@/lib/kota";
 
 const layananData: Record<string, { title: string, subtitle: string, waText: string, content: React.ReactNode }> = {
   "syarat-dan-proses": {
@@ -98,6 +99,8 @@ export default async function LayananPage({ params }: { params: Promise<{ slug: 
     notFound();
   }
 
+  const config = await getConfig();
+
   return (
     <main className="min-h-screen bg-slate-50 font-sans pb-24">
       {/* Hero Section */}
@@ -121,7 +124,7 @@ export default async function LayananPage({ params }: { params: Promise<{ slug: 
             <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center mt-10">
               <p className="text-slate-700 font-semibold mb-4">Siap untuk mengajukan pinjaman Anda hari ini?</p>
               <a
-                href={`https://wa.me/6287823651470?text=${encodeURIComponent(layanan.waText)}`}
+                href={`https://wa.me/6287724039666?text=${encodeURIComponent(layanan.waText)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
@@ -152,7 +155,7 @@ export default async function LayananPage({ params }: { params: Promise<{ slug: 
       </section>
 
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 p-4 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] sm:bg-transparent sm:border-none sm:shadow-none sm:p-0 sm:bottom-8 sm:right-8 sm:left-auto">
-        <WhatsAppButton noWa="6287823651470" messageTemplate={layanan.waText} buttonText="Konsultasi Marketing" />
+        <WhatsAppButton noWa={config.whatsapp_pusat || "6287724039666"} messageTemplate={layanan.waText} buttonText="Konsultasi Marketing" />
       </div>
     </main>
   );

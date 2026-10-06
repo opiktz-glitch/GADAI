@@ -4,6 +4,7 @@ import { Settings, PlusCircle, MapPin, Pencil, Trash2, Library, CheckCircle } fr
 import Link from "next/link";
 import ArticleTable from "./ArticleTable";
 import AllArticlesTable from "./AllArticlesTable";
+import ArticleAssignmentForm from "./ArticleAssignmentForm";
 import ToastNotification from "./ToastNotification";
 import AIGenerator from "./AIGenerator";
 
@@ -13,7 +14,7 @@ export default async function AdminPage({
   searchParams: Promise<{ success?: string; error?: string; tab?: string }>;
 }) {
   const sp = await searchParams;
-  const activeTab = sp.tab || "global";
+  const activeTab = sp.tab || "pengaturan";
   const config = await getConfig();
   const semuaKota = await getAllKota();
   const semuaArticles = await getAllArticles();
@@ -29,132 +30,94 @@ export default async function AdminPage({
           {/* Tab Navigation (Modern Segmented Control) */}
           <nav className="inline-flex p-1 space-x-1 bg-slate-200/60 rounded-xl overflow-x-auto hide-scrollbar">
             <Link 
-              href="/admin?tab=global" 
-              className={`px-5 py-2.5 rounded-lg text-sm font-semibold whitespace-nowrap transition-all duration-200 flex items-center ${activeTab === 'global' ? 'bg-white text-blue-700 shadow-sm ring-1 ring-black/5' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-300/40'}`}
+              href="/admin?tab=pengaturan" 
+              className={`px-5 py-2.5 rounded-lg text-sm font-semibold whitespace-nowrap transition-all duration-200 flex items-center ${activeTab === 'pengaturan' ? 'bg-white text-blue-700 shadow-sm ring-1 ring-black/5' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-300/40'}`}
             >
-              <Settings className="w-4 h-4 mr-2" /> Global
-            </Link>
-            <Link 
-              href="/admin?tab=kota" 
-              className={`px-5 py-2.5 rounded-lg text-sm font-semibold whitespace-nowrap transition-all duration-200 flex items-center ${activeTab === 'kota' ? 'bg-white text-blue-700 shadow-sm ring-1 ring-black/5' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-300/40'}`}
-            >
-              <MapPin className="w-4 h-4 mr-2" /> Kota
+              <Settings className="w-4 h-4 mr-2" /> Pengaturan & Kota
             </Link>
             <Link 
               href="/admin?tab=artikel" 
               className={`px-5 py-2.5 rounded-lg text-sm font-semibold whitespace-nowrap transition-all duration-200 flex items-center ${activeTab === 'artikel' ? 'bg-white text-blue-700 shadow-sm ring-1 ring-black/5' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-300/40'}`}
             >
-              <Library className="w-4 h-4 mr-2" /> Artikel AI
+              <Library className="w-4 h-4 mr-2" /> Artikel & AI
             </Link>
           </nav>
         </div>
         
-        {/* Pengaturan Global */}
-        {activeTab === "global" && (
-        <section className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-          <div className="mb-4 flex items-center space-x-2 border-b pb-4">
-            <Settings className="h-6 w-6 text-slate-500" />
-            <h2 className="text-xl font-semibold">Pengaturan Global</h2>
-          </div>
-          <form action={updateConfig} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-700">Nomor WhatsApp Pusat (Awali 62)</label>
-              <input 
-                type="text" 
-                name="whatsapp_pusat" 
-                defaultValue={config.whatsapp_pusat}
-                className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500" 
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700">Teks Artikel Halaman Utama (Opsional)</label>
-              <textarea 
-                name="artikel_homepage" 
-                rows={5}
-                defaultValue={config.artikel_homepage || ""}
-                placeholder="Jika diisi, teks ini akan menggantikan artikel bawaan di halaman utama..."
-                className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500" 
-              ></textarea>
-            </div>
-            <div className="flex justify-end">
-              <button type="submit" className="rounded-md bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 font-medium">
-                Simpan Pengaturan
-              </button>
-            </div>
-          </form>
-        </section>
-        )}
-
-        {/* Manajemen Kota */}
-        {activeTab === "kota" && (
+        {/* Gabungan Pengaturan Global & Manajemen Kota */}
+        {activeTab === "pengaturan" && (
           <div className="space-y-8">
-            {/* Tambah Kota */}
-            <section className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-          <div className="mb-4 flex items-center space-x-2 border-b pb-4">
-            <PlusCircle className="h-6 w-6 text-slate-500" />
-            <h2 className="text-xl font-semibold">Tambah Kota Baru</h2>
-          </div>
-          <form action={addKota} className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            <div>
-              <label className="block text-sm font-medium">Nama Kota</label>
-              <input required type="text" name="nama_kota" placeholder="Contoh: Semarang" className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Pengaturan Global */}
+              <section className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200 h-fit">
+                <div className="mb-4 flex items-center space-x-2 border-b pb-4">
+                  <Settings className="h-6 w-6 text-slate-500" />
+                  <h2 className="text-xl font-semibold">Pengaturan Global</h2>
+                </div>
+                <form action={updateConfig} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700">Nomor WhatsApp Pusat (Awali 62)</label>
+                    <input 
+                      type="text" 
+                      name="whatsapp_pusat" 
+                      defaultValue={config.whatsapp_pusat}
+                      className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500" 
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700">Teks Artikel Halaman Utama (Opsional)</label>
+                    <textarea 
+                      name="artikel_homepage" 
+                      rows={4}
+                      defaultValue={config.artikel_homepage || ""}
+                      placeholder="Jika diisi, teks ini akan menggantikan artikel bawaan di halaman utama..."
+                      className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500" 
+                    ></textarea>
+                  </div>
+                  <div className="flex justify-end pt-2">
+                    <button type="submit" className="rounded-md bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 font-medium">
+                      Simpan Pengaturan
+                    </button>
+                  </div>
+                </form>
+              </section>
+
+              {/* Tambah Kota */}
+              <section className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200 h-fit">
+                <div className="mb-4 flex items-center space-x-2 border-b pb-4">
+                  <PlusCircle className="h-6 w-6 text-slate-500" />
+                  <h2 className="text-xl font-semibold">Tambah Kota Baru</h2>
+                </div>
+                <form action={addKota} className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium">Nama Kota</label>
+                      <input required type="text" name="nama_kota" placeholder="Contoh: Semarang" className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium">Slug (Tanpa Spasi)</label>
+                      <input required type="text" name="slug" placeholder="Contoh: semarang" className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium">Provinsi</label>
+                      <input required type="text" name="provinsi" placeholder="Contoh: Jawa Tengah" className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium">Alamat Cabang</label>
+                      <input required type="text" name="alamat_cabang_utama" placeholder="Jalan Sudirman No 1..." className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
+                    </div>
+                  </div>
+                  
+                  <div className="pt-2">
+                    <button type="submit" className="w-full rounded-md bg-green-600 px-6 py-2 text-white hover:bg-green-700 font-bold">
+                      Simpan Kota Baru
+                    </button>
+                  </div>
+                </form>
+              </section>
             </div>
-            <div>
-              <label className="block text-sm font-medium">Slug (Tanpa Spasi/Gunakan Strip)</label>
-              <input required type="text" name="slug" placeholder="Contoh: semarang" className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium">Provinsi</label>
-              <input required type="text" name="provinsi" placeholder="Contoh: Jawa Tengah" className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium">Jumlah Cabang</label>
-              <input required type="number" name="jumlah_cabang" defaultValue="1" className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium">Estimasi Pencairan Minimal</label>
-              <input required type="number" name="estimasi_pencairan_min" defaultValue="5000000" className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium">Estimasi Pencairan Maksimal</label>
-              <input required type="number" name="estimasi_pencairan_max" defaultValue="500000000" className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium">Waktu Proses (Jam)</label>
-              <input required type="number" name="waktu_proses_jam" defaultValue="2" className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium">Nama Marketing Lokal</label>
-              <input required type="text" name="nama_marketing_lokal" placeholder="Contoh: Pak Joko" className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
-            </div>
-            <div className="sm:col-span-2">
-              <label className="block text-sm font-medium">Alamat Cabang Utama</label>
-              <input required type="text" name="alamat_cabang_utama" className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
-            </div>
-            <div className="sm:col-span-2">
-              <label className="block text-sm font-medium">Testimoni Lokal</label>
-              <textarea required name="testimoni" rows={3} className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2"></textarea>
-            </div>
-            <div className="sm:col-span-2">
-              <label className="block text-sm font-medium">Kendaraan Populer (Pisahkan dengan koma)</label>
-              <input required type="text" name="kendaraan_populer" placeholder="Avanza, NMAX, Xenia" className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
-            </div>
-            <div className="sm:col-span-2">
-              <label className="block text-sm font-medium text-blue-700">Artikel SEO Khusus Kota Ini (Opsional)</label>
-              <textarea name="artikel_seo" rows={4} placeholder="Tuliskan paragraf tambahan yang unik untuk SEO kota ini..." className="mt-1 block w-full rounded-md border border-blue-300 px-3 py-2 bg-blue-50"></textarea>
-              <p className="mt-1 text-xs text-slate-500">Jika diisi, paragraf ini akan muncul di paling bawah artikel halaman kota.</p>
-            </div>
-            
-            <div className="sm:col-span-2 border-t pt-4">
-              <button type="submit" className="w-full rounded-md bg-green-600 px-6 py-3 text-white hover:bg-green-700 font-bold text-lg">
-                Simpan Kota Baru
-              </button>
-              <p className="mt-2 text-center text-sm text-slate-500">
-                Setelah disimpan, coba refresh halaman depan untuk melihat perubahannya!
-              </p>
-            </div>
-          </form>
-        </section>
 
         {/* Daftar Kota Saat Ini */}
         <section className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
@@ -200,48 +163,56 @@ export default async function AdminPage({
           </div>
         )}
 
-        {/* Bank Artikel SEO */}
+        {/* Tab Artikel & AI */}
         {activeTab === "artikel" && (
-        <section className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-          <div className="mb-4 flex items-center space-x-2 border-b pb-4">
-            <Library className="h-6 w-6 text-slate-500" />
-            <h2 className="text-xl font-semibold">Bank Artikel SEO ({semuaArticles.length})</h2>
+          <div className="space-y-8">
+            
+            {/* Bagian: Buat Artikel Baru */}
+            <section className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+              <div className="mb-4 flex items-center space-x-2 border-b pb-4">
+                <Library className="h-6 w-6 text-slate-500" />
+                <h2 className="text-xl font-semibold">Buat Artikel Baru</h2>
+              </div>
+              <p className="text-sm text-slate-600 mb-6">
+                Gunakan AI untuk membuat artikel SEO-friendly dengan sekali klik, atau paste artikel Anda sendiri.
+              </p>
+
+              {/* Form Generate AI Terpisah (Client Component) */}
+              <AIGenerator kotaList={semuaKota} />
+
+              {/* Form Simpan Manual */}
+              <form action={addArticle} className="mt-8 border-t pt-6">
+                <label className="block text-sm font-medium mb-2 text-slate-700">Atau Tambah Artikel Manual</label>
+                <div className="flex items-start space-x-3">
+                  <textarea required name="content" rows={2} placeholder="Paste artikel Anda di sini..." className="flex-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm resize-none"></textarea>
+                  <button type="submit" className="rounded-md bg-slate-800 px-4 py-2 text-white hover:bg-slate-900 font-medium whitespace-nowrap transition-colors h-[56px]">
+                    Simpan Manual
+                  </button>
+                </div>
+              </form>
+            </section>
+
+            {/* Bagian: Distribusi Artikel */}
+            <section className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+              <div className="mb-4 flex items-center space-x-2 border-b pb-4">
+                <CheckCircle className="h-6 w-6 text-slate-500" />
+                <h2 className="text-xl font-semibold">Distribusi Artikel</h2>
+              </div>
+              <ArticleAssignmentForm kotaList={semuaKota} articles={semuaArticles} />
+              <div className="mt-4 pt-4 border-t border-slate-100">
+                <ArticleTable articles={semuaArticles} kotaList={semuaKota} config={config} />
+              </div>
+            </section>
+
+            {/* Bagian: Bank Artikel */}
+            <section className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+              <div className="mb-4 flex items-center justify-between border-b pb-4">
+                <h2 className="text-xl font-semibold">Bank Artikel SEO ({semuaArticles.length})</h2>
+              </div>
+              <AllArticlesTable articles={semuaArticles} />
+            </section>
+            
           </div>
-          <p className="text-sm text-slate-600 mb-4">
-            Artikel-artikel di bawah ini akan diacak (dirotasi) secara otomatis setiap harinya pada halaman-halaman kota. Semakin banyak artikel yang Anda masukkan, semakin unik halaman Anda setiap harinya!
-          </p>
-          
-          {/* Form Simpan Manual */}
-          <form action={addArticle} className="mb-6 border-b pb-6">
-            <label className="block text-sm font-medium mb-1">Tambah Artikel Manual</label>
-            <div className="flex items-start space-x-3">
-              <textarea required name="content" rows={3} placeholder="Paste atau tulis artikel Anda di sini..." className="flex-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm resize-none"></textarea>
-              <button type="submit" className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 font-medium whitespace-nowrap transition-colors h-[76px]">
-                Simpan Manual
-              </button>
-            </div>
-          </form>
-
-          {/* Form Generate AI Terpisah (Client Component) */}
-          <AIGenerator />
-
-          <AllArticlesTable articles={semuaArticles} />
-        </section>
-        )}
-
-        {/* Distribusi & Rotasi Artikel */}
-        {activeTab === "artikel" && (
-        <section className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200 mt-8">
-          <div className="mb-4 flex items-center space-x-2 border-b pb-4">
-            <CheckCircle className="h-6 w-6 text-slate-500" />
-            <h2 className="text-xl font-semibold">Distribusi & Rotasi Artikel</h2>
-          </div>
-          <p className="text-sm text-slate-600 mb-6">
-            Tabel ini menunjukkan artikel mana yang sedang terpasang di setiap kota. Anda dapat mengatur apakah suatu kota diikutkan dalam rotasi artikel acak atau tidak.
-          </p>
-
-          <ArticleTable articles={semuaArticles} kotaList={semuaKota} config={config} />
-        </section>
         )}
       </div>
     </main>

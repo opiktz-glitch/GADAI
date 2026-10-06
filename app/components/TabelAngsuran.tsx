@@ -7,7 +7,7 @@ export const TableMotor = () => {
   const [selectedPinjaman, setSelectedPinjaman] = useState<string | null>(null);
   const [nama, setNama] = useState("");
   const [kendaraan, setKendaraan] = useState("");
-  const noWa = "6287823651470";
+  const noWa = "6287724039666";
 
   const data = [
     ["3.000.000", "493.000", "367.000", "310.000", "278.000", "259.000"],
@@ -143,7 +143,7 @@ export const TableMobil = () => {
   const [selectedPinjaman, setSelectedPinjaman] = useState<string | null>(null);
   const [nama, setNama] = useState("");
   const [kendaraan, setKendaraan] = useState("");
-  const noWa = "6287823651470";
+  const noWa = "6287724039666";
 
   const data = [
     ["30.000.000", "3.660.000", "1.998.000", "1.562.000", "1.293.000"],

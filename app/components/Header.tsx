@@ -75,15 +75,15 @@ export default function Header() {
                 </ul>
               </div>
             </div>
-            <Link href="/blog" className="text-slate-600 hover:text-red-600 font-medium transition-colors">
-              Blog
+            <Link href="/lokasi" className="text-slate-600 hover:text-red-600 font-medium transition-colors">
+              Lokasi
             </Link>
           </nav>
 
           {/* CTA Button */}
           <div className="flex items-center">
             <a 
-              href="https://wa.me/6281234567890" 
+              href="https://wa.me/6287724039666" 
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-2 px-3 sm:py-2.5 sm:px-6 rounded-md transition-colors shadow-sm tracking-wide text-[11px] sm:text-sm flex items-center gap-1.5 sm:gap-2"
@@ -142,8 +142,8 @@ export default function Header() {
               )}
             </div>
 
-            <Link href="/blog" className="block text-slate-700 font-bold" onClick={() => setIsMobileMenuOpen(false)}>
-              Blog
+            <Link href="/lokasi" className="block text-slate-700 font-bold" onClick={() => setIsMobileMenuOpen(false)}>
+              Lokasi
             </Link>
           </div>
         </div>
