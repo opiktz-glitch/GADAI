@@ -153,26 +153,26 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
       <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mt-20">
         <h2 className="text-2xl font-bold text-center text-slate-900 mb-10">Layanan Utama AXI Adira</h2>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <div className="bg-white p-6 rounded-xl shadow-sm text-center border-t-4 border-yellow-400">
-            <h3 className="font-bold text-lg mb-2">Gadai BPKB Mobil</h3>
+          <Link href="/produk/gadai-bpkb-mobil" className="block bg-white p-6 rounded-xl shadow-sm text-center border-t-4 border-yellow-400 hover:-translate-y-1 hover:shadow-md transition-all group">
+            <h3 className="font-bold text-lg mb-2 group-hover:text-red-600 transition-colors">Gadai BPKB Mobil</h3>
             <p className="text-sm text-slate-600">Pencairan tinggi untuk kebutuhan dana besar Anda.</p>
-          </div>
-          <div className="bg-white p-6 rounded-xl shadow-sm text-center border-t-4 border-yellow-400">
-            <h3 className="font-bold text-lg mb-2">Gadai BPKB Motor</h3>
+          </Link>
+          <Link href="/produk/gadai-bpkb-motor" className="block bg-white p-6 rounded-xl shadow-sm text-center border-t-4 border-yellow-400 hover:-translate-y-1 hover:shadow-md transition-all group">
+            <h3 className="font-bold text-lg mb-2 group-hover:text-red-600 transition-colors">Gadai BPKB Motor</h3>
             <p className="text-sm text-slate-600">Proses kilat, dana cair tanpa potong biaya survei.</p>
-          </div>
-          <div className="bg-white p-6 rounded-xl shadow-sm text-center border-t-4 border-yellow-400">
-            <h3 className="font-bold text-lg mb-2">Kredit Motor dan Mobil Baru</h3>
+          </Link>
+          <Link href="/produk/kredit-baru" className="block bg-white p-6 rounded-xl shadow-sm text-center border-t-4 border-yellow-400 hover:-translate-y-1 hover:shadow-md transition-all group">
+            <h3 className="font-bold text-lg mb-2 group-hover:text-red-600 transition-colors">Kredit Motor dan Mobil Baru</h3>
             <p className="text-sm text-slate-600">Fasilitas kredit kendaraan baru dengan DP ringan.</p>
-          </div>
-          <div className="bg-white p-6 rounded-xl shadow-sm text-center border-t-4 border-yellow-400">
-            <h3 className="font-bold text-lg mb-2">Kredit Motor dan Mobil Bekas</h3>
+          </Link>
+          <Link href="/produk/kredit-bekas" className="block bg-white p-6 rounded-xl shadow-sm text-center border-t-4 border-yellow-400 hover:-translate-y-1 hover:shadow-md transition-all group">
+            <h3 className="font-bold text-lg mb-2 group-hover:text-red-600 transition-colors">Kredit Motor dan Mobil Bekas</h3>
             <p className="text-sm text-slate-600">Fasilitas kredit motor dan mobil bekas terpercaya.</p>
-          </div>
-          <div className="bg-white p-6 rounded-xl shadow-sm text-center border-t-4 border-yellow-400">
-            <h3 className="font-bold text-lg mb-2">Take Over & Top Up</h3>
+          </Link>
+          <Link href="/produk/take-over-top-up" className="block bg-white p-6 rounded-xl shadow-sm text-center border-t-4 border-yellow-400 hover:-translate-y-1 hover:shadow-md transition-all group">
+            <h3 className="font-bold text-lg mb-2 group-hover:text-red-600 transition-colors">Take Over & Top Up</h3>
             <p className="text-sm text-slate-600">Pindahkan kredit Anda atau tambah limit dengan mudah.</p>
-          </div>
+          </Link>
         </div>
       </section>
 
