@@ -7,7 +7,7 @@ export default async function Footer() {
   return (
     <>
       {/* Trust & Partnership Logos - Banner */}
-      <section className="bg-[#FFE600] border-t-4 border-yellow-500 py-3 flex justify-center">
+      <section className="bg-[#ffed00] border-t-4 border-yellow-500 py-3 flex justify-center">
         <Image 
           src="/footer-logo-2x.png" 
           alt="AXI Adira Finance - Dicicil Aja - Otoritas Jasa Keuangan (OJK)" 
