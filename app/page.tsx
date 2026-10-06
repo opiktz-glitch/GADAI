@@ -106,7 +106,8 @@ export default async function HomePage() {
                 >
                   {assignedArticle.content
                     .replace(/\[NAMA_KOTA\]/gi, "Seluruh Indonesia")
-                    .replace(/\[NAMA_KOTA_KAPITAL\]/gi, "SELURUH INDONESIA")}
+                    .replace(/\[NAMA_KOTA_KAPITAL\]/gi, "SELURUH INDONESIA")
+                    .replace(/\[\s*(!\[[\s\S]*?\]\([\s\S]*?\))\s*\]\(([\s\S]*?)\)/g, "[$1]($2)")}
                 </ReactMarkdown>
               ) : config.artikel_homepage ? (
                 <div className="whitespace-pre-wrap">{config.artikel_homepage}</div>
