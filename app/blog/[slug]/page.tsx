@@ -6,10 +6,12 @@ import remarkGfm from "remark-gfm";
 import ViewTracker from "@/app/components/ViewTracker";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
 
-export default async function CityPage({ params }: { params: { slug: string } }) {
-  const cityName = params.slug.charAt(0).toUpperCase() + params.slug.slice(1);
+export default async function CityPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
+  const cityName = slug.charAt(0).toUpperCase() + slug.slice(1);
   
-  const kota = await getKotaBySlug(params.slug);
+  const kota = await getKotaBySlug(slug);
   const config = await getConfig();
   
   // Ambil artikel dinamis (Prioritas: Artikel Kota -> Artikel Config Global)

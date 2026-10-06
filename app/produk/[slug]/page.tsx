@@ -133,8 +133,10 @@ const productData: Record<string, { title: string, subtitle: string, desc: strin
   }
 };
 
-export default function ProdukPage({ params }: { params: { slug: string } }) {
-  const product = productData[params.slug];
+export default async function ProdukPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
+  const product = productData[slug];
 
   if (!product) {
     notFound();
@@ -200,14 +202,14 @@ export default function ProdukPage({ params }: { params: { slug: string } }) {
       <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mt-10 mb-20 text-center">
          <h3 className="text-xl font-bold text-slate-800 mb-6">Lihat Produk Lainnya</h3>
          <div className="flex flex-wrap justify-center gap-4">
-           {Object.keys(productData).map((slug) => (
-             slug !== params.slug && (
+           {Object.keys(productData).map((s) => (
+             s !== slug && (
                <Link 
-                 key={slug} 
-                 href={`/produk/${slug}`}
+                 key={s} 
+                 href={`/produk/${s}`}
                  className="px-6 py-3 bg-white border border-slate-200 rounded-full text-slate-700 font-medium hover:border-yellow-400 hover:text-yellow-600 transition-colors shadow-sm"
                >
-                 {productData[slug].title}
+                 {productData[s].title}
                </Link>
              )
            ))}

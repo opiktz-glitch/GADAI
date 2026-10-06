@@ -40,4 +40,9 @@ if (!getApps().length) {
   }
 }
 
-export const db = getFirestore();
+export let db: any;
+try {
+  db = getFirestore();
+} catch (e) {
+  console.warn("Firestore not initialized due to missing credentials.");
+}

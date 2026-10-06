@@ -89,8 +89,10 @@ const layananData: Record<string, { title: string, subtitle: string, waText: str
   }
 };
 
-export default function LayananPage({ params }: { params: { slug: string } }) {
-  const layanan = layananData[params.slug];
+export default async function LayananPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
+  const layanan = layananData[slug];
 
   if (!layanan) {
     notFound();
@@ -135,14 +137,14 @@ export default function LayananPage({ params }: { params: { slug: string } }) {
       <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mt-10 mb-20 text-center">
          <h3 className="text-xl font-bold text-slate-800 mb-6">Informasi Layanan Lainnya</h3>
          <div className="flex flex-wrap justify-center gap-4">
-           {Object.keys(layananData).map((slug) => (
-             slug !== params.slug && (
+           {Object.keys(layananData).map((s) => (
+             s !== slug && (
                <Link 
-                 key={slug} 
-                 href={`/layanan/${slug}`}
+                 key={s} 
+                 href={`/layanan/${s}`}
                  className="px-6 py-3 bg-white border border-slate-200 rounded-full text-slate-700 font-medium hover:border-slate-400 hover:text-slate-900 transition-colors shadow-sm"
                >
-                 {layananData[slug].title}
+                 {layananData[s].title}
                </Link>
              )
            ))}

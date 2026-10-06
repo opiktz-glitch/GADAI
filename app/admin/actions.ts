@@ -126,7 +126,7 @@ export async function addArticle(formData: FormData) {
   if (!content) throw new Error("Konten tidak boleh kosong");
 
   const counterRef = db.collection('config').doc('articleCounter');
-  const nextIdNum = await db.runTransaction(async (t) => {
+  const nextIdNum = await db.runTransaction(async (t: any) => {
     const doc = await t.get(counterRef);
     let count = 1;
     if (doc.exists) {
