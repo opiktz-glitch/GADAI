@@ -33,7 +33,7 @@ export default function Header() {
                 width={240} 
                 height={120} 
                 priority
-                className="h-14 sm:h-20 w-auto object-contain scale-110 sm:scale-125 origin-left group-hover:opacity-90 transition-all"
+                className="h-12 sm:h-16 w-auto object-contain group-hover:opacity-90 transition-all"
               />
             </Link>
           </div>
