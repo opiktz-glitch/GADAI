@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
 
 const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
@@ -6,7 +7,7 @@ const config: Config = {
     extend: {},
   },
   plugins: [
-    require("@tailwindcss/typography")
+    typography
   ],
 };
 

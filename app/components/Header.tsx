@@ -1,8 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, Menu, X, ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 export default function Header() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
+  const toggleDropdown = (name: string) => {
+    setOpenDropdown(openDropdown === name ? null : name);
+  };
+
   return (
     <header className="bg-white border-b border-slate-100 sticky top-0 z-50 shadow-sm">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,7 +25,7 @@ export default function Header() {
               width={240} 
               height={120} 
               priority
-              className="h-12 sm:h-14 w-auto object-contain group-hover:opacity-90 transition-opacity"
+              className="h-10 sm:h-14 w-auto object-contain group-hover:opacity-90 transition-opacity"
             />
           </Link>
 
@@ -61,21 +71,82 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* CTA Button */}
-          <div className="flex items-center">
+          {/* CTA Button & Mobile Menu Toggle */}
+          <div className="flex items-center gap-2 sm:gap-4">
             <a 
               href="https://wa.me/6281234567890" 
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-2.5 px-6 rounded-md transition-colors shadow-sm tracking-wide text-sm flex items-center gap-2"
+              className="bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-2 px-3 sm:py-2.5 sm:px-6 rounded-md transition-colors shadow-sm tracking-wide text-[11px] sm:text-sm flex items-center gap-1.5 sm:gap-2"
               aria-label="Hubungi kami via WhatsApp"
             >
-              <MessageCircle className="w-5 h-5" />
+              <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>WHATSAPP</span>
             </a>
+
+            <button 
+              className="md:hidden p-2 -mr-2 text-slate-600 hover:text-red-600 focus:outline-none"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle mobile menu"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Mobile Navigation Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden border-t border-slate-100 bg-white absolute top-full left-0 w-full shadow-lg pb-4">
+          <div className="px-4 py-4 space-y-4 max-h-[80vh] overflow-y-auto">
+            <Link href="/tentang-kami" className="block text-slate-700 font-bold" onClick={() => setIsMobileMenuOpen(false)}>
+              Tentang Kami
+            </Link>
+
+            {/* Mobile Produk Dropdown */}
+            <div>
+              <button 
+                className="flex items-center justify-between w-full text-left text-slate-700 font-bold"
+                onClick={() => toggleDropdown("produk")}
+              >
+                <span>Produk</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${openDropdown === 'produk' ? 'rotate-180' : ''}`} />
+              </button>
+              {openDropdown === 'produk' && (
+                <div className="mt-3 pl-4 space-y-4 border-l-2 border-slate-100">
+                  <Link href="/produk/gadai-bpkb-mobil" className="block text-slate-600 text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>Gadai BPKB Mobil</Link>
+                  <Link href="/produk/gadai-bpkb-motor" className="block text-slate-600 text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>Gadai BPKB Motor</Link>
+                  <Link href="/produk/kredit-baru" className="block text-slate-600 text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>Kredit Motor dan Mobil Baru</Link>
+                  <Link href="/produk/kredit-bekas" className="block text-slate-600 text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>Kredit Motor dan Mobil Bekas</Link>
+                  <Link href="/produk/take-over-top-up" className="block text-slate-600 text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>Take Over &amp; Top Up</Link>
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Layanan Dropdown */}
+            <div>
+              <button 
+                className="flex items-center justify-between w-full text-left text-slate-700 font-bold"
+                onClick={() => toggleDropdown("layanan")}
+              >
+                <span>Layanan</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${openDropdown === 'layanan' ? 'rotate-180' : ''}`} />
+              </button>
+              {openDropdown === 'layanan' && (
+                <div className="mt-3 pl-4 space-y-4 border-l-2 border-slate-100">
+                  <Link href="/layanan/simulasi-angsuran" className="block text-slate-600 text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>Tabel Simulasi Angsuran</Link>
+                  <Link href="/layanan/syarat-dan-proses" className="block text-slate-600 text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>Syarat &amp; Proses Gadai BPKB</Link>
+                  <Link href="/layanan/cara-pengajuan" className="block text-slate-600 text-sm font-medium" onClick={() => setIsMobileMenuOpen(false)}>Cara Pengajuan Gadai BPKB</Link>
+                </div>
+              )}
+            </div>
+
+            <Link href="/blog" className="block text-slate-700 font-bold" onClick={() => setIsMobileMenuOpen(false)}>
+              Blog
+            </Link>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
