@@ -6,11 +6,13 @@ import remarkGfm from "remark-gfm";
 import ViewTracker from "@/app/components/ViewTracker";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
 
-export default async function HomePage() {
+export default async function CityPage({ params }: { params: { slug: string } }) {
+  const cityName = params.slug.charAt(0).toUpperCase() + params.slug.slice(1);
+  
   const semuaKota = await getAllKota();
   const config = await getConfig();
   const assignedArticle = config.assignedArticleId ? await getArticleById(config.assignedArticleId) : null;
-  const waMessageTemplate = "Halo Admin AXI Adira, saya ingin bertanya mengenai prosedur gadai BPKB / Kredit Kendaraan.";
+  const waMessageTemplate = `Halo Admin AXI Adira, saya ingin bertanya mengenai prosedur gadai BPKB / Kredit Kendaraan di ${cityName}.`;
 
   // Data Spesifik Cabang dari Gambar
   const cabangUtama = {
@@ -68,9 +70,9 @@ export default async function HomePage() {
             {/* Judul & Nomor */}
             <div className="text-center mb-8">
               <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0B1E36] mb-2 leading-tight">
-                Halo! Saya Agen AXI Adira Finance
+                Agen AXI Adira Finance Cabang {cityName}
               </h1>
-              <p className="text-slate-500 text-base mb-4">Siap membantu kebutuhan pembiayaan Anda dengan proses cepat &amp; aman</p>
+              <p className="text-slate-500 text-base mb-4">Siap membantu kebutuhan pembiayaan Anda di wilayah Kota {cityName} & sekitarnya</p>
               <a
                 href={`tel:${cabangUtama.noHp}`}
                 className="inline-block text-2xl sm:text-3xl font-extrabold text-[#0B1E36] hover:text-yellow-600 transition-colors border-b-4 border-yellow-400 pb-1"
@@ -82,7 +84,7 @@ export default async function HomePage() {
             {/* Artikel Perkenalan Sesuai Standar OJK */}
             <div className="prose prose-slate max-w-none text-slate-700 mb-10 space-y-4">
               <p className="text-base leading-relaxed">
-                Selamat datang! Saya adalah <strong>Agen Resmi AXI Adira Finance</strong>. Sebagai mitra representatif dari PT Adira Dinamika Multi Finance Tbk, saya hadir untuk membantu memfasilitasi kebutuhan pembiayaan Anda secara profesional.
+                Selamat datang! Saya adalah <strong>Agen Resmi AXI Adira Finance</strong>. Sebagai mitra representatif dari PT Adira Dinamika Multi Finance Tbk, saya hadir untuk membantu memfasilitasi kebutuhan pembiayaan Anda di wilayah {cityName} secara profesional.
               </p>
               <p className="text-base leading-relaxed">
                 Sebagai agen berpengalaman, saya akan mendampingi proses pengajuan Anda dari awal hingga selesai. Cukup hubungi saya, dan saya bisa membantu penjemputan dokumen di lokasi Anda.

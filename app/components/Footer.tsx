@@ -48,8 +48,8 @@ export default function Footer() {
             <address className="not-italic">
               <h3 className="text-white text-lg font-bold mb-4">Hubungi Agen</h3>
               <ul className="space-y-3 text-sm">
-                <li>Telepon / WA: +6281219251995</li>
-                <li>Cabang: Pungkur, Bandung</li>
+                <li>Telepon / WA: +62 878-2365-1470</li>
+                <li>Layanan Seluruh Indonesia</li>
               </ul>
             </address>
           </div>

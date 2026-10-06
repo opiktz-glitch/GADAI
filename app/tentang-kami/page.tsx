@@ -1,71 +1,84 @@
 import { Metadata } from 'next';
+import WhatsAppButton from "@/app/components/WhatsAppButton";
 
 export const metadata: Metadata = {
-  title: 'Tentang Kami - Gadai Pojok Berkah',
-  description: 'Pojok Berkah adalah platform informasi dan rujukan gadai BPKB, membantu Anda menemukan dan membandingkan lembaga pembiayaan resmi.',
+  title: 'Tentang Kami - Agen Resmi AXI Adira Finance',
+  description: 'Kami adalah Agen Resmi AXI Adira Finance yang siap membantu memfasilitasi pengajuan Gadai BPKB Motor & Mobil dengan proses cepat, aman, dan transparan.',
 };
 
 export default function TentangKami() {
+  const noHp = "+6287823651470";
+  const waMessageTemplate = "Halo Admin AXI Adira, saya ingin bertanya seputar layanan Adira Finance.";
+
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-slate-50 py-12 pb-24">
       <div className="container mx-auto px-4 max-w-3xl">
-        <article className="prose prose-blue prose-slate lg:prose-lg bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100 mx-auto">
-          <p className="text-sm font-bold text-blue-600 tracking-wider uppercase mb-2">Pojok Berkah</p>
-          <h1 className="mt-0">Tentang Kami</h1>
+        <article className="prose prose-slate lg:prose-lg bg-white p-8 md:p-12 rounded-[2rem] shadow-xl shadow-slate-200/60 ring-1 ring-slate-100 mx-auto">
+          <div className="flex justify-center mb-6">
+            <span className="bg-yellow-400 text-slate-900 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
+              ✦ Profil Agen Resmi
+            </span>
+          </div>
           
-          <p className="lead text-xl text-gray-700 font-medium">
-            Kami adalah platform informasi dan rujukan gadai BPKB &mdash; membantu Anda menemukan dan membandingkan lembaga pembiayaan resmi sebelum mengambil keputusan.
+          <h1 className="text-center text-3xl sm:text-4xl font-extrabold text-[#0B1E36] mb-8 leading-tight mt-0">
+            Tentang Kami
+          </h1>
+          
+          <p className="lead text-xl text-slate-700 font-medium text-center mb-10">
+            Kami adalah <strong>Agen Resmi AXI Adira Finance</strong> yang berdedikasi untuk membantu Anda mendapatkan solusi finansial terbaik.
           </p>
 
-          <div className="not-prose bg-yellow-50 border-l-4 border-yellow-400 p-5 my-8 rounded-r-lg">
-            <p className="font-bold text-yellow-800 m-0">Penting untuk Anda ketahui:</p>
-            <p className="text-yellow-800 mt-2 m-0 leading-relaxed">
-              Pojok Berkah <strong>bukan</strong> lembaga pemberi pinjaman. Kami tidak menyimpan BPKB, tidak mencairkan dana, dan tidak menetapkan bunga. Kami menghubungkan Anda dengan mitra lembaga pergadaian dan pembiayaan yang terdaftar dan diawasi oleh Otoritas Jasa Keuangan (OJK).
+          <h2 className="text-2xl font-bold text-[#0B1E36] mb-4">Siapa Kami?</h2>
+          <p className="text-base leading-relaxed text-slate-700">
+            Sebagai mitra representatif (AXI) dari PT Adira Dinamika Multi Finance Tbk, kami hadir untuk menjembatani kebutuhan pembiayaan masyarakat, mulai dari Gadai BPKB Kendaraan (Motor & Mobil), fasilitas Kredit Kendaraan Bekas, hingga layanan Take Over dan Top Up.
+          </p>
+          <p className="text-base leading-relaxed text-slate-700 mb-8">
+            Kehadiran kami bertujuan agar calon nasabah tidak perlu repot datang ke kantor cabang untuk sekadar bertanya, berkonsultasi, atau menyerahkan dokumen awal. Semua bisa dilakukan dari rumah melalui bantuan kami.
+          </p>
+
+          <div className="not-prose bg-slate-50 border-l-4 border-yellow-400 p-6 my-8 rounded-r-lg">
+            <p className="font-bold text-[#0B1E36] m-0 mb-2">Penting untuk Anda ketahui:</p>
+            <p className="text-slate-600 m-0 leading-relaxed text-sm">
+              Seluruh proses persetujuan kredit, pencairan dana, hingga penetapan suku bunga mutlak berada di bawah kewenangan kantor pusat/cabang <strong>PT Adira Dinamika Multi Finance Tbk</strong>. Kami selaku Agen AXI bertugas sebagai fasilitator yang membantu merapikan dokumen, memberikan simulasi, dan mempercepat alur pengajuan Anda ke sistem Adira secara resmi.
             </p>
           </div>
 
-          <h2>Apa yang kami lakukan</h2>
-          <p>
-            Banyak orang kesulitan membandingkan penawaran gadai BPKB karena informasinya tersebar dan sulit diverifikasi. Pojok Berkah merangkum simulasi, syarat, dan proses dari beberapa lembaga resmi di satu tempat, supaya Anda bisa membandingkan sebelum menghubungi mereka langsung.
-          </p>
-
-          <h2>Bagaimana kami bekerja</h2>
-          <ul>
-            <li>Anda mengisi simulasi kebutuhan dana di situs ini.</li>
-            <li>Kami menunjukkan estimasi dan mitra lembaga yang sesuai dengan kota dan jenis kendaraan Anda.</li>
-            <li>Proses pengajuan, verifikasi, dan pencairan dana sepenuhnya dilakukan oleh lembaga mitra &mdash; bukan oleh kami.</li>
-            <li>Kami dapat menerima komisi rujukan dari mitra; ini tidak menambah biaya apa pun bagi Anda.</li>
+          <h2 className="text-2xl font-bold text-[#0B1E36] mb-4">Mengapa Mengajukan Lewat Kami?</h2>
+          <ul className="space-y-3 text-slate-700 text-base mb-8 list-none pl-0">
+            <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span> <strong>Gratis Konsultasi:</strong> Dapatkan simulasi angsuran yang transparan sebelum Anda memutuskan untuk meminjam.</li>
+            <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span> <strong>Jemput Bola:</strong> Kami bantu ambil dokumen langsung ke lokasi Anda (rumah/kantor) sehingga menghemat waktu Anda.</li>
+            <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span> <strong>Proses Didampingi:</strong> Kami pantau status pengajuan Anda sejak dokumen diserahkan hingga dana cair ke rekening Anda.</li>
+            <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span> <strong>Aman & Terpercaya:</strong> Data Anda langsung masuk ke sistem Adira Finance yang berizin dan diawasi oleh OJK.</li>
           </ul>
 
-          <h2>Sebelum menghubungi lembaga manapun</h2>
-          <p>
-            Selalu periksa status izin lembaga pembiayaan melalui laman resmi OJK di <a href="https://www.ojk.go.id" target="_blank" rel="noopener noreferrer">ojk.go.id</a> atau hubungi kontak OJK 157. Waspadai lembaga yang menjanjikan pencairan tanpa survei sama sekali, atau meminta biaya di muka di luar prosedur resmi.
-          </p>
+          <hr className="my-10 border-slate-200" />
 
-          <hr className="my-10 border-gray-200" />
-
-          <div className="not-prose text-center">
-            <p className="font-medium text-lg text-gray-800 mb-6">
-              Ada pertanyaan soal proses atau ingin dibantu mencari mitra terdekat?
+          <div className="not-prose bg-yellow-50 border border-yellow-200 rounded-2xl p-8 text-center">
+            <p className="font-bold text-[#0B1E36] text-lg mb-4">
+              Punya pertanyaan atau butuh dana cepat hari ini?
+            </p>
+            <p className="text-slate-600 mb-6 text-sm">
+              Jangan ragu untuk menghubungi kami. Kami siap melayani Anda di berbagai kota di Indonesia.
             </p>
             
             <a 
-              href="https://wa.me/6287724039666" 
+              href={`https://wa.me/${noHp.replace('+', '')}?text=${encodeURIComponent(waMessageTemplate)}`}
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center bg-green-500 text-white font-bold px-8 py-4 rounded-xl hover:bg-green-600 transition-all hover:-translate-y-1 hover:shadow-lg"
+              className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
             >
-              <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
-              </svg>
-              Chat via WhatsApp &rarr;
+              <span>💬</span> Chat Konsultasi Gratis
             </a>
           </div>
 
-          <p className="text-sm text-gray-500 mt-12 italic text-center not-prose">
-            Pojok Berkah &mdash; platform informasi dan rujukan gadai BPKB.<br /> Bukan lembaga jasa keuangan.
+          <p className="text-sm text-slate-500 mt-12 italic text-center not-prose">
+            PT Adira Dinamika Multi Finance Tbk berizin dan diawasi oleh Otoritas Jasa Keuangan (OJK).
           </p>
         </article>
+      </div>
+
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 p-4 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] sm:bg-transparent sm:border-none sm:shadow-none sm:p-0 sm:bottom-8 sm:right-8 sm:left-auto">
+        <WhatsAppButton noWa="6287823651470" messageTemplate={waMessageTemplate} buttonText="Konsultasi Agen" />
       </div>
     </div>
   );
