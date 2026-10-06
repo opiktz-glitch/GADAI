@@ -271,7 +271,7 @@ export async function shuffleArticles() {
     redirect("/admin?tab=artikel&error=Tidak%20ada%20artikel%20untuk%20diacak");
   }
 
-  const allArticles = articlesSnap.docs.map(d => d.id);
+  const allArticles = articlesSnap.docs.map((d: any) => d.id);
   const batch = db.batch();
   
   // Fungsi bantu untuk mengacak array
@@ -288,7 +288,7 @@ export async function shuffleArticles() {
   // Assign to Kota jika tidak dikunci
   const shuffledForKota = shuffle([...allArticles]);
   let i = 0;
-  kotaSnap.docs.forEach(doc => {
+  kotaSnap.docs.forEach((doc: any) => {
     const data = doc.data();
     if (data.allowRandom !== false) {
       batch.update(doc.ref, { assignedArticleId: shuffledForKota[i % shuffledForKota.length] });
