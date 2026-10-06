@@ -41,33 +41,33 @@ const layananData: Record<string, { title: string, subtitle: string, waText: str
           Sebagai Marketing Resmi AXI Adira Finance, saya hadir untuk mempermudah seluruh proses pengajuan Anda agar Anda tidak perlu repot bolak-balik ke kantor cabang. Ikuti langkah mudah berikut:
         </p>
         
-        <div className="space-y-6 mb-8 mt-6">
+        <div className="not-prose space-y-6 mb-8 mt-6">
           <div className="flex gap-4">
             <div className="flex-shrink-0 w-10 h-10 bg-yellow-400 text-slate-900 rounded-full flex items-center justify-center font-bold text-lg">1</div>
             <div>
-              <h3 className="text-lg font-bold text-[#0B1E36]">Konsultasi Awal via WhatsApp</h3>
-              <p className="text-slate-600 mt-1">Hubungi saya melalui tombol WhatsApp di bawah. Kita akan mendiskusikan kebutuhan dana Anda, jenis kendaraan, dan saya akan memberikan simulasi cicilan yang sesuai dengan budget Anda.</p>
+              <h3 className="text-lg font-bold text-[#0B1E36] mb-1">Konsultasi Awal via WhatsApp</h3>
+              <p className="text-slate-600 text-base leading-relaxed">Hubungi saya melalui tombol WhatsApp di bawah. Kita akan mendiskusikan kebutuhan dana Anda, jenis kendaraan, dan saya akan memberikan simulasi cicilan yang sesuai dengan budget Anda.</p>
             </div>
           </div>
           <div className="flex gap-4">
             <div className="flex-shrink-0 w-10 h-10 bg-yellow-400 text-slate-900 rounded-full flex items-center justify-center font-bold text-lg">2</div>
             <div>
-              <h3 className="text-lg font-bold text-[#0B1E36]">Penjemputan Dokumen</h3>
-              <p className="text-slate-600 mt-1">Jika Anda setuju dengan simulasi yang diberikan, siapkan berkas (KTP, KK, STNK, BPKB, Slip Gaji). Saya akan membantu menjemput dokumen langsung ke rumah atau lokasi yang disepakati.</p>
+              <h3 className="text-lg font-bold text-[#0B1E36] mb-1">Penjemputan Dokumen</h3>
+              <p className="text-slate-600 text-base leading-relaxed">Jika Anda setuju dengan simulasi yang diberikan, siapkan berkas (KTP, KK, STNK, BPKB, Slip Gaji). Saya akan membantu menjemput dokumen langsung ke rumah atau lokasi yang disepakati.</p>
             </div>
           </div>
           <div className="flex gap-4">
             <div className="flex-shrink-0 w-10 h-10 bg-yellow-400 text-slate-900 rounded-full flex items-center justify-center font-bold text-lg">3</div>
             <div>
-              <h3 className="text-lg font-bold text-[#0B1E36]">Proses Survei</h3>
-              <p className="text-slate-600 mt-1">Tim surveyor dari Adira Finance akan melakukan verifikasi data fisik kendaraan dan tempat tinggal Anda dengan proses yang profesional dan sopan.</p>
+              <h3 className="text-lg font-bold text-[#0B1E36] mb-1">Proses Survei</h3>
+              <p className="text-slate-600 text-base leading-relaxed">Tim surveyor dari Adira Finance akan melakukan verifikasi data fisik kendaraan dan tempat tinggal Anda dengan proses yang profesional dan sopan.</p>
             </div>
           </div>
           <div className="flex gap-4">
             <div className="flex-shrink-0 w-10 h-10 bg-yellow-400 text-slate-900 rounded-full flex items-center justify-center font-bold text-lg">4</div>
             <div>
-              <h3 className="text-lg font-bold text-[#0B1E36]">Pencairan Dana Tunai</h3>
-              <p className="text-slate-600 mt-1">Setelah pengajuan disetujui (biasanya 1-2 hari kerja), dana akan langsung ditransfer secara utuh ke rekening bank pribadi Anda secara aman.</p>
+              <h3 className="text-lg font-bold text-[#0B1E36] mb-1">Pencairan Dana Tunai</h3>
+              <p className="text-slate-600 text-base leading-relaxed">Setelah pengajuan disetujui (biasanya 1-2 hari kerja), dana akan langsung ditransfer secara utuh ke rekening bank pribadi Anda secara aman.</p>
             </div>
           </div>
         </div>
