@@ -107,6 +107,7 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
               <h2 className="text-xl font-bold text-[#0B1E36] pt-2">Layanan yang Saya Fasilitasi</h2>
               <ul className="space-y-2 text-base">
                 <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span><span><strong>Gadai BPKB Mobil &amp; Motor</strong> — Solusi dana tunai dengan jaminan BPKB.</span></li>
+                <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span><span><strong>Kredit Motor &amp; Mobil Baru</strong> — Fasilitas pembiayaan kendaraan baru dengan proses mudah.</span></li>
                 <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span><span><strong>Kredit Motor &amp; Mobil Bekas</strong> — Pembiayaan kendaraan bekas dengan proses transparan.</span></li>
                 <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span><span><strong>Top Up Pinjaman</strong> — Tambahan dana untuk nasabah aktif Adira Finance.</span></li>
                 <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span><span><strong>Take Over Kredit</strong> — Pemindahan fasilitas kredit ke Adira Finance.</span></li>
