@@ -128,14 +128,22 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
             {/* CTA Hubungi */}
             <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
               <p className="text-slate-700 font-semibold mb-4">📞 Hubungi saya sekarang untuk konsultasi <span className="text-yellow-600">GRATIS</span></p>
-              <a
-                href={`https://wa.me/${noWa}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
-              >
-                <span>💬</span> Chat via WhatsApp
-              </a>
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <a
+                  href={`https://wa.me/${noWa}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
+                >
+                  <span>💬</span> Chat via WhatsApp
+                </a>
+                <Link
+                  href="/layanan/simulasi-angsuran"
+                  className="inline-flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
+                >
+                  <span>📊</span> Tabel Simulasi
+                </Link>
+              </div>
             </div>
           </article>
         </div>
