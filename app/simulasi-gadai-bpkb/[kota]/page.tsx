@@ -79,13 +79,13 @@ export default async function KotaPage({ params }: Props) {
           "@type": "ListItem",
           position: 1,
           name: "Beranda",
-          item: "https://gadai.pojokberkah.online/"
+          item: "https://www.gadaibpkb.co.id/"
         },
         {
           "@type": "ListItem",
           position: 2,
           name: `Gadai BPKB ${kota.nama_kota}`,
-          item: `https://gadai.pojokberkah.online/simulasi-gadai-bpkb-${kota.slug}`
+          item: `https://www.gadaibpkb.co.id/simulasi-gadai-bpkb-${kota.slug}`
         }
       ]
     }
@@ -218,6 +218,7 @@ export default async function KotaPage({ params }: Props) {
                   .replace(/\[NAMA_KOTA\]/gi, kota.nama_kota)
                   .replace(/\[JUMLAH_CABANG\]/gi, kota.jumlah_cabang.toString())
                   .replace(/\[\s*(!\[[\s\S]*?\]\([\s\S]*?\)|\<img[\s\S]*?\>|\<button[\s\S]*?\>[\s\S]*?\<\/button\>)\s*\]\(([\s\S]*?)\)/gi, "")
+                  .replace(/\[([^\]]*)\]\(https?:\/\/wa\.me[^)]+\)/gi, "")
                   .replace(/\]\(([^)]+)\)/g, (match, url) => `](${url.replace(/ /g, "%20")})`)}
               </ReactMarkdown>
             </div>
@@ -253,6 +254,27 @@ export default async function KotaPage({ params }: Props) {
               </p>
             </div>
           )}
+
+          {/* CTA Hubungi */}
+          <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center mt-12">
+            <p className="text-slate-700 font-semibold mb-4">📞 Hubungi saya sekarang untuk konsultasi <span className="text-yellow-600">GRATIS</span></p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <a
+                href={`https://wa.me/${config.whatsapp_pusat.replace('+', '')}?text=${encodeURIComponent(waMessageTemplate)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
+              >
+                <span>💬</span> Chat via WhatsApp
+              </a>
+              <Link
+                href="/layanan/simulasi-angsuran"
+                className="inline-flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
+              >
+                <span>📊</span> Tabel Simulasi
+              </Link>
+            </div>
+          </div>
         </article>
       </div>
 
