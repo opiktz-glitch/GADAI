@@ -49,12 +49,12 @@ export default async function Footer() {
             {/* Column 3: Contact */}
             <address className="not-italic">
               <h3 className="text-white text-lg font-bold mb-4">Hubungi Marketing</h3>
-              <ul className="space-y-3 text-sm">
-                <li>Nama AXi : Leni Suherman</li>
-                <li>Id AXI : 000019002675</li>
-                <li>Telepon / WA: +{config.whatsapp_pusat}</li>
-                <li>Layanan Seluruh Indonesia</li>
-              </ul>
+              <div className="grid grid-cols-[auto_auto_1fr] gap-x-2 gap-y-3 text-sm">
+                <span>Nama AXi</span><span>:</span><span>Leni Suherman</span>
+                <span>Id AXI</span><span>:</span><span>000019002675</span>
+                <span>Telepon / WA</span><span>:</span><span>+{config.whatsapp_pusat}</span>
+                <span className="col-span-3 mt-1">Layanan Seluruh Indonesia</span>
+              </div>
             </address>
           </div>
           
