@@ -3,6 +3,7 @@ import { getConfig, getAllKota, getAllArticles } from "@/lib/kota";
 import { Settings, PlusCircle, MapPin, Pencil, Trash2, Library, CheckCircle } from "lucide-react";
 import Link from "next/link";
 import ArticleTable from "./ArticleTable";
+import AllArticlesTable from "./AllArticlesTable";
 import ToastNotification from "./ToastNotification";
 import AIGenerator from "./AIGenerator";
 
@@ -223,6 +224,21 @@ export default async function AdminPage({
 
           {/* Form Generate AI Terpisah (Client Component) */}
           <AIGenerator />
+
+          <AllArticlesTable articles={semuaArticles} />
+        </section>
+        )}
+
+        {/* Distribusi & Rotasi Artikel */}
+        {activeTab === "artikel" && (
+        <section className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200 mt-8">
+          <div className="mb-4 flex items-center space-x-2 border-b pb-4">
+            <CheckCircle className="h-6 w-6 text-slate-500" />
+            <h2 className="text-xl font-semibold">Distribusi & Rotasi Artikel</h2>
+          </div>
+          <p className="text-sm text-slate-600 mb-6">
+            Tabel ini menunjukkan artikel mana yang sedang terpasang di setiap kota. Anda dapat mengatur apakah suatu kota diikutkan dalam rotasi artikel acak atau tidak.
+          </p>
 
           <ArticleTable articles={semuaArticles} kotaList={semuaKota} config={config} />
         </section>
