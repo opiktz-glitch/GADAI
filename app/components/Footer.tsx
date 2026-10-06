@@ -50,6 +50,8 @@ export default async function Footer() {
             <address className="not-italic">
               <h3 className="text-white text-lg font-bold mb-4">Hubungi Marketing</h3>
               <ul className="space-y-3 text-sm">
+                <li>Nama AXi : Leni Suherman</li>
+                <li>Id AXI : 000019002675</li>
                 <li>Telepon / WA: +{config.whatsapp_pusat}</li>
                 <li>Layanan Seluruh Indonesia</li>
               </ul>
