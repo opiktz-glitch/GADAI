@@ -1,12 +1,12 @@
 import type { MetadataRoute } from "next";
 import { getAllKota } from "@/lib/kota";
 
-const BASE_URL = "https://gadai.pojokberkah.online";
+const BASE_URL = "https://gadaibpkbsyariah.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const kotaList = await getAllKota();
   const kotaPages = kotaList.map((k) => ({
-    url: `${BASE_URL}/simulasi-gadai-bpkb-${k.slug}`,
+    url: `${BASE_URL}/blog/${k.slug}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.8,
