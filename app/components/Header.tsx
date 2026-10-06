@@ -17,17 +17,26 @@ export default function Header() {
     <header className="bg-white border-b border-slate-100 sticky top-0 z-50 shadow-sm">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group" aria-label="Beranda AXI Marketing Adira">
-            <Image 
-              src="/logo-axi-v3-web.png" 
-              alt="Logo AXI Marketing Adira Beraxi" 
-              width={240} 
-              height={120} 
-              priority
-              className="h-10 sm:h-14 w-auto object-contain group-hover:opacity-90 transition-opacity"
-            />
-          </Link>
+          {/* Mobile Toggle & Logo */}
+          <div className="flex items-center gap-2">
+            <button 
+              className="md:hidden p-2 -ml-2 text-slate-600 hover:text-red-600 focus:outline-none"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle mobile menu"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+            <Link href="/" className="flex items-center space-x-3 group" aria-label="Beranda AXI Marketing Adira">
+              <Image 
+                src="/logo-axi-v3-web.png" 
+                alt="Logo AXI Marketing Adira Beraxi" 
+                width={240} 
+                height={120} 
+                priority
+                className="h-10 sm:h-14 w-auto object-contain group-hover:opacity-90 transition-opacity"
+              />
+            </Link>
+          </div>
 
           {/* Navigation - SEO Semantic <nav> */}
           <nav className="hidden md:flex space-x-8 items-center" aria-label="Main Navigation">
@@ -71,8 +80,8 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* CTA Button & Mobile Menu Toggle */}
-          <div className="flex items-center gap-2 sm:gap-4">
+          {/* CTA Button */}
+          <div className="flex items-center">
             <a 
               href="https://wa.me/6281234567890" 
               target="_blank"
@@ -83,14 +92,6 @@ export default function Header() {
               <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>WHATSAPP</span>
             </a>
-
-            <button 
-              className="md:hidden p-2 -mr-2 text-slate-600 hover:text-red-600 focus:outline-none"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle mobile menu"
-            >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
           </div>
         </div>
       </div>
