@@ -135,7 +135,7 @@ const productData: Record<string, { title: string, subtitle: string, desc: strin
   "take-over-top-up": {
     title: "Take Over & Top Up",
     subtitle: "Pindahkan kredit Anda atau tambah limit dengan mudah.",
-    desc: "Merasa cicilan kendaraan Anda di tempat lain terlalu berat? Lakukan Take Over ke Adira Finance untuk mendapatkan cicilan yang lebih ringan. Selain itu, jika Anda adalah nasabah aktif kami yang membutuhkan dana tambahan, Anda bisa melakukan Top Up pinjaman tanpa harus mengganti kontrak lama.",
+    desc: "Merasa cicilan kendaraan Anda di tempat lain terlalu berat? Lakukan Take Over ke Adira Finance untuk mendapatkan cicilan yang lebih ringan (Gratis Biaya Take Over). Selain itu, jika Anda adalah nasabah aktif kami yang membutuhkan dana tambahan, Anda bisa melakukan Top Up pinjaman tanpa harus mengganti kontrak lama.",
     waText: "Halo Admin AXI Adira, saya ingin konsultasi mengenai fasilitas Take Over / Top Up."
   }
 };
@@ -182,6 +182,9 @@ export default async function ProdukPage({ params }: { params: Promise<{ slug: s
                  <li className="flex items-start gap-2"><span className="text-green-500 font-bold mt-0.5">✔</span> Proses didampingi dari awal sampai cair.</li>
                  <li className="flex items-start gap-2"><span className="text-green-500 font-bold mt-0.5">✔</span> Tidak perlu antre lama di kantor cabang.</li>
                  <li className="flex items-start gap-2"><span className="text-green-500 font-bold mt-0.5">✔</span> Syarat dijemput langsung ke rumah Anda.</li>
+                 {slug === 'take-over-top-up' && (
+                   <li className="flex items-start gap-2"><span className="text-green-500 font-bold mt-0.5">✔</span> <strong>Gratis Biaya Take Over</strong> khusus perpindahan leasing.</li>
+                 )}
                </ul>
             </div>
 

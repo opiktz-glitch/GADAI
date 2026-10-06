@@ -3,6 +3,7 @@ import { editKota } from "../../actions";
 import { notFound, redirect } from "next/navigation";
 import { ArrowLeft, Edit } from "lucide-react";
 import Link from "next/link";
+import CatatanLokalInput from "../../CatatanLokalInput";
 
 export default async function EditKotaPage({ params }: { params: Promise<{ slug: string }> }) {
   const p = await params;
@@ -37,7 +38,7 @@ export default async function EditKotaPage({ params }: { params: Promise<{ slug:
             
             <div>
               <label className="block text-sm font-medium">Nama Kota</label>
-              <input required type="text" name="nama_kota" defaultValue={kota.nama_kota} className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
+              <input id="nama_kota_edit" required type="text" name="nama_kota" defaultValue={kota.nama_kota} className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
             </div>
             <div>
               <label className="block text-sm font-medium">Slug (Tanpa Spasi/Gunakan Strip)</label>
@@ -51,6 +52,8 @@ export default async function EditKotaPage({ params }: { params: Promise<{ slug:
               <label className="block text-sm font-medium">Alamat Cabang Utama</label>
               <input required type="text" name="alamat_cabang_utama" defaultValue={kota.alamat_cabang_utama} className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
             </div>
+
+            <CatatanLokalInput defaultValue={kota.artikel_seo} kotaInputId="nama_kota_edit" />
             
             <div className="sm:col-span-2 border-t pt-4">
               <button type="submit" className="w-full rounded-md bg-blue-600 px-6 py-3 text-white hover:bg-blue-700 font-bold text-lg">

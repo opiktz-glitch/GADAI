@@ -7,6 +7,7 @@ import AllArticlesTable from "./AllArticlesTable";
 import ArticleAssignmentForm from "./ArticleAssignmentForm";
 import ToastNotification from "./ToastNotification";
 import AIGenerator from "./AIGenerator";
+import CatatanLokalInput from "./CatatanLokalInput";
 
 export default async function AdminPage({
   searchParams,
@@ -92,7 +93,7 @@ export default async function AdminPage({
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium">Nama Kota</label>
-                      <input required type="text" name="nama_kota" placeholder="Contoh: Semarang" className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
+                      <input id="nama_kota_add" required type="text" name="nama_kota" placeholder="Contoh: Semarang" className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium">Slug (Tanpa Spasi)</label>
@@ -108,6 +109,10 @@ export default async function AdminPage({
                       <label className="block text-sm font-medium">Alamat Cabang</label>
                       <input required type="text" name="alamat_cabang_utama" placeholder="Jalan Sudirman No 1..." className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2" />
                     </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 gap-4">
+                    <CatatanLokalInput kotaInputId="nama_kota_add" />
                   </div>
                   
                   <div className="pt-2">

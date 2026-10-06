@@ -85,7 +85,7 @@ export default async function KotaPage({ params }: Props) {
           "@type": "ListItem",
           position: 2,
           name: `Gadai BPKB ${kota.nama_kota}`,
-          item: `https://www.gadaibpkb.co.id/simulasi-gadai-bpkb-${kota.slug}`
+          item: `https://www.gadaibpkb.co.id/simulasi-gadai-bpkb/${kota.slug}`
         }
       ]
     }
@@ -203,7 +203,7 @@ export default async function KotaPage({ params }: Props) {
               <ReactMarkdown 
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  h1: ({ node, ...props }: any) => <h1 className="text-center" {...props} />,
+                  h1: ({ node, ...props }: any) => <h2 className="text-center text-2xl font-bold mt-6 mb-4 text-[#0B1E36]" {...props} />,
                   img: ({ node, ...props }: any) => (
                     <img 
                       {...props} 
@@ -249,7 +249,7 @@ export default async function KotaPage({ params }: Props) {
           {kota.artikel_seo && (
             <div className="mt-8 pt-8 border-t border-slate-100">
               <h3 className="text-xl font-bold text-slate-900 mb-3">Catatan Lokal</h3>
-              <p className="text-slate-700 leading-relaxed whitespace-pre-line">
+              <p className="text-slate-700 leading-relaxed whitespace-pre-line text-justify">
                 {kota.artikel_seo}
               </p>
             </div>
@@ -287,7 +287,7 @@ export default async function KotaPage({ params }: Props) {
               {relatedCities.map((rc) => (
                 <Link 
                   key={rc.slug} 
-                  href={`/simulasi-gadai-bpkb-${rc.slug}`} 
+                  href={`/simulasi-gadai-bpkb/${rc.slug}`} 
                   className="px-4 py-2 bg-slate-100 text-slate-700 hover:bg-blue-600 hover:text-white rounded-lg text-sm font-medium transition-colors"
                 >
                   Gadai BPKB {rc.nama_kota}

@@ -15,7 +15,7 @@ export default function WhatsAppButton({
   const [url, setUrl] = useState(`https://wa.me/${noWa}`);
 
   useEffect(() => {
-    // Mendapatkan URL domain secara dinamis (misal: www.pojok.com)
+    // Mendapatkan URL domain secara dinamis
     const host = window.location.host;
     const finalMessage = messageTemplate.replace("[host]", host);
     setUrl(`https://wa.me/${noWa}?text=${encodeURIComponent(finalMessage)}`);

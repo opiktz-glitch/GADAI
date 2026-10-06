@@ -10,7 +10,7 @@ import { Metadata } from "next";
 export async function generateMetadata(): Promise<Metadata> {
   const config = await getConfig();
   const assignedArticle = config.assignedArticleId ? await getArticleById(config.assignedArticleId) : null;
-  
+
   return {
     title: "Gadai BPKB Syariah - Marketing Resmi AXI Adira Finance",
     description: assignedArticle?.metaDesc || "Layanan resmi pengajuan simulasi gadai BPKB motor dan mobil seluruh Indonesia bersama marketing AXI Adira Finance. Proses cepat, pencairan tinggi.",
@@ -40,7 +40,6 @@ export default async function HomePage() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "AXI Marketing Adira Beraxi",
-    url: "https://adira.pojokberkah.online",
     contactPoint: {
       "@type": "ContactPoint",
       telephone: cabangUtama.noHp,
@@ -57,7 +56,7 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       {assignedArticle && <ViewTracker location="pusat" />}
-      
+
       {/* Hero Section dengan desain khusus Adira Marketing */}
       <section className="bg-yellow-400 px-6 py-12 text-slate-900 border-b-4 border-slate-900">
         <div className="mx-auto max-w-5xl text-center">
@@ -83,9 +82,9 @@ export default async function HomePage() {
 
             {/* Judul & Nomor */}
             <div className="text-center mb-8">
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0B1E36] mb-2 leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0B1E36] mb-2 leading-tight">
                 Halo! Saya Marketing AXI Adira Finance
-              </h1>
+              </h2>
               <p className="text-slate-500 text-base mb-4">Siap membantu kebutuhan pembiayaan Anda dengan proses cepat &amp; aman</p>
               <a
                 href={`tel:${cabangUtama.noHp}`}
@@ -98,10 +97,10 @@ export default async function HomePage() {
             {/* Artikel Utama (Dari AI, Pengaturan, atau Bawaan) */}
             <div className="prose prose-slate max-w-none text-slate-700 mb-10 space-y-4">
               {assignedArticle ? (
-                <ReactMarkdown 
+                <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{
-                    h1: ({ node, ...props }: any) => <h1 className="text-center" {...props} />
+                    h1: ({ node, ...props }: any) => <h2 className="text-center text-2xl font-bold mt-6 mb-4 text-[#0B1E36]" {...props} />
                   }}
                 >
                   {assignedArticle.content
@@ -201,7 +200,7 @@ export default async function HomePage() {
           <div className="grid md:grid-cols-2 gap-10">
             <div>
               <h3 className="text-lg font-bold text-[#0B1E36] mb-4 flex items-center gap-2">
-                <span className="bg-yellow-400 text-slate-900 w-8 h-8 rounded-full flex items-center justify-center font-bold">1</span> 
+                <span className="bg-yellow-400 text-slate-900 w-8 h-8 rounded-full flex items-center justify-center font-bold">1</span>
                 Persyaratan Dokumen
               </h3>
               <ul className="space-y-3 text-slate-600 text-base">
@@ -213,7 +212,7 @@ export default async function HomePage() {
             </div>
             <div>
               <h3 className="text-lg font-bold text-[#0B1E36] mb-4 flex items-center gap-2">
-                <span className="bg-yellow-400 text-slate-900 w-8 h-8 rounded-full flex items-center justify-center font-bold">2</span> 
+                <span className="bg-yellow-400 text-slate-900 w-8 h-8 rounded-full flex items-center justify-center font-bold">2</span>
                 Alur Pencairan Dana
               </h3>
               <ul className="space-y-3 text-slate-600 text-base">
@@ -233,7 +232,7 @@ export default async function HomePage() {
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0B1E36] mb-4">Pertanyaan Seputar Pinjaman Dana Adira</h2>
           <p className="text-slate-600 text-lg">Temukan jawaban cepat untuk keraguan Anda</p>
         </div>
-        
+
         <div className="space-y-4">
           <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm ring-1 ring-slate-100 hover:shadow-md transition-shadow">
             <h3 className="font-bold text-[#0B1E36] text-lg mb-2">Apakah kendaraan akan ditahan saat saya menggadai BPKB?</h3>

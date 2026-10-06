@@ -98,6 +98,7 @@ export async function editKota(formData: FormData) {
   if (!slug || !nama_kota) throw new Error("Slug dan Nama Kota wajib diisi");
 
   const updatedKota: Kota = {
+    ...oldData,
     slug, nama_kota, provinsi, jumlah_cabang, estimasi_pencairan_min, 
     estimasi_pencairan_max, waktu_proses_jam, nama_marketing_lokal, 
     testimoni, alamat_cabang_utama, kendaraan_populer, artikel_seo
@@ -113,7 +114,7 @@ export async function editKota(formData: FormData) {
     await db.collection('kota').doc(slug).set(updatedKota);
   } else {
     // Just update
-    await docRef.set(updatedKota);
+    await docRef.update(updatedKota);
   }
   
   revalidatePath("/", "layout");
@@ -354,4 +355,37 @@ export async function assignArticleToKota(formData: FormData) {
 
   revalidatePath("/", "layout");
   redirect("/admin?tab=artikel&success=Artikel%20berhasil%20dipasang!");
+}
+
+export async function generateCatatanLokalAI(kotaName: string) {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    return { error: "API Key Gemini belum diatur. Harap tambahkan GEMINI_API_KEY di file .env.local" };
+  }
+
+  const prompt = `Buatkan satu paragraf singkat (sekitar 3-4 kalimat) catatan lokal yang SEO friendly untuk layanan "Gadai BPKB" di kota ${kotaName}. 
+
+ATURAN WAJIB (HARUS ADA): 
+- Anda WAJIB menyertakan kalimat yang mengandung keyword persis seperti ini: "Layanan gadai BPKB ${kotaName}" di awal paragraf (misalnya: "Layanan gadai BPKB ${kotaName} adalah solusi terbaik...").
+- Sertakan juga kata kunci "simulasi gadai BPKB mobil ${kotaName}" dan "gadai BPKB motor ${kotaName}".
+
+ATURAN TAMBAHAN:
+- Sebutkan satu atau dua nama daerah terkenal/jalan utama di ${kotaName} agar terkesan sangat lokal dan natural.
+- Gunakan bahasa yang persuasif, tanpa menggunakan sapaan halo.
+- DILARANG menggunakan format markdown seperti bintang ganda (**) untuk menebalkan teks. Tulis murni teks biasa (plain text) saja.`;
+
+  try {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${apiKey}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+    });
+    
+    if (!res.ok) return { error: "Gagal memanggil API AI" };
+    const data = await res.json();
+    const text = data.candidates[0].content.parts[0].text.trim();
+    return { success: true, text };
+  } catch (error) {
+    return { error: "Gagal menghubungi AI. Periksa koneksi atau limit API Anda." };
+  }
 }
