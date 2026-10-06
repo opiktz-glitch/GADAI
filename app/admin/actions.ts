@@ -224,7 +224,7 @@ Positioning (wajib, tidak bisa ditawar):
 Elemen yang wajib ada di setiap halaman:
 - Satu H1 saja per halaman (headline utama, spesifik pada isi halaman).
 - Penjelasan singkat bahwa pengajuan dilakukan secara resmi melalui sistem Adira Finance yang berizin dan diawasi OJK.
-- CTA yang mengarahkan untuk chat via WhatsApp kepada Marketing Resmi Adira Finance.
+- CTA berupa kalimat ajakan (persuasif) di paragraf penutup untuk menghubungi Marketing Resmi Adira Finance. PENTING: JANGAN membuat tombol, gambar badge, atau memasukkan link URL WhatsApp secara manual. Cukup buat kalimat ajakannya saja (misal: "Silakan klik tombol WhatsApp di layar ini...").
 
 Yang harus dihindari:
 - Klaim jaminan seperti "Pasti Cair", "Tanpa Survey", atau "Pencairan 100%" tanpa syarat ketentuan.
@@ -239,7 +239,7 @@ Struktur konten (sesuaikan dengan target pembaca):
 - Bagian edukatif: cara kerja gadai BPKB, dokumen yang dibutuhkan
 - Bagian penawaran: Tonjolkan keunggulan utama (${fokusKeunggulan}) untuk jenis kendaraan (${jenisKendaraan}).
 - Bagian kehati-hatian: cek legalitas sebelum lanjut
-- CTA akhir: WhatsApp untuk bantuan mencari mitra
+- CTA akhir: Kalimat ajakan untuk menghubungi tim marketing (tanpa link/tombol)
 
 Gaya bahasa: ${tone}. Mudah dipahami, edukatif, protektif terhadap konsumen, dan BUKAN hard-selling.
 ${instruksiTambahan ? `\nTopik/Instruksi Khusus dari Pengguna:\n- ${instruksiTambahan}\nPastikan instruksi khusus ini menjadi tema utama (angle) dari artikel yang dibuat, tanpa melanggar aturan utama (Positioning).\n` : ''}

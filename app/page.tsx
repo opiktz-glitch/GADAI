@@ -107,7 +107,7 @@ export default async function HomePage() {
                   {assignedArticle.content
                     .replace(/\[NAMA_KOTA\]/gi, "Seluruh Indonesia")
                     .replace(/\[NAMA_KOTA_KAPITAL\]/gi, "SELURUH INDONESIA")
-                    .replace(/\[\s*(!\[[\s\S]*?\]\([\s\S]*?\)|\<img[\s\S]*?\>|\<button[\s\S]*?\>[\s\S]*?\<\/button\>)\s*\]\(([\s\S]*?)\)/gi, "[$1]($2)")
+                    .replace(/\[\s*(!\[[\s\S]*?\]\([\s\S]*?\)|\<img[\s\S]*?\>|\<button[\s\S]*?\>[\s\S]*?\<\/button\>)\s*\]\(([\s\S]*?)\)/gi, "")
                     .replace(/\]\(([^)]+)\)/g, (match, url) => `](${url.replace(/ /g, "%20")})`)}
                 </ReactMarkdown>
               ) : config.artikel_homepage ? (
