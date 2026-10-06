@@ -46,11 +46,23 @@ export default async function TentangKami() {
           </div>
 
           <h2 className="text-2xl font-bold text-[#0B1E36] mb-4">Mengapa Mengajukan Lewat Kami?</h2>
-          <ul className="space-y-3 text-slate-700 text-base mb-8 list-none pl-0">
-            <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span> <strong>Gratis Konsultasi:</strong> Dapatkan simulasi angsuran yang transparan sebelum Anda memutuskan untuk meminjam.</li>
-            <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span> <strong>Jemput Bola:</strong> Kami bantu ambil dokumen langsung ke lokasi Anda (rumah/kantor) sehingga menghemat waktu Anda.</li>
-            <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span> <strong>Proses Didampingi:</strong> Kami pantau status pengajuan Anda sejak dokumen diserahkan hingga dana cair ke rekening Anda.</li>
-            <li className="flex items-start gap-2"><span className="text-yellow-500 font-bold mt-0.5">✔</span> <strong>Aman & Terpercaya:</strong> Data Anda langsung masuk ke sistem Adira Finance yang berizin dan diawasi oleh OJK.</li>
+          <ul className="space-y-4 text-slate-700 text-base mb-8 list-none pl-0">
+            <li className="flex items-start gap-3">
+              <span className="text-yellow-500 font-bold mt-1 flex-shrink-0">✔</span> 
+              <span><strong>Gratis Konsultasi:</strong> Dapatkan simulasi angsuran yang transparan sebelum Anda memutuskan untuk meminjam.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-yellow-500 font-bold mt-1 flex-shrink-0">✔</span> 
+              <span><strong>Jemput Bola:</strong> Kami bantu ambil dokumen langsung ke lokasi Anda (rumah/kantor) sehingga menghemat waktu Anda.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-yellow-500 font-bold mt-1 flex-shrink-0">✔</span> 
+              <span><strong>Proses Didampingi:</strong> Kami pantau status pengajuan Anda sejak dokumen diserahkan hingga dana cair ke rekening Anda.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-yellow-500 font-bold mt-1 flex-shrink-0">✔</span> 
+              <span><strong>Aman & Terpercaya:</strong> Data Anda langsung masuk ke sistem Adira Finance yang berizin dan diawasi oleh OJK.</span>
+            </li>
           </ul>
 
           <hr className="my-10 border-slate-200" />

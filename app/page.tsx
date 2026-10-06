@@ -211,16 +211,32 @@ export default async function HomePage() {
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-bold text-[#0B1E36] mb-4 flex items-center gap-2">
-                <span className="bg-yellow-400 text-slate-900 w-8 h-8 rounded-full flex items-center justify-center font-bold">2</span>
+              <h3 className="text-lg font-bold text-[#0B1E36] mb-6 flex items-center gap-2">
+                <span className="bg-yellow-400 text-slate-900 w-8 h-8 rounded-full flex items-center justify-center font-bold">2</span> 
                 Alur Pencairan Dana
               </h3>
-              <ul className="space-y-3 text-slate-600 text-base">
-                <li className="flex items-start gap-2"><span className="text-yellow-600 font-bold">A.</span> <strong>Konsultasi WA:</strong> Hubungi saya untuk simulasi angsuran.</li>
-                <li className="flex items-start gap-2"><span className="text-yellow-600 font-bold">B.</span> <strong>Jemput Dokumen:</strong> Saya bantu ambil berkas ke rumah Anda.</li>
-                <li className="flex items-start gap-2"><span className="text-yellow-600 font-bold">C.</span> <strong>Survei:</strong> Pengecekan kendaraan &amp; verifikasi data.</li>
-                <li className="flex items-start gap-2"><span className="text-yellow-600 font-bold">D.</span> <strong>Dana Cair:</strong> Ditransfer langsung ke rekening pribadi Anda.</li>
-              </ul>
+              <div className="relative border-l-2 border-slate-200 ml-4 space-y-6">
+                <div className="relative pl-6">
+                  <span className="absolute -left-[9px] top-1 bg-white border-2 border-yellow-400 w-4 h-4 rounded-full"></span>
+                  <strong className="text-slate-800 text-base block">1. Konsultasi WA</strong>
+                  <span className="text-slate-600 text-sm block mt-1">Hubungi saya untuk perhitungan simulasi angsuran awal.</span>
+                </div>
+                <div className="relative pl-6">
+                  <span className="absolute -left-[9px] top-1 bg-white border-2 border-yellow-400 w-4 h-4 rounded-full"></span>
+                  <strong className="text-slate-800 text-base block">2. Jemput Dokumen</strong>
+                  <span className="text-slate-600 text-sm block mt-1">Tidak perlu repot, saya bantu ambil berkas ke rumah Anda.</span>
+                </div>
+                <div className="relative pl-6">
+                  <span className="absolute -left-[9px] top-1 bg-white border-2 border-yellow-400 w-4 h-4 rounded-full"></span>
+                  <strong className="text-slate-800 text-base block">3. Survei & Verifikasi</strong>
+                  <span className="text-slate-600 text-sm block mt-1">Proses pengecekan kendaraan fisik & verifikasi data persetujuan.</span>
+                </div>
+                <div className="relative pl-6">
+                  <span className="absolute -left-[11px] top-0 bg-green-500 text-white w-5 h-5 rounded-full flex items-center justify-center shadow-sm font-bold text-xs ring-4 ring-white">✓</span>
+                  <strong className="text-green-700 text-base block font-extrabold">4. Dana Cair!</strong>
+                  <span className="text-slate-600 text-sm block mt-1">Dana pinjaman ditransfer utuh ke rekening pribadi Anda.</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

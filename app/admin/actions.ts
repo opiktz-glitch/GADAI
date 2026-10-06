@@ -238,7 +238,7 @@ Fokus Konten Tambahan:
 Struktur konten (sesuaikan dengan target pembaca):
 - Hero: judul + sublead + disclosure badge
 - Bagian edukatif: cara kerja gadai BPKB, dokumen yang dibutuhkan
-- Bagian penawaran: Tonjolkan keunggulan utama (${fokusKeunggulan}) untuk jenis kendaraan (${jenisKendaraan}).
+- Bagian penawaran: Tonjolkan keunggulan utama (${fokusKeunggulan}) untuk jenis kendaraan (${jenisKendaraan}). WAJIB menyisipkan penawaran promo "Gratis biaya take over" bagi nasabah yang ingin pindah kredit (Take Over).
 - Bagian kehati-hatian: cek legalitas sebelum lanjut
 - CTA akhir: Kalimat ajakan untuk menghubungi tim marketing (tanpa link/tombol)
 
@@ -371,6 +371,7 @@ ATURAN WAJIB (HARUS ADA):
 
 ATURAN TAMBAHAN:
 - Sebutkan satu atau dua nama daerah terkenal/jalan utama di ${kotaName} agar terkesan sangat lokal dan natural.
+- Sisipkan kalimat promosi penawaran "Gratis biaya take over" secara luwes dan natural bagi nasabah yang ingin pindah leasing.
 - Gunakan bahasa yang persuasif, tanpa menggunakan sapaan halo.
 - DILARANG menggunakan format markdown seperti bintang ganda (**) untuk menebalkan teks. Tulis murni teks biasa (plain text) saja.`;
 
