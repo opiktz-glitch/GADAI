@@ -7,18 +7,18 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://gadai.pojokberkah.online"),
+  metadataBase: new URL("https://gadaibpkbsyariah.com"),
   title: {
-    default: "Gadai BPKB Kendaraan | Gadai Pojok Berkah",
-    template: "%s | Gadai Pojok Berkah",
+    default: "Gadai BPKB Kendaraan | Gadai BPKB Syariah",
+    template: "%s | Gadai BPKB Syariah",
   },
   description: "Layanan gadai BPKB mobil dan motor terpercaya, proses cepat, aman, dan pencairan maksimal. Temukan simulasi dan cabang terdekat di kota Anda.",
   keywords: ["gadai bpkb", "pinjaman dana tunai", "gadai bpkb mobil", "gadai bpkb motor", "pinjaman cepat cair", "dana tunai", "gadai bpkb terdekat"],
   openGraph: {
     title: "Gadai BPKB Kendaraan Proses Cepat & Aman",
     description: "Proses pencairan dana kilat, tanpa ribet, dan dijamin aman. Temukan cabang terdekat di kota Anda sekarang.",
-    url: "https://gadai.pojokberkah.online",
-    siteName: "Gadai Pojok Berkah",
+    url: "https://gadaibpkbsyariah.com",
+    siteName: "Gadai BPKB Syariah",
     locale: "id_ID",
     type: "website",
   },

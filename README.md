@@ -1,8 +1,8 @@
-# 🚀 Gadai Pojok Berkah - Programmatic SEO (PSEO) Platform
+# 🚀 Gadai BPKB Syariah - Programmatic SEO (PSEO) Platform
 
 Website rujukan dan informasi gadai BPKB berskala raksasa, dirancang khusus untuk mendominasi pencarian SEO lokal di berbagai kota di Indonesia. Proyek ini dibangun menggunakan **Next.js 15 (App Router)**, **Firebase Firestore**, dan terintegrasi dengan **Google Gemini AI**.
 
-**Domain Live:** [https://gadai.pojokberkah.online](https://gadai.pojokberkah.online)
+**Domain Live:** [https://gadaibpkbsyariah.com](https://gadaibpkbsyariah.com)
 
 ---
 

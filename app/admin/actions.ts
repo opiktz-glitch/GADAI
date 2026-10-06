@@ -177,24 +177,22 @@ export async function generateArticleAI(formData: FormData) {
   const panjang = formData.get("panjang")?.toString() || "800-1200 kata";
   const tone = formData.get("tone")?.toString() || "edukatif netral";
 
-  const prompt = `Buatkan/revisi konten halaman web untuk Pojok Berkah, sebuah platform informasi dan rujukan gadai BPKB, dengan ketentuan berikut:
+  const prompt = `Buatkan/revisi konten halaman web untuk Gadai BPKB Syariah, dengan penekanan sebagai Marketing Resmi AXI Adira Finance, dengan ketentuan berikut:
 
 Positioning (wajib, tidak bisa ditawar):
-- Pojok Berkah adalah platform rujukan/perbandingan, BUKAN lembaga pemberi pinjaman, bukan penyimpan BPKB, dan tidak mencairkan dana.
-- Semua proses pengajuan, verifikasi, dan pencairan dana dilakukan oleh lembaga mitra yang berizin OJK, bukan oleh Pojok Berkah.
-- Jangan gunakan klaim kepemilikan proses seperti "kami cairkan dana", "BPKB Anda kami simpan", "hubungi layanan pelanggan kami" (untuk hal yang sebenarnya dilakukan lembaga mitra).
-- Boleh gunakan: "kami bantu Anda menemukan/membandingkan", "mitra kami akan...", "lembaga rujukan kami".
+- Identitas utama adalah sebagai Marketing Resmi AXI Adira Finance, BUKAN lembaga pemberi pinjaman yang mencairkan dana secara langsung.
+- Semua proses verifikasi, persetujuan, dan pencairan dana dilakukan langsung oleh Adira Finance, bukan oleh agen marketing.
+- Jangan gunakan klaim kepemilikan proses seperti "kami cairkan dana" atau "BPKB Anda kami simpan".
+- Boleh gunakan: "kami bantu proses pengajuan Anda ke Adira", "Adira Finance akan memproses", "pencairan oleh Adira Finance".
 
 Elemen yang wajib ada di setiap halaman:
 - Satu H1 saja per halaman (headline utama, spesifik pada isi halaman).
-- Badge/kalimat disclosure singkat: platform rujukan, bukan pemberi pinjaman.
-- Ajakan untuk mengecek legalitas lembaga di ojk.go.id atau kontak OJK 157, sebelum CTA.
-- CTA yang jujur: mengarahkan ke bantuan mencari mitra, bukan "ajukan pinjaman sekarang".
+- Penjelasan singkat bahwa pengajuan dilakukan secara resmi melalui sistem Adira Finance yang berizin dan diawasi OJK.
+- CTA yang mengarahkan untuk chat via WhatsApp kepada Marketing Resmi Adira Finance.
 
 Yang harus dihindari:
-- Klaim jaminan seperti "100% Aman", "Pencairan Maksimal", "Dijamin Cair" tanpa syarat.
-- Testimoni atau angka (jumlah nasabah, rating) yang tidak bisa diverifikasi.
-- Bahasa yang menyiratkan Pojok Berkah adalah lembaga jasa keuangan berizin.
+- Klaim jaminan seperti "Pasti Cair", "Tanpa Survey", atau "Pencairan 100%" tanpa syarat ketentuan.
+- Menyebutkan bahwa website ini adalah website resmi Adira Finance (hanya Marketing Resmi AXI Adira).
 
 Struktur konten (sesuaikan dengan target pembaca):
 - Hero: judul + sublead + disclosure badge

@@ -4,7 +4,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Blog & Informasi Kota",
-  description: "Daftar informasi dan simulasi pencairan di berbagai kota cabang Gadai Pojok Berkah.",
+  description: "Daftar informasi dan simulasi pencairan di berbagai kota cabang Gadai BPKB Syariah.",
 };
 
 import { getAllKota } from "@/lib/kota";
