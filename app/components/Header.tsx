@@ -8,15 +8,15 @@ export default function Header() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group" aria-label="Beranda Gadai Pojok Berkah">
+          <Link href="/" className="flex items-center space-x-3 group" aria-label="Beranda AXI Agen Adira">
             <Image 
-              src="/logo.jpg" 
-              alt="Logo Gadai Pojok Berkah" 
-              width={40} 
-              height={40} 
-              className="rounded-lg group-hover:scale-105 transition-transform"
+              src="/logo-axi-v3-web.png" 
+              alt="Logo AXI Agen Adira Beraxi" 
+              width={240} 
+              height={120} 
+              priority
+              className="h-12 sm:h-14 w-auto object-contain group-hover:opacity-90 transition-opacity"
             />
-            <span className="font-bold text-xl text-slate-900 hidden sm:block">Pojok Berkah</span>
           </Link>
 
           {/* Navigation - SEO Semantic <nav> */}
