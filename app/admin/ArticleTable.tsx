@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Article, Kota, Config } from "@/lib/kota";
+import type { Article, Kota, Config } from "@/lib/kota";
+const slugify = (text: string) => text.toString().toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-');
 import { Pencil, Trash2, Check, X, Eye, Shuffle } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -71,9 +72,22 @@ export default function ArticleTable({ articles, kotaList, config }: { articles:
                   return tb - ta; // Newest first
                 });
                 
+                const provinsiSet = new Set(kotaList.map(k => k.provinsi));
+                const provinsiNames = Array.from(provinsiSet);
+
                 sortedArticles.forEach(a => {
                   const locs: { slug: string, name: string, views: number, allowRandom: boolean | undefined, isPusat: boolean }[] = [];
                   if (config.assignedArticleId === a.id) locs.push({ slug: "pusat", name: "Pusat", views: config.views || 0, allowRandom: config.allowRandom, isPusat: true });
+                  
+                  if (config.provinsiArticles) {
+                    Object.entries(config.provinsiArticles).forEach(([provSlug, artId]) => {
+                      if (artId === a.id) {
+                        const provName = provinsiNames.find(p => slugify(p) === provSlug) || provSlug;
+                        locs.push({ slug: `provinsi_${provSlug}`, name: `Prov. ${provName}`, views: 0, allowRandom: false, isPusat: true });
+                      }
+                    });
+                  }
+
                   kotaList.forEach(k => {
                     if (k.assignedArticleId === a.id) locs.push({ slug: k.slug, name: k.nama_kota, views: k.views || 0, allowRandom: k.allowRandom, isPusat: false });
                   });

@@ -152,10 +152,26 @@ export async function addArticle(formData: FormData) {
   });
 
   if (targetKota) {
-    await db.collection('kota').doc(targetKota).update({
-      assignedArticleId: newId,
-      allowRandom: false
-    });
+    if (targetKota === "pusat") {
+      await db.collection('config').doc('main').set({
+        assignedArticleId: newId
+      }, { merge: true });
+    } else if (targetKota.startsWith("provinsi_")) {
+      const provSlug = targetKota.replace("provinsi_", "");
+      const configDoc = await db.collection('config').doc('main').get();
+      const configData = configDoc.exists ? configDoc.data() : {};
+      const provinsiArticles = configData?.provinsiArticles || {};
+      provinsiArticles[provSlug] = newId;
+      
+      await db.collection('config').doc('main').set({
+        provinsiArticles
+      }, { merge: true });
+    } else {
+      await db.collection('kota').doc(targetKota).update({
+        assignedArticleId: newId,
+        allowRandom: false
+      });
+    }
   }
 
   revalidatePath("/", "layout");
@@ -194,9 +210,15 @@ export async function generateArticleAI(formData: FormData) {
 
   let kotaInstruksi = "";
   if (kotaSlug) {
-    // Ambil nama kota dari slug
-    const kotaDoc = await db.collection('kota').doc(kotaSlug).get();
-    const namaKota = kotaDoc.exists ? kotaDoc.data()?.nama_kota || kotaSlug : kotaSlug;
+    let namaKota = kotaSlug;
+    if (kotaSlug.startsWith("provinsi_")) {
+      const rawName = kotaSlug.replace("provinsi_", "").replace(/-/g, " ");
+      // Capitalize first letters
+      namaKota = "Provinsi " + rawName.replace(/\b\w/g, c => c.toUpperCase());
+    } else {
+      const kotaDoc = await db.collection('kota').doc(kotaSlug).get();
+      namaKota = kotaDoc.exists ? kotaDoc.data()?.nama_kota || kotaSlug : kotaSlug;
+    }
     
     kotaInstruksi = `
 PENTING: Artikel ini dibuat KHUSUS untuk kota **${namaKota}**.
@@ -345,6 +367,16 @@ export async function assignArticleToKota(formData: FormData) {
   if (kotaSlug === "pusat") {
     await db.collection('config').doc('main').set({
       assignedArticleId: articleId
+    }, { merge: true });
+  } else if (kotaSlug.startsWith("provinsi_")) {
+    const provSlug = kotaSlug.replace("provinsi_", "");
+    const configDoc = await db.collection('config').doc('main').get();
+    const configData = configDoc.exists ? configDoc.data() : {};
+    const provinsiArticles = configData?.provinsiArticles || {};
+    provinsiArticles[provSlug] = articleId;
+    
+    await db.collection('config').doc('main').set({
+      provinsiArticles
     }, { merge: true });
   } else {
     await db.collection('kota').doc(kotaSlug).update({

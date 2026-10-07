@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { generateArticleAI, addArticle } from "./actions";
 import { Loader2 } from "lucide-react";
-import { Kota } from "@/lib/kota";
+import type { Kota } from "@/lib/kota";
+const slugify = (text: string) => text.toString().toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-');
 
 export default function AIGenerator({ kotaList }: { kotaList: Kota[] }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -11,6 +12,12 @@ export default function AIGenerator({ kotaList }: { kotaList: Kota[] }) {
   const [metaDesc, setMetaDesc] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [selectedKota, setSelectedKota] = useState("");
+
+  const provinsiSet = new Set(kotaList.map(k => k.provinsi));
+  const provinsiList = Array.from(provinsiSet).map(p => ({
+    nama: p,
+    slug: `provinsi_${slugify(p)}`
+  }));
 
   const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,9 +62,16 @@ export default function AIGenerator({ kotaList }: { kotaList: Kota[] }) {
             <label className="block text-xs font-medium text-purple-700 mb-1">Target Kota</label>
             <select name="kota" className="w-full rounded-md border-purple-200 px-3 py-2 text-sm focus:border-purple-500 focus:ring-purple-500" disabled={isLoading}>
               <option value="">-- Artikel Global (Tanpa Kota) --</option>
-              {kotaList.map(k => (
-                <option key={k.slug} value={k.slug}>{k.nama_kota}</option>
-              ))}
+              <optgroup label="Halaman Provinsi">
+                {provinsiList.map(p => (
+                  <option key={p.slug} value={p.slug}>Provinsi {p.nama}</option>
+                ))}
+              </optgroup>
+              <optgroup label="Halaman Kota">
+                {kotaList.map(k => (
+                  <option key={k.slug} value={k.slug}>{k.nama_kota}</option>
+                ))}
+              </optgroup>
             </select>
           </div>
           <div>

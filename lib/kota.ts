@@ -1,4 +1,5 @@
 import { db } from "@/lib/firebase";
+import { cache } from "react";
 
 export type Kota = {
   slug: string;
@@ -24,6 +25,7 @@ export type Config = {
   assignedArticleId?: string;
   views?: number;
   allowRandom?: boolean;
+  provinsiArticles?: Record<string, string>;
 };
 
 export type Article = {
@@ -35,22 +37,47 @@ export type Article = {
   shortId?: string;
 };
 
-export async function getAllKota(): Promise<Kota[]> {
+export const getAllKota = cache(async (): Promise<Kota[]> => {
   const snapshot = await db.collection('kota').get();
   return snapshot.docs.map(doc => doc.data() as Kota);
-}
+});
 
-export async function getKotaBySlug(slug: string): Promise<Kota | undefined> {
+export const getKotaBySlug = cache(async (slug: string): Promise<Kota | undefined> => {
   const doc = await db.collection('kota').doc(slug).get();
   if (!doc.exists) return undefined;
   return doc.data() as Kota;
+});
+
+export function slugify(text: string): string {
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+    .replace(/^-+/, '')             // Trim - from start of text
+    .replace(/-+$/, '');            // Trim - from end of text
 }
 
-export async function getConfig(): Promise<Config> {
+export const getUniqueProvinsi = cache(async (): Promise<{ nama: string, slug: string }[]> => {
+  const kotaList = await getAllKota();
+  const provinsiSet = new Set(kotaList.map(k => k.provinsi));
+  return Array.from(provinsiSet).map(p => ({
+    nama: p,
+    slug: slugify(p)
+  }));
+});
+
+export const getCitiesByProvinsiSlug = cache(async (provinsiSlug: string): Promise<Kota[]> => {
+  const kotaList = await getAllKota();
+  return kotaList.filter(k => slugify(k.provinsi) === provinsiSlug);
+});
+
+export const getConfig = cache(async (): Promise<Config> => {
   const doc = await db.collection('config').doc('main').get();
   if (!doc.exists) return { whatsapp_pusat: "6287724039666" };
   return doc.data() as Config;
-}
+});
 
 export async function getAllArticles(): Promise<Article[]> {
   const snapshot = await db.collection('articles').get();

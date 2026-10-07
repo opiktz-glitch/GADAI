@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllKota, getKotaBySlug, formatRupiah, getConfig, getArticleById } from "@/lib/kota";
+import { getAllKota, getKotaBySlug, formatRupiah, getConfig, getArticleById, slugify } from "@/lib/kota";
 import { MapPin, Clock, CheckCircle2, MessageCircle, Map, Quote } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -11,12 +11,15 @@ import WhatsAppButton from "@/app/components/WhatsAppButton";
 export const revalidate = 86400; // ISR: 1 hari (24 jam)
 
 type Props = {
-  params: Promise<{ kota: string }>;
+  params: Promise<{ provinsi: string; kota: string }>;
 };
 
 export async function generateStaticParams() {
   const kotaList = await getAllKota();
-  return kotaList.map((k) => ({ kota: k.slug }));
+  return kotaList.map((k) => ({ 
+    provinsi: slugify(k.provinsi),
+    kota: k.slug 
+  }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -37,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: `/simulasi-gadai-bpkb/${kota.slug}` },
+    alternates: { canonical: `/simulasi-gadai-bpkb/${p.provinsi}/${kota.slug}` },
     openGraph: { title, description },
   };
 }
@@ -84,8 +87,14 @@ export default async function KotaPage({ params }: Props) {
         {
           "@type": "ListItem",
           position: 2,
+          name: `Gadai BPKB ${kota.provinsi}`,
+          item: `https://www.gadaibpkb.co.id/simulasi-gadai-bpkb/${p.provinsi}`
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
           name: `Gadai BPKB ${kota.nama_kota}`,
-          item: `https://www.gadaibpkb.co.id/simulasi-gadai-bpkb/${kota.slug}`
+          item: `https://www.gadaibpkb.co.id/simulasi-gadai-bpkb/${p.provinsi}/${kota.slug}`
         }
       ]
     }
@@ -108,7 +117,11 @@ export default async function KotaPage({ params }: Props) {
         <div className="relative mx-auto max-w-4xl text-center">
           <div className="mb-4 flex items-center justify-center space-x-2 text-yellow-400">
             <MapPin className="h-5 w-5" />
-            <span className="text-sm font-bold uppercase tracking-wider">Layanan Khusus {kota.provinsi}</span>
+            <span className="text-sm font-bold uppercase tracking-wider">
+              <Link href={`/simulasi-gadai-bpkb/${p.provinsi}`} className="hover:text-yellow-200 transition-colors">
+                Layanan Khusus {kota.provinsi}
+              </Link>
+            </span>
           </div>
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl text-white">
             Gadai BPKB Kendaraan di <span className="text-yellow-400">{kota.nama_kota}</span>
@@ -119,81 +132,7 @@ export default async function KotaPage({ params }: Props) {
         </div>
       </section>
 
-      {/* Main Content */}
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        
-        {/* Highlight Stats Card (Floating) */}
-        <div className="relative -mt-10 mb-12 grid grid-cols-1 gap-4 sm:-mt-12 sm:grid-cols-3">
-          <div className="rounded-xl bg-white p-6 shadow-xl shadow-slate-900/10 ring-1 ring-slate-100 transition hover:shadow-2xl">
-            <div className="flex items-center space-x-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100 text-yellow-600">
-                <Map className="h-6 w-6" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-slate-500">Cabang Tersedia</p>
-                <p className="text-2xl font-bold text-slate-900">{kota.jumlah_cabang} Lokasi</p>
-              </div>
-            </div>
-          </div>
-          <div className="rounded-xl bg-white p-6 shadow-xl shadow-slate-900/10 ring-1 ring-slate-100 transition hover:shadow-2xl sm:col-span-2">
-            <div className="flex items-center space-x-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-green-600">
-                <Clock className="h-6 w-6" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-slate-500">Estimasi Dana Cair</p>
-                <p className="text-xl font-bold text-slate-900 sm:text-2xl">
-                  {formatRupiah(kota.estimasi_pencairan_min)} - {formatRupiah(kota.estimasi_pencairan_max)}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
-          {/* Left Column */}
-          <div className="space-y-10">
-            <section>
-              <h2 className="text-2xl font-bold text-slate-900">Kendaraan Populer</h2>
-              <p className="mt-2 text-slate-600">Merk yang paling sering diajukan di area {kota.nama_kota}:</p>
-              <ul className="mt-4 space-y-3">
-                {kota.kendaraan_populer.map((v) => (
-                  <li key={v} className="flex items-center text-slate-700">
-                    <CheckCircle2 className="mr-3 h-5 w-5 text-indigo-500" />
-                    <span className="font-medium">{v}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </div>
-
-          {/* Right Column */}
-          <div className="space-y-10">
-            <section className="relative rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
-              <Quote className="absolute -left-4 -top-4 h-12 w-12 text-slate-200" />
-              <div className="relative">
-                <p className="text-lg italic leading-relaxed text-slate-700">
-                  "{kota.testimoni}"
-                </p>
-                <div className="mt-6 flex items-center justify-between">
-                  <div>
-                    <p className="font-semibold text-slate-900">Marketing Lokal</p>
-                    <p className="text-sm text-slate-500">{kota.nama_marketing_lokal}</p>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section>
-              <h2 className="text-lg font-semibold text-slate-900">Lokasi Cabang Utama</h2>
-              <p className="mt-2 flex items-start text-slate-600">
-                <MapPin className="mr-2 mt-1 h-5 w-5 flex-shrink-0 text-slate-400" />
-                {kota.alamat_cabang_utama}
-              </p>
-            </section>
-          </div>
-        </div>
-      </div>
+      {/* Main Content dihilangkan sesuai permintaan */}
 
       {/* Localized SEO Article Section */}
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 mt-12 mb-8">
@@ -204,6 +143,7 @@ export default async function KotaPage({ params }: Props) {
                 remarkPlugins={[remarkGfm]}
                 components={{
                   h1: ({ node, ...props }: any) => <h2 className="text-center text-2xl font-bold mt-6 mb-4 text-[#0B1E36]" {...props} />,
+                  p: ({ node, ...props }: any) => <p className="text-justify leading-relaxed mb-4" {...props} />,
                   img: ({ node, ...props }: any) => (
                     <img 
                       {...props} 
@@ -226,22 +166,10 @@ export default async function KotaPage({ params }: Props) {
             <>
               <h2 className="text-2xl font-bold text-slate-900 mb-4">Layanan Gadai BPKB Terpercaya di {kota.nama_kota}, {kota.provinsi}</h2>
               <p className="text-slate-700 mb-4 leading-relaxed">
-                Mencari tempat pinjaman dana tunai dengan jaminan BPKB di wilayah <strong>{kota.nama_kota}</strong> kini semakin mudah. Kami memahami bahwa kebutuhan finansial bisa datang kapan saja, baik untuk modal usaha bagi warga {kota.nama_kota}, biaya pendidikan, atau kebutuhan mendesak lainnya. Dengan {kota.jumlah_cabang} cabang yang tersebar strategis di area {kota.nama_kota}, kami siap memberikan pelayanan terbaik dengan proses yang aman dan transparan.
+                Mencari tempat pinjaman dana tunai dengan jaminan BPKB di wilayah <strong>{kota.nama_kota}</strong> kini semakin mudah. Kami memahami bahwa kebutuhan finansial bisa datang kapan saja, baik untuk modal usaha bagi warga {kota.nama_kota}, biaya pendidikan, atau kebutuhan mendesak lainnya. Kami siap memberikan pelayanan terbaik dengan proses yang aman dan transparan.
               </p>
-
-              <h3 className="text-xl font-bold text-slate-900 mt-8 mb-3">Keuntungan Gadai BPKB di Cabang {kota.nama_kota}</h3>
-              <p className="text-slate-700 mb-4 leading-relaxed">
-                Dibandingkan mencari pinjaman tanpa jaminan, mempercayakan agunan BPKB Anda kepada kami di {kota.nama_kota} memberikan sejumlah keunggulan khusus:
-              </p>
-              <ul className="list-disc pl-5 text-slate-700 mb-6 space-y-2">
-                <li><strong>Pencairan Tinggi:</strong> Dapatkan pencairan mulai dari {formatRupiah(kota.estimasi_pencairan_min)} hingga {formatRupiah(kota.estimasi_pencairan_max)}, disesuaikan dengan nilai pasaran kendaraan Anda di {kota.provinsi}.</li>
-                <li><strong>Proses Super Kilat:</strong> Tim lapangan kami siap menjemput bola, dan jika disetujui, dana bisa cair dalam estimasi waktu {kota.waktu_proses_jam} jam saja.</li>
-                <li><strong>Kendaraan Tetap Anda Gunakan:</strong> Anda cukup menjaminkan BPKB. Kendaraan seperti {kota.kendaraan_populer[0] || 'mobil/motor Anda'} tetap bisa digunakan untuk beraktivitas sehari-hari mengitari {kota.nama_kota}.</li>
-              </ul>
-
-              <h3 className="text-xl font-bold text-slate-900 mt-8 mb-3">Hubungi Spesialis Kami Hari Ini</h3>
               <p className="text-slate-700 leading-relaxed">
-                Tidak perlu ragu atau repot keluar rumah, Anda bisa berkonsultasi secara online. Perwakilan resmi kami, <strong>{kota.nama_marketing_lokal}</strong>, siap membantu memandu Anda dan menghitung simulasi angsuran yang paling ringan. Datang langsung ke kantor kami di <em>{kota.alamat_cabang_utama}</em> atau cukup tekan tombol WhatsApp di layar Anda untuk respon instan tanpa biaya apapun!
+                Silakan ajukan pinjaman Anda sekarang juga atau buat artikel melalui Panel Admin untuk menggantikan teks bawaan ini.
               </p>
             </>
           )}
@@ -287,7 +215,7 @@ export default async function KotaPage({ params }: Props) {
               {relatedCities.map((rc) => (
                 <Link 
                   key={rc.slug} 
-                  href={`/simulasi-gadai-bpkb/${rc.slug}`} 
+                  href={`/simulasi-gadai-bpkb/${slugify(rc.provinsi)}/${rc.slug}`} 
                   className="px-4 py-2 bg-slate-100 text-slate-700 hover:bg-blue-600 hover:text-white rounded-lg text-sm font-medium transition-colors"
                 >
                   Gadai BPKB {rc.nama_kota}
