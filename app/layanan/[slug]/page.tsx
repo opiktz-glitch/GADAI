@@ -15,13 +15,47 @@ const layananData: Record<string, { title: string, subtitle: string, waText: str
         <p className="text-base leading-relaxed mb-6">
           Untuk mempercepat proses pengajuan dana tunai atau kredit di Adira Finance, pastikan Anda telah menyiapkan dokumen-dokumen dasar berikut:
         </p>
-        <ul className="space-y-3 text-slate-600 text-base mb-8">
-          <li className="flex items-start gap-2"><span className="text-green-500 font-bold mt-0.5">✔</span> <strong>KTP Asli:</strong> KTP Pemohon dan Pasangan (jika sudah menikah).</li>
-          <li className="flex items-start gap-2"><span className="text-green-500 font-bold mt-0.5">✔</span> <strong>Kartu Keluarga (KK):</strong> Fotokopi atau dokumen asli untuk diverifikasi.</li>
-          <li className="flex items-start gap-2"><span className="text-green-500 font-bold mt-0.5">✔</span> <strong>Bukti Penghasilan:</strong> Slip Gaji (karyawan) atau Rekening Koran / Bukti Usaha (wiraswasta).</li>
-          <li className="flex items-start gap-2"><span className="text-green-500 font-bold mt-0.5">✔</span> <strong>Dokumen Kendaraan:</strong> STNK dan BPKB asli kendaraan yang akan dijaminkan.</li>
-          <li className="flex items-start gap-2"><span className="text-green-500 font-bold mt-0.5">✔</span> <strong>Bukti Domisili:</strong> Rekening listrik / PBB / Surat Domisili (jika alamat tinggal berbeda dengan KTP).</li>
-        </ul>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 not-prose">
+          <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:border-blue-400 hover:shadow-md transition-all">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold">1</span>
+              <h3 className="font-bold text-[#0B1E36] text-lg">KTP Asli</h3>
+            </div>
+            <p className="text-slate-600 text-sm pl-11">KTP Pemohon dan Pasangan (jika sudah menikah).</p>
+          </div>
+          
+          <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:border-blue-400 hover:shadow-md transition-all">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold">2</span>
+              <h3 className="font-bold text-[#0B1E36] text-lg">Kartu Keluarga (KK)</h3>
+            </div>
+            <p className="text-slate-600 text-sm pl-11">Fotokopi atau dokumen asli untuk keperluan diverifikasi.</p>
+          </div>
+
+          <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:border-blue-400 hover:shadow-md transition-all">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold">3</span>
+              <h3 className="font-bold text-[#0B1E36] text-lg">Bukti Penghasilan</h3>
+            </div>
+            <p className="text-slate-600 text-sm pl-11">Slip Gaji (karyawan) atau Rekening Koran / Bukti Usaha (wiraswasta).</p>
+          </div>
+
+          <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:border-blue-400 hover:shadow-md transition-all">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold">4</span>
+              <h3 className="font-bold text-[#0B1E36] text-lg">Dokumen Kendaraan</h3>
+            </div>
+            <p className="text-slate-600 text-sm pl-11">STNK dan BPKB asli kendaraan yang akan dijaminkan.</p>
+          </div>
+
+          <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm hover:border-blue-400 hover:shadow-md transition-all sm:col-span-2">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold">5</span>
+              <h3 className="font-bold text-[#0B1E36] text-lg">Bukti Domisili</h3>
+            </div>
+            <p className="text-slate-600 text-sm pl-11">Rekening listrik / PBB / Surat Domisili (Jika alamat tinggal berbeda dengan alamat KTP).</p>
+          </div>
+        </div>
 
         <h2 className="text-2xl font-bold text-[#0B1E36] mb-4 mt-10">Proses Verifikasi (Survei)</h2>
         <p className="text-base leading-relaxed mb-6">
