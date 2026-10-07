@@ -26,7 +26,8 @@ export default function WhatsAppButton({
       href={url}
       target="_blank"
       rel="noreferrer"
-      className="flex w-full items-center justify-center space-x-2 rounded-full bg-green-500 px-6 py-4 text-center font-bold text-white shadow-xl transition-transform hover:scale-105 hover:bg-green-600 sm:w-auto"
+        className="flex w-full items-center justify-center space-x-2 rounded-full bg-green-700 px-6 py-4 text-center font-bold text-white shadow-xl transition-transform hover:scale-105 hover:bg-green-800 sm:w-auto"
+
     >
       <MessageCircle className="h-6 w-6" />
       <span>{buttonText}</span>

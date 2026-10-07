@@ -58,7 +58,7 @@ export default async function Footer() {
             </address>
           </div>
           
-          <div className="pt-8 border-t border-slate-800 text-center text-sm text-slate-500 flex flex-col md:flex-row justify-between items-center">
+          <div className="pt-8 border-t border-slate-800 text-center text-sm text-slate-400 flex flex-col md:flex-row justify-between items-center">
             <p>&copy; {new Date().getFullYear()} AXI Marketing Adira Beraxi. Hak Cipta Dilindungi.</p>
           </div>
         </div>
