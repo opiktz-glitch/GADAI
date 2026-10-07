@@ -13,6 +13,7 @@ export default async function Footer() {
           alt="AXI Adira Finance - Dicicil Aja - Otoritas Jasa Keuangan (OJK)" 
           width={1600} 
           height={200} 
+          sizes="(max-width: 768px) 300px, 400px"
           className="h-14 sm:h-16 w-auto object-contain"
           priority={false}
         />

@@ -32,6 +32,7 @@ export default function Header() {
                 alt="Logo AXI Marketing Adira Beraxi" 
                 width={240} 
                 height={120} 
+                sizes="150px"
                 priority
                 className="h-12 sm:h-16 w-auto object-contain group-hover:opacity-90 transition-all"
               />
