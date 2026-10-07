@@ -69,7 +69,7 @@ export default function Header() {
               {/* Dropdown Menu */}
               <div className="absolute top-full left-0 w-64 bg-white border border-slate-100 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden">
                 <ul className="py-2">
-                  <li><Link href="/layanan/simulasi-angsuran" className="block px-5 py-3 text-sm font-bold text-yellow-600 hover:bg-yellow-50 transition-colors border-b border-slate-50">Tabel Simulasi Angsuran</Link></li>
+                  <li><Link href="/layanan/simulasi-angsuran" className="block px-5 py-3 text-sm font-bold text-amber-700 hover:bg-yellow-50 transition-colors border-b border-slate-50">Tabel Simulasi Angsuran</Link></li>
                   <li><Link href="/layanan/syarat-dan-proses" className="block px-5 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-red-600 transition-colors border-b border-slate-50">Syarat &amp; Proses Gadai BPKB</Link></li>
                   <li><Link href="/layanan/cara-pengajuan" className="block px-5 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-red-600 transition-colors">Cara Pengajuan Gadai BPKB</Link></li>
                 </ul>
@@ -86,7 +86,7 @@ export default function Header() {
               href="https://wa.me/6287724039666" 
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-2 px-3 sm:py-2.5 sm:px-6 rounded-md transition-colors shadow-sm tracking-wide text-[11px] sm:text-sm flex items-center gap-1.5 sm:gap-2"
+              className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-3 sm:py-2.5 sm:px-6 rounded-md transition-colors shadow-sm tracking-wide text-[11px] sm:text-sm flex items-center gap-1.5 sm:gap-2"
               aria-label="Hubungi kami via WhatsApp"
             >
               <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />

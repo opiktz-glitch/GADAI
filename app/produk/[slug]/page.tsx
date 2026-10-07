@@ -200,7 +200,7 @@ export default async function ProdukPage({ params }: { params: Promise<{ slug: s
                 href={`https://wa.me/${noHp.replace('+', '')}?text=${encodeURIComponent(product.waText)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
+                className="inline-flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
               >
                 <span>💬</span> Hubungi via WhatsApp
               </a>
@@ -218,7 +218,7 @@ export default async function ProdukPage({ params }: { params: Promise<{ slug: s
                <Link 
                  key={s} 
                  href={`/produk/${s}`}
-                 className="px-6 py-3 bg-white border border-slate-200 rounded-full text-slate-700 font-medium hover:border-yellow-400 hover:text-yellow-600 transition-colors shadow-sm"
+                 className="px-6 py-3 bg-white border border-slate-200 rounded-full text-slate-700 font-medium hover:border-yellow-400 hover:text-amber-700 transition-colors shadow-sm"
                >
                  {productData[s].title}
                </Link>

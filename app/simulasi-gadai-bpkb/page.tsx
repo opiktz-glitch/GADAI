@@ -20,7 +20,7 @@ export default async function HubProvinsiPage() {
         
         {/* Header Section */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center p-3 bg-yellow-100 text-yellow-600 rounded-full mb-4">
+          <div className="inline-flex items-center justify-center p-3 bg-yellow-100 text-amber-700 rounded-full mb-4">
             <Map className="w-8 h-8" />
           </div>
           <h1 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">

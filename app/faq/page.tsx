@@ -64,7 +64,7 @@ export default function FAQPage() {
           <div className="mt-12 bg-yellow-50 rounded-xl p-6 text-center border border-yellow-200">
             <h4 className="font-bold text-slate-800 mb-2">Masih punya pertanyaan lain?</h4>
             <p className="text-slate-600 mb-4">Jangan ragu untuk berkonsultasi langsung dengan tim Marketing kami (Gratis!).</p>
-            <a href="https://wa.me/6287724039666" className="inline-flex items-center justify-center bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-2.5 px-6 rounded-full transition-colors">
+            <a href="https://wa.me/6287724039666" className="inline-flex items-center justify-center bg-green-700 hover:bg-green-800 text-white font-bold py-2.5 px-6 rounded-full transition-colors">
               Hubungi via WhatsApp
             </a>
           </div>

@@ -79,7 +79,7 @@ export default async function TentangKami() {
               href={`https://wa.me/${noHp.replace('+', '')}?text=${encodeURIComponent(waMessageTemplate)}`}
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
+              className="inline-flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
             >
               <span>💬</span> Chat Konsultasi Gratis
             </a>

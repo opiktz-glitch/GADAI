@@ -185,13 +185,13 @@ export default async function KotaPage({ params }: Props) {
 
           {/* CTA Hubungi */}
           <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center mt-12">
-            <p className="text-slate-700 font-semibold mb-4">📞 Hubungi saya sekarang untuk konsultasi <span className="text-yellow-600">GRATIS</span></p>
+            <p className="text-slate-700 font-semibold mb-4">📞 Hubungi saya sekarang untuk konsultasi <span className="text-amber-700">GRATIS</span></p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a
                 href={`https://wa.me/${config.whatsapp_pusat.replace('+', '')}?text=${encodeURIComponent(waMessageTemplate)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
+                className="inline-flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
               >
                 <span>💬</span> Chat via WhatsApp
               </a>

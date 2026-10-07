@@ -125,7 +125,7 @@ export const TableMotor = () => {
                   </button>
                   <button 
                     type="submit"
-                    className="w-full sm:w-2/3 bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-2.5 px-4 rounded-lg transition-colors shadow-md text-center flex items-center justify-center gap-2 text-sm"
+                    className="w-full sm:w-2/3 bg-green-700 hover:bg-green-800 text-white font-bold py-2.5 px-4 rounded-lg transition-colors shadow-md text-center flex items-center justify-center gap-2 text-sm"
                   >
                     <span>💬</span> Lanjut via WA
                   </button>
@@ -259,7 +259,7 @@ export const TableMobil = () => {
                   </button>
                   <button 
                     type="submit"
-                    className="w-full sm:w-2/3 bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-2.5 px-4 rounded-lg transition-colors shadow-md text-center flex items-center justify-center gap-2 text-sm"
+                    className="w-full sm:w-2/3 bg-green-700 hover:bg-green-800 text-white font-bold py-2.5 px-4 rounded-lg transition-colors shadow-md text-center flex items-center justify-center gap-2 text-sm"
                   >
                     <span>💬</span> Lanjut via WA
                   </button>

@@ -88,7 +88,7 @@ export default async function HomePage() {
               <p className="text-slate-500 text-base mb-4">Siap membantu kebutuhan pembiayaan Anda dengan proses cepat &amp; aman</p>
               <a
                 href={`tel:${cabangUtama.noHp}`}
-                className="inline-block text-2xl sm:text-3xl font-extrabold text-[#0B1E36] hover:text-yellow-600 transition-colors border-b-4 border-yellow-400 pb-1"
+                className="inline-block text-2xl sm:text-3xl font-extrabold text-[#0B1E36] hover:text-amber-700 transition-colors border-b-4 border-yellow-400 pb-1"
               >
                 {cabangUtama.noHp}
               </a>
@@ -144,13 +144,13 @@ export default async function HomePage() {
 
             {/* CTA Hubungi */}
             <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
-              <p className="text-slate-700 font-semibold mb-4">📞 Hubungi saya sekarang untuk konsultasi <span className="text-yellow-600">GRATIS</span></p>
+              <p className="text-slate-700 font-semibold mb-4">📞 Hubungi saya sekarang untuk konsultasi <span className="text-amber-700">GRATIS</span></p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <a
                   href={`https://wa.me/${cabangUtama.noHp.replace('+', '')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebd5c] text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
+                  className="inline-flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
                 >
                   <span>💬</span> Chat via WhatsApp
                 </a>
