@@ -120,29 +120,20 @@ export default async function ProvinsiPage({ params }: Props) {
         </div>
 
         {/* Grid Cards for Cities */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {cities.map((city, index) => (
             <Link 
               href={`/simulasi-gadai-bpkb/${p.provinsi}/${city.slug}`} 
               key={index}
-              className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-400 hover:-translate-y-1 transition-all group flex flex-col h-full"
+              className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-400 hover:-translate-y-1 transition-all group flex items-center justify-between"
             >
-              {/* Card Header */}
-              <div className="flex items-center text-slate-400 mb-4">
-                <MapPin className="w-4 h-4 mr-2 text-blue-500" />
-                <span className="text-xs font-semibold tracking-wider uppercase text-blue-500">{city.provinsi}</span>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-100 transition-colors">
+                  <MapPin className="w-4 h-4 text-blue-600" />
+                </div>
+                <h2 className="text-base font-bold text-slate-900">{city.nama_kota}</h2>
               </div>
-              
-              {/* Card Body */}
-              <div className="flex-grow">
-                <h2 className="text-2xl font-bold text-slate-900 mb-2">{city.nama_kota}</h2>
-              </div>
-
-              {/* Card Footer */}
-              <div className="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between text-blue-600 font-medium group-hover:text-blue-700">
-                <span>Lihat Detail Layanan</span>
-                <ChevronRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
-              </div>
+              <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transform group-hover:translate-x-1 transition-all" />
             </Link>
           ))}
         </div>
