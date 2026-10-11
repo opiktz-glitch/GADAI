@@ -1,79 +1,160 @@
-# 🚀 Gadai BPKB Syariah - Programmatic SEO (PSEO) Platform
+# 🚀 Gadai BPKB Syariah — Programmatic SEO (PSEO) Platform
 
-Website rujukan dan informasi gadai BPKB berskala raksasa, dirancang khusus untuk mendominasi pencarian SEO lokal (Local SEO) di berbagai kota dan provinsi di Indonesia. Proyek ini dibangun menggunakan **Next.js 15 (App Router)**, **Firebase Firestore**, dan terintegrasi dengan **Google Gemini AI**.
+Website rujukan & simulasi **Gadai BPKB** berskala PSEO untuk mendominasi pencarian *local SEO* di ratusan kota/provinsi Indonesia. Dibangun dengan **Next.js 15 (App Router)**, **Firebase Firestore (Admin SDK)**, **Tailwind CSS**, dan **Google Gemini AI**.
 
 **Domain Live:** [https://gadaibpkbsyariah.com](https://gadaibpkbsyariah.com)
 
 ---
 
-## ✨ Fitur & Arsitektur Unggulan
+## ✨ Fitur Utama
 
-### 1. Arsitektur SEO Silo (Struktur Berjenjang)
-Website ini dirancang menggunakan konsep arsitektur **Silo SEO** yang sangat disukai oleh Google untuk mendistribusikan *Link Juice* (Otoritas):
-- **Level 1 (Global):** `/simulasi-gadai-bpkb` (Hub utama)
-- **Level 2 (Provinsi):** `/simulasi-gadai-bpkb/[provinsi]` (Membidik keyword *mid-tail*)
-- **Level 3 (Kota):** `/simulasi-gadai-bpkb/[provinsi]/[kota]` (Membidik keyword *hyper-local* / spesifik)
+| Area | Detail |
+|---|---|
+| **Arsitektur SEO Silo** | `/simulasi-gadai-bpkb` (hub) → `/simulasi-gadai-bpkb/[provinsi]` → `/simulasi-gadai-bpkb/[provinsi]/[kota]` — distribusi *link juice* + internal linking antar kota se-provinsi |
+| **SSG + ISR** | Semua halaman silo & produk/layanan `revalidate = 86400` (24 jam) + `cache()` React — Firestore hanya di-hit saat build/revalidate |
+| **AI Article Generator** | Gemini `gemini-2.5-flash-lite` — batch Markdown + placeholder `[NAMA_KOTA]`/`[JUMLAH_CABANG]` yang di-replace saat render |
+| **Catatan Lokal AI** | `generateCatatanLokalAI()` — 3–4 kalimat hiperlokal per kota (keyword wajib `Layanan gadai BPKB {kota}`) |
+| **Smart WhatsApp CTA** | Nomor pusat `config.main.whatsapp_pusat` + template konteks (homepage/provinsi/kota/produk/layanan) |
+| **Admin CMS** | 2 tab (`pengaturan` & `artikel`) — CRUD kota, assign/acak artikel, bank artikel, generate AI, tracking views |
+| **Secure Admin** | `middleware.ts` — Basic Auth (`ADMIN_USERNAME`/`ADMIN_PASSWORD`), matcher `/admin/:path*` |
 
-### 2. Rendering Cepat & Caching (SSG & ISR)
-Memanfaatkan fitur Incremental Static Regeneration (ISR) dan React `cache`, website mampu men-*generate* ribuan halaman dengan kecepatan super cepat tanpa membebani kuota database Firebase. Firebase hanya dipanggil saat proses *build* atau *revalidate* di *background*.
+---
 
-### 3. AI Article Generator Terintegrasi
-Panel admin dilengkapi AI (Google Gemini 1.5 Flash) yang memproduksi artikel SEO dan edukatif secara otomatis. 
-Sistem memanfaatkan *placeholder* dinamis seperti `[NAMA_KOTA]` & `[JUMLAH_CABANG]` sehingga satu artikel utama bisa menempel di berbagai kota namun tetap terasa lokal.
+## 🗺️ Peta Rute
 
-### 4. Smart WhatsApp CTA
-Tombol kontak WhatsApp otomatis melampirkan dari halaman kota/provinsi mana pengguna tersebut berasal, mempermudah tim marketing mengetahui konteks pelanggan.
+| Rute | Tipe | Sumber Data |
+|---|---|---|
+| `/` | Homepage + artikel pusat (`config.assignedArticleId`) | `getConfig()` + `getArticleById()` |
+| `/simulasi-gadai-bpkb` | Hub provinsi (grid provinsi) | `getUniqueProvinsi()` |
+| `/simulasi-gadai-bpkb/[provinsi]` | Listing kota per provinsi + artikel provinsi (`config.provinsiArticles[slug]`) | `getCitiesByProvinsiSlug()` |
+| `/simulasi-gadai-bpkb/[provinsi]/[kota]` | Detail kota (hero, estimasi cair, testimoni, artikel placeholder + catatan lokal, related cities) | `getKotaBySlug()` |
+| `/produk/gadai-bpkb-mobil` | Produk — tabel `TableMobil` | statis |
+| `/produk/gadai-bpkb-motor` | Produk — tabel `TableMotor` | statis |
+| `/produk/kredit-baru` | Kredit kendaraan baru | statis |
+| `/produk/kredit-bekas` | Kredit kendaraan bekas | statis |
+| `/produk/take-over-top-up` | Take Over & Top Up (Gratis Biaya Take Over) | statis |
+| `/layanan/syarat-dan-proses` | Grid 5 kartu persyaratan dokumen | statis |
+| `/layanan/cara-pengajuan` | Timeline 4 langkah | statis |
+| `/layanan/simulasi-angsuran` | `TableMotor` + `TableMobil` | statis |
+| `/tentang-kami` | Profil Marketing Resmi AXI | `getConfig()` (WA) |
+| `/faq` | 7 Q&A | statis |
+| `/kebijakan-privasi` | Kebijakan privasi | statis |
+| `/lokasi` | `redirect("/simulasi-gadai-bpkb")` | — |
+| `/sitemap.xml` | `app/sitemap.ts` — static + provinsi + kota | Firestore |
+| `/robots.txt` | `app/robots.ts` — `Allow:/`, `Disallow:/admin/` | — |
+| `/api/track-view` | `POST {location}` → `FieldValue.increment(1)` | Firestore |
 
-### 5. Secure Admin CMS
-Pengelolaan data kota, jumlah cabang, pengaturan nomor WhatsApp, dan publikasi artikel tersimpan aman di database NoSQL real-time (Firestore). Panel dilindungi oleh sistem keamanan berbasis *Basic Auth Middleware*.
+> **Catatan:** `app/sitemap.ts` saat ini masih memetakan static routes lama (`/produk/kredit-kendaraan-bekas`). Sinkronisasi ke 5 slug produk & 3 slug layanan terbaru ada di CHANGELOG — Unreleased.
+
+---
+
+## 🧱 Stack & Versi
+
+- **Next.js** `^15.0.0` (`output: standalone`, `next/font Inter`, `rewrites: /simulasi-gadai-bpkb-:kota → /simulasi-gadai-bpkb/:kota`)
+- **React** `^19.0.0` + `react-markdown` `^10.1.0` + `remark-gfm` `^4.0.1`
+- **firebase-admin** `^14.5.0` (Firestore Admin SDK)
+- **Tailwind CSS** `^3.4.0` + `@tailwindcss/typography` `^0.5.20` + `lucide-react` `^1.48.0`
+- **TypeScript** `^5.5.0` (strict), **Node** 18+ (Docker `node:18-alpine`)
+
+---
+
+## 📁 Struktur Proyek
+
+```
+app/
+  admin/            # CMS (page.tsx, actions.ts, AIGenerator, ArticleTable, AllArticlesTable, …)
+  api/track-view/   # POST increment views (config/kota)
+  components/       # Header (client, dropdown Produk/Layanan), Footer (banner OJK), TabelAngsuran, WhatsAppButton, ViewTracker
+  simulasi-gadai-bpkb/
+    page.tsx                 # Hub provinsi
+    [provinsi]/page.tsx      # Provinsi → grid kota (ISR 86400)
+    [provinsi]/[kota]/page.tsx # Kota → LocalBusiness + Breadcrumb JSON-LD (ISR 86400)
+  produk/[slug]/page.tsx     # 5 produk (hero kuning, TabelAngsuran)
+  layanan/[slug]/page.tsx    # 3 layanan (syarat/cara/simulasi)
+  tentang-kami/, faq/, kebijakan-privasi/, lokasi/ (redirect)
+  layout.tsx        # Inter font, Header/Footer, SEO metadataBase
+  sitemap.ts / robots.ts / globals.css / icon.png
+lib/
+  firebase.ts       # Admin SDK init (env vars → fallback firebase-service-account.json)
+  kota.ts           # Types + cache() helpers (getAllKota, getKotaBySlug, getUniqueProvinsi, getCitiesByProvinsiSlug, getConfig, getAllArticles, getArticleById, formatRupiah, slugify)
+data/
+  kota.json / config.json / articles.json   # seed lokal
+scripts/migrate.js  # node scripts/migrate.js → push data/*.json ke Firestore via batch
+middleware.ts       # Basic Auth untuk /admin
+next.config.js      # rewrites + output standalone
+Dockerfile          # multi-stage (deps → builder → runner)
+```
+
+---
+
+## 🗄️ Database
+
+Firebase Firestore — detail skema lihat **`DATABASE.md`**.
+
+Ringkasan: `kota/{slug}` (1 dok per kota), `articles/{id}` (bank artikel Markdown + `metaDesc`), `config/main` (singleton `whatsapp_pusat`, `assignedArticleId`, `provinsiArticles`, `views`). Semua akses via **Admin SDK di server** — tidak ada akses client-side.
 
 ---
 
 ## 🛠️ Instalasi & Pengembangan Lokal
 
 ### 1. Prasyarat
-- Node.js versi 18+
-- Akun Firebase (dengan service account key Firestore)
-- Google Gemini API Key
+- Node.js 18+, akun Firebase (Firestore enabled), Gemini API Key (opsional tapi wajib untuk fitur AI)
 
-### 2. Setup Environment Variables
-Buat file `.env.local` di *root directory* dan isi kredensial berikut:
+### 2. Environment
+Salin `.env.sample` → `.env.local` lalu isi:
 
 ```env
-# Kredensial Admin Panel
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=admin@123
-
-# Firebase Server-side Credentials (didapat dari console firebase > project settings > service accounts)
 FIREBASE_PROJECT_ID=project-anda
-FIREBASE_CLIENT_EMAIL=email-anda
+FIREBASE_CLIENT_EMAIL=...@project-anda.iam.gserviceaccount.com
 FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
-
-# Gemini AI API
 GEMINI_API_KEY=AIzaSy...
 ```
 
-### 3. Menjalankan Server Lokal
+> Lokal tanpa env vars tetap bisa jalan jika ada `firebase-service-account.json` di root (di-`fs.readFileSync` di `lib/firebase.ts`). File ini di-`.gitignore`.
+
+### 3. Jalan lokal
 ```bash
 npm install
-npm run dev
+npm run dev        # http://localhost:3000  |  http://localhost:3000/admin
+npm run build      # build standalone
+npm start          # jalankan build standalone
+npm run lint
 ```
-- Buka [http://localhost:3000](http://localhost:3000) untuk halaman publik.
-- Buka [http://localhost:3000/admin](http://localhost:3000/admin) untuk masuk ke CMS.
+
+### 4. Seed / migrasi Firestore
+```bash
+# Edit data/kota.json, data/config.json, data/articles.json sesuai kebutuhan
+node scripts/migrate.js
+```
 
 ---
 
-## 🚀 Deployment ke Vercel (Produksi)
+## 🚀 Deploy ke Vercel
 
-Sistem ini didesain agar sangat mulus saat di-*deploy* ke **Vercel**.
-1. Push *repository* ini ke GitHub.
-2. Buat project baru di Vercel dan hubungkan ke *repository* GitHub Anda.
-3. Di bagian **Environment Variables** Vercel, pastikan Anda menyalin semua variabel dari `.env.local`. 
-   > **Catatan Penting:** Hati-hati dengan `FIREBASE_PRIVATE_KEY` di Vercel. Pastikan karakter `\n` ditangani dengan benar agar string kunci tetap valid.
-4. Vercel akan otomatis mengenali framework Next.js, melakukan *build*, dan mempublikasikan website.
+1. Push repo ke GitHub → Import di Vercel (auto-detect Next.js).
+2. Isi **Environment Variables** Vercel dengan semua key dari `.env.local` (perhatikan `FIREBASE_PRIVATE_KEY` — jaga `\\n` tetap valid).
+3. Deploy — `next build` dengan output `standalone` (juga kompatibel Docker).
+
+Alternatif Docker: `docker build -t pseo . && docker run -p 3000:3000 pseo` (runner `node server.js`).
 
 ---
 
-## 🔒 Catatan Keamanan & Batasan Kuota
-- Kuota Gratis Firebase (Spark Plan) mencakup **50.000 Reads** dan **20.000 Writes** per hari. Kapasitas ini sangat besar dan tidak akan habis karena website menerapkan mekanisme *caching* (tidak hit database setiap kali ada kunjungan).
-- Pastikan file `.env.local` dan `firebase-service-account.json` (jika ada) **TIDAK PERNAH** di-*commit* ke repositori publik Anda.
+## 🔒 Keamanan & Kuota
+
+- `/admin` dilindungi **Basic Auth** via `middleware.ts` (`WWW-Authenticate: Basic realm="Secure Admin Area"`). Ganti kredensial sebelum production.
+- Spark (gratis) 50k reads / 20k writes / hari — aman karena **ISR + `cache()`** (hit Firestore hanya saat build/revalidate). Satu-satunya write per visit adalah `/api/track-view`.
+- Jangan commit `.env.local` / `firebase-service-account.json`.
+
+---
+
+## 📜 Changelog
+
+Lihat **`CHANGELOG.md`** (format *Keep a Changelog*) untuk riwayat versi lengkap.
+
+---
+
+## 📄 Lisensi
+
+Private — Hak cipta AXI Marketing Adira Beraxi.

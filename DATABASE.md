@@ -1,83 +1,213 @@
-# 🗄️ Dokumentasi Database (Firebase Firestore)
+# 🗄️ Dokumentasi Database — Firebase Firestore
 
-Aplikasi Gadai BPKB Syariah ini menggunakan **Firebase Firestore** sebagai database NoSQL utamanya. Struktur databasenya dirancang agar sangat *flat* (datar) dan ringan untuk mempercepat proses kueri saat men-*generate* halaman statis (SSG).
+> **Stack DB saat ini: Firebase Firestore (Admin SDK) — Firebase-only.** Tidak ada SQLite / Postgres. Semua baca-tulis lewat **Firebase Admin SDK di server** (`lib/firebase.ts`, `app/admin/actions.ts`, `app/api/track-view/route.ts`).
 
-Berikut adalah struktur koleksi (*Collections*) dan dokumen (*Documents*) yang digunakan di dalam proyek ini:
+Firestore diakses via `getFirestore()` setelah `initializeApp(cert(...))`. Kredensial diambil dengan urutan:
+1. **Env vars** `FIREBASE_PROJECT_ID` / `FIREBASE_CLIENT_EMAIL` / `FIREBASE_PRIVATE_KEY` (Vercel / production) — `FIREBASE_PRIVATE_KEY` di-`replace(/\\n/g, ''\n'')` agar `\n` dari env tetap valid.
+2. **Fallback file** `firebase-service-account.json` di root (local dev, `fs.readFileSync` + `JSON.parse`) — file ini di-`.gitignore`.
 
----
-
-## 1. Koleksi: `kota`
-Koleksi ini menyimpan semua data cabang atau representasi kota secara spesifik. Setiap halaman wilayah *hyper-local* mengambil data dari sini.
-
-- **Document ID**: Menggunakan *Slug* kota (misal: `bandung`, `surabaya`, `kab-bekasi`)
-- **Struktur Data (Fields)**:
-  ```typescript
-  {
-    "slug": "bandung",                      // String: ID Unik URL (misal: "bandung")
-    "provinsi": "Jawa Barat",               // String: Nama provinsi (dipakai untuk grouping & URL Silo)
-    "nama_kota": "Bandung",                 // String: Nama kota untuk di layar
-    "alamat_cabang_utama": "Jl. Asia...",   // String: Alamat detail cabang
-    "jumlah_cabang": 5,                     // Number: Total cabang di area tersebut
-    "kendaraan_populer": ["Avanza", "Beat"],// Array<String>: Daftar kendaraan populer
-    "estimasi_pencairan_min": 5000000,      // Number: Nominal pencairan minimal
-    "estimasi_pencairan_max": 500000000,    // Number: Nominal pencairan maksimal
-    "waktu_proses_jam": 2,                  // Number: Estimasi waktu cair (dalam jam)
-    "testimoni": "Prosesnya cepat...",      // String: Kutipan testimoni pelanggan
-    "nama_marketing_lokal": "Budi",         // String: Nama sales/marketing lokal
-    "artikel_seo": "Melayani area Dago..",  // String (Opsional): Catatan hiperlokal khusus kota ini
-    "assignedArticleId": "art-12345",       // String (Opsional): ID Artikel AI yang menempel di kota ini
-    "allowRandom": false,                   // Boolean: Apakah kota ini boleh dirotasi artikelnya oleh AI?
-    "lastUpdatedAt": "2026-10-07T00:00:00Z" // String/Timestamp: Waktu update terakhir
-  }
-  ```
+Semua helper Firestore di-cache React (`cache()` di `lib/kota.ts`) dan halaman silo memakai **ISR `revalidate = 86400`** — Firestore hanya di-hit saat build / revalidate, bukan tiap request.
 
 ---
 
-## 2. Koleksi: `articles`
-Koleksi ini berfungsi sebagai **Bank Artikel**. Semua artikel panjang yang di-*generate* oleh AI Gemini atau ditulis manual akan tersimpan di sini sebelum dipasangkan (*assigned*) ke halaman tertentu.
+## Ringkasan Koleksi
 
-- **Document ID**: Auto-generated (misal: `uuid` unik atau dari Firestore)
-- **Struktur Data (Fields)**:
-  ```typescript
-  {
-    "id": "1698765432100",                  // String: ID unik artikel
-    "title": "Keunggulan Gadai BPKB...",    // String: Judul artikel untuk dashboard admin
-    "content": "# Panduan Gadai...\n...",   // String: Isi artikel dalam format Markdown
-    "metaDesc": "Deskripsi singkat SEO",    // String: Untuk tag <meta name="description">
-    "status": "published",                  // String: "published" atau "draft"
-    "createdAt": "2026-10-07T00:00:00Z"     // String/Timestamp: Tanggal artikel dibuat
-  }
-  ```
-  > **Info:** Artikel di sini menggunakan *placeholder* seperti `[NAMA_KOTA]` yang nantinya akan otomatis diganti (*replace*) dengan nama kota/provinsi asli saat ditampilkan di halaman depan.
+| Koleksi | Doc ID | Jumlah Dokumen | Deskripsi |
+|---|---|---|---|
+| `kota` | `slug` kota (`bandung`, `kab-bekasi`) | N kota (seed lokal 3) | 1 dokumen per cabang/kota — sumber halaman `[provinsi]/[kota]` |
+| `articles` | `id` artikel (string, contoh `"1"` / `"1698765432100"`) | N artikel (seed 2) | Bank artikel Markdown — di-assign ke homepage / provinsi / kota |
+| `config` | `main` (singleton) | 1 | Konfigurasi global (WA pusat, mapping artikel, views) |
 
 ---
 
-## 3. Koleksi: `config`
-Koleksi ini hanya berisi **satu buah dokumen** bernama `main`. Dokumen ini berfungsi mengatur konfigurasi global website.
+## 1. Koleksi `kota`
 
-- **Document ID**: `main`
-- **Struktur Data (Fields)**:
-  ```typescript
-  {
-    "whatsapp_pusat": "6287724039666",      // String: Nomor WA yang dipakai secara global
-    
-    // Konfigurasi Halaman Utama (Homepage)
-    "artikel_homepage": "Teks manual...",   // String (Opsional): Teks darurat homepage (sebelum pakai AI)
-    "assignedArticleId": "art-999",         // String (Opsional): ID Artikel AI yang menempel di Homepage
-    
-    // Konfigurasi Halaman Provinsi
-    "provinsiArticles": {
-      "jawa-barat": "art-111",              // Mapping antara Slug Provinsi dengan ID Artikel AI
-      "dki-jakarta": "art-222"
-    }
-  }
-  ```
+**Document ID = `slug`** (lowercase, hyphen). Slug juga dipakai untuk URL: `/simulasi-gadai-bpkb/{provinsi-slug}/{kota-slug}` dengan `provinsi-slug = slugify(provinsi)`.
+
+### TypeScript (`lib/kota.ts`)
+
+```ts
+export type Kota = {
+  slug: string;                  // doc ID + URL slug
+  nama_kota: string;             // tampil di UI, mis. "Bandung"
+  provinsi: string;              // nama provinsi asli, mis. "Jawa Barat" (di-slugify untuk URL)
+  jumlah_cabang: number;
+  estimasi_pencairan_min: number; // IDR
+  estimasi_pencairan_max: number; // IDR
+  waktu_proses_jam: number;       // jam, mis. 2
+  nama_marketing_lokal: string;
+  testimoni: string;
+  alamat_cabang_utama: string;
+  kendaraan_populer: string[];    // ["Toyota Avanza", "Honda Beat"]
+  artikel_seo?: string;           // catatan hiperlokal per-kota (plain text, diisi manual atau generateCatatanLokalAI)
+  assignedArticleId?: string;     // FK → articles.id (artikel yang menempel di kota ini)
+  views?: number;                 // increment via POST /api/track-view {location: slug}
+  allowRandom?: boolean;          // false = dikunci (tidak ikut shuffle acak), default true-ish
+};
+```
+
+### Contoh Dokumen
+
+```json
+{
+  "slug": "bandung",
+  "nama_kota": "Bandung",
+  "provinsi": "Jawa Barat",
+  "jumlah_cabang": 12,
+  "estimasi_pencairan_min": 5000000,
+  "estimasi_pencairan_max": 500000000,
+  "waktu_proses_jam": 2,
+  "nama_marketing_lokal": "Budi Santoso",
+  "testimoni": "Prosesnya cepat banget, dana cair dalam 2 jam di cabang Kelapa Gading.",
+  "alamat_cabang_utama": "Jl. Boulevard Raya, Kelapa Gading, Jakarta Utara",
+  "kendaraan_populer": ["Toyota Avanza", "Honda Beat", "Mitsubishi Xpander"],
+  "artikel_seo": "Layanan gadai BPKB Bandung adalah solusi terbaik ... Gratis biaya take over ...",
+  "assignedArticleId": "1698765432100",
+  "views": 42,
+  "allowRandom": false
+}
+```
+
+### Catatan
+- `getAllKota()` / `getKotaBySlug(slug)` / `getCitiesByProvinsiSlug(provSlug)` / `getUniqueProvinsi()` semuanya `cache()`.
+- `slugify()` : `toLowerCase → s/\s+/-/ → s/[^\w-]// → s/--+/ -/ → trim -`.
+- `allowRandom === false` dipakai `randomizeArticlePlacement` & `assignArticleToKota` untuk mengunci kota agar tidak di-acak.
 
 ---
 
-## Aturan Hubungan (Relasi) Database
-1. **Relasi Halaman Utama:** Mengambil artikel dari tabel `articles` berdasarkan ID yang tercatat di `config.main.assignedArticleId`.
-2. **Relasi Halaman Provinsi:** Mengambil artikel dari tabel `articles` berdasarkan ID yang tercatat di `config.main.provinsiArticles['slug-provinsi']`.
-3. **Relasi Halaman Kota:** Mengambil artikel dari tabel `articles` berdasarkan ID yang tercatat di dalam properti `assignedArticleId` pada tabel `kota` itu sendiri.
+## 2. Koleksi `articles`
 
-Semua koneksi ke database dilakukan dari sisi Server (*Server Components* & *Server Actions*) menggunakan **Firebase Admin SDK** agar sangat aman dan rahasia.
+Bank artikel Markdown yang di-generate Gemini atau ditulis manual di Admin → dipakai di 3 level (pusat / provinsi / kota) via placeholder.
+
+### TypeScript
+
+```ts
+export type Article = {
+  id: string;        // doc ID, dipakai sebagai FK di kota/config
+  content: string;   // Markdown (boleh mengandung HTML <img>, link, heading)
+  metaDesc?: string; // <meta name="description"> — dipakai generateMetadata()
+  source?: string;   // asal generate, mis. "gemini" / "manual"
+  createdAt?: number;// epoch ms (Date.now())
+  shortId?: string;  // 6-char untuk label UI (opsional, tidak dipakai di Firestore saat ini)
+};
+```
+
+### Contoh Dokumen
+
+```json
+{
+  "id": "1698765432100",
+  "content": "# Panduan Gadai BPKB di [NAMA_KOTA]\\nKini warga [NAMA_KOTA] dengan [JUMLAH_CABANG] cabang ...",
+  "metaDesc": "Simulasi gadai BPKB di [NAMA_KOTA] — [JUMLAH_CABANG] cabang, cair 2 jam.",
+  "source": "gemini",
+  "createdAt": 1728260000000
+}
+```
+
+### Placeholder (wajib dipahami)
+- `[NAMA_KOTA]` → diganti `nama_kota` / `provinsiName` saat render (`replace(/\[NAMA_KOTA\]/gi, ...)`).
+- `[JUMLAH_CABANG]` → diganti `jumlah_cabang` / `jumlah kota di provinsi`.
+- Di halaman kota/provinsi/homepage, link `wa.me` dan wrapper `[...](wa.me)` di-strip dari Markdown sebelum render agar tidak duplikat CTA (lihat `replace` chain di `app/simulasi-gadai-bpkb/[provinsi]/[kota]/page.tsx`).
+
+---
+
+## 3. Koleksi `config` — Dokumen `main`
+
+Singleton — hanya `config/main` yang dipakai.
+
+### TypeScript
+
+```ts
+export type Config = {
+  whatsapp_pusat: string;                    // "6287724039666" — dipakai Header/Footer/CTA
+  artikel_homepage?: string;                 // legacy: teks manual homepage (sebelum bank artikel)
+  assignedArticleId?: string;                // FK → articles.id untuk homepage "/"
+  views?: number;                            // increment via POST /api/track-view {location: "pusat"}
+  allowRandom?: boolean;                     // (jarang dipakai di config)
+  provinsiArticles?: Record<string, string>; // { "jawa-barat": "art-111", "dki-jakarta": "art-222" }
+};
+```
+
+### Contoh Dokumen
+
+```json
+{
+  "whatsapp_pusat": "6287724039666",
+  "assignedArticleId": "art-999",
+  "provinsiArticles": {
+    "jawa-barat": "art-111",
+    "dki-jakarta": "art-222"
+  },
+  "views": 128
+}
+```
+
+---
+
+## Relasi & Alur Data
+
+```
+articles {id} ──< assignedArticleId ── config.main.assignedArticleId      → Homepage "/"  (getArticleById)
+articles {id} ──< assignedArticleId ── config.main.provinsiArticles[slug] → /simulasi-gadai-bpkb/[provinsi]
+articles {id} ──< assignedArticleId ── kota.{slug}.assignedArticleId     → /simulasi-gadai-bpkb/[provinsi]/[kota]
+```
+
+1. **Homepage** — `getConfig()` → `config.assignedArticleId` → `getArticleById()` → render Markdown + `metaDesc` untuk `generateMetadata()`.
+2. **Provinsi** — `config.provinsiArticles[provinsiSlug]` → artikel provinsi (fallback deskripsi auto jika kosong).
+3. **Kota** — `kota.assignedArticleId` → artikel kota (fallback teks statis edukatif jika kosong) + `kota.artikel_seo` (Catatan Lokal) selalu tampil di bawah artikel utama.
+
+Semua relasi diselesaikan **server-side** (Server Components / Server Actions) — tidak ada query client-side.
+
+---
+
+## Operasi Tulis
+
+| Aksi (Admin) | Fungsi | Koleksi | Metode |
+|---|---|---|---|
+| Update WA & artikel_homepage | `updateConfig()` | `config/main` | `set(newConfig)` + `revalidatePath("/", "layout")` |
+| Tambah kota | `addKota()` | `kota/{slug}` | `doc(slug).get()` cek duplikat → `set(newKota)` |
+| Hapus kota | `deleteKota()` | `kota/{slug}` | `delete()` |
+| Edit kota | `editKota()` | `kota/{slug}` | `get()` → `set()` (atau `update` jika slug tidak berubah) |
+| Tambah artikel manual | `addArticle()` | `articles/{id}` | `set({id, content, createdAt})` |
+| Generate AI batch | `generateArticleAI()` | `articles/*` | Gemini `generateContent` → `batch.set()` per artikel |
+| Hapus artikel | `deleteArticle()` | `articles/{id}` | `delete()` + bersihkan FK di `kota` & `config` |
+| Assign artikel ke kota/provinsi/pusat | `assignArticleToKota()` | `kota/{slug}` atau `config/main` | `update({assignedArticleId})` / `set({provinsiArticles}, {merge:true})` |
+| Acak penempatan | `randomizeArticlePlacement()` | `kota/*` + `config/main` | `batch.update()` shuffle, hormati `allowRandom === false` |
+| Catatan lokal AI per kota | `generateCatatanLokalAI(kotaName)` | — (return text, simpan via `editKota`) | Gemini `gemini-2.5-flash-lite:generateContent` |
+| Tracking view | `POST /api/track-view` | `config/main` atau `kota/{slug}` | `FieldValue.increment(1)` |
+
+---
+
+## Seed & Migrasi Lokal
+
+```bash
+# 1. Edit seed lokal
+#    data/kota.json      — array Kota (3 contoh: jakarta, bekasi, bandung)
+#    data/config.json    — { whatsapp_pusat }
+#    data/articles.json  — [{id, content}, ...]
+
+# 2. Push ke Firestore (butuh firebase-service-account.json di root)
+node scripts/migrate.js
+#   → batch.set() untuk config (doc main), kota (per slug), articles (per id)
+```
+
+`scripts/migrate.js` memakai `require("../firebase-service-account.json")` langsung (CommonJS) — bukan env vars. Untuk production/Vercel, seeding dilakukan manual atau via Admin CMS.
+
+---
+
+## Index & Security Notes
+
+- Tidak ada composite index Firestore yang dibutuhkan saat ini — semua query adalah `collection.get()` atau `doc(slug).get()` (full scan + filter di memori via `getCitiesByProvinsiSlug`, `getUniqueProvinsi`). Jika kota > 1k, pertimbangkan `where("provinsi", "==", ...)` + index.
+- **Rules Firestore** (jika diaktifkan): semua akses via Admin SDK bypass rules. Jika membuka akses client SDK di masa depan, kunci `kota`/`articles`/`config` ke `allow read: if true; allow write: if false;`.
+- Jangan commit `firebase-service-account.json` / `.env.local` — keduanya di-`.gitignore`.
+
+---
+
+## File Terkait
+
+- `lib/firebase.ts` — inisialisasi Admin SDK (env vars → fallback JSON)
+- `lib/kota.ts` — types + `cache()` helpers + `slugify` + `formatRupiah`
+- `data/kota.json`, `data/config.json`, `data/articles.json` — seed lokal
+- `scripts/migrate.js` — migrasi JSON → Firestore
+- `app/admin/actions.ts` — semua Server Actions tulis
+- `app/api/track-view/route.ts` — increment views
