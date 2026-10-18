@@ -12,12 +12,20 @@ export async function generateMetadata(): Promise<Metadata> {
   const assignedArticle = config.assignedArticleId ? await getArticleById(config.assignedArticleId) : null;
 
   return {
-    title: "Gadai BPKB Syariah - Marketing Resmi AXI Adira Finance",
+    title: "Gadai Pojok Berkah - Marketing Resmi AXI Adira Finance",
     description: assignedArticle?.metaDesc || "Layanan resmi pengajuan simulasi gadai BPKB motor dan mobil seluruh Indonesia bersama marketing AXI Adira Finance. Proses cepat, pencairan tinggi.",
     alternates: { canonical: "/" },
     openGraph: {
-      title: "Gadai BPKB Syariah - Marketing Resmi AXI Adira Finance",
+      title: "Gadai Pojok Berkah - Marketing Resmi AXI Adira Finance",
       description: assignedArticle?.metaDesc || "Layanan resmi pengajuan simulasi gadai BPKB motor dan mobil seluruh Indonesia bersama marketing AXI Adira Finance. Proses cepat, pencairan tinggi.",
+      images: [
+        {
+          url: "/og-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Gadai Pojok Berkah - Marketing Resmi AXI Adira Finance",
+        },
+      ],
     }
   };
 }

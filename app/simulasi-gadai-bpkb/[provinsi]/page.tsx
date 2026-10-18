@@ -63,19 +63,19 @@ export default async function ProvinsiPage({ params }: Props) {
           "@type": "ListItem",
           position: 1,
           name: "Beranda",
-          item: "https://www.gadaibpkb.co.id/"
+          item: "https://gadai.pojokberkah.online/"
         },
         {
           "@type": "ListItem",
           position: 2,
           name: "Simulasi Gadai BPKB",
-          item: "https://www.gadaibpkb.co.id/simulasi-gadai-bpkb"
+          item: "https://gadai.pojokberkah.online/simulasi-gadai-bpkb"
         },
         {
           "@type": "ListItem",
           position: 3,
           name: `Provinsi ${provinsiName}`,
-          item: `https://www.gadaibpkb.co.id/simulasi-gadai-bpkb/${p.provinsi}`
+          item: `https://gadai.pojokberkah.online/simulasi-gadai-bpkb/${p.provinsi}`
         }
       ]
     }

@@ -82,19 +82,19 @@ export default async function KotaPage({ params }: Props) {
           "@type": "ListItem",
           position: 1,
           name: "Beranda",
-          item: "https://www.gadaibpkb.co.id/"
+          item: "https://gadai.pojokberkah.online/"
         },
         {
           "@type": "ListItem",
           position: 2,
           name: `Gadai BPKB ${kota.provinsi}`,
-          item: `https://www.gadaibpkb.co.id/simulasi-gadai-bpkb/${p.provinsi}`
+          item: `https://gadai.pojokberkah.online/simulasi-gadai-bpkb/${p.provinsi}`
         },
         {
           "@type": "ListItem",
           position: 3,
           name: `Gadai BPKB ${kota.nama_kota}`,
-          item: `https://www.gadaibpkb.co.id/simulasi-gadai-bpkb/${p.provinsi}/${kota.slug}`
+          item: `https://gadai.pojokberkah.online/simulasi-gadai-bpkb/${p.provinsi}/${kota.slug}`
         }
       ]
     }
@@ -113,7 +113,7 @@ export default async function KotaPage({ params }: Props) {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-slate-900 px-6 py-16 text-white sm:py-24 border-b-4 border-yellow-400">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px] opacity-25"></div>
         <div className="relative mx-auto max-w-4xl text-center">
           <div className="mb-4 flex items-center justify-center space-x-2 text-yellow-400">
             <MapPin className="h-5 w-5" />

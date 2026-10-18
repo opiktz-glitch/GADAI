@@ -1,13 +1,18 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import { getConfig } from '@/lib/kota';
 
 export const metadata: Metadata = {
-  title: 'FAQ - Pertanyaan Seputar Gadai BPKB Adira Finance',
-  description: 'Daftar pertanyaan yang sering diajukan mengenai persyaratan, proses, dan simulasi gadai BPKB motor dan mobil di Adira Finance.',
+  title: 'FAQ - Pertanyaan Seputar Gadai BPKB',
+  description: 'Daftar pertanyaan yang sering diajukan mengenai persyaratan, proses, dan simulasi gadai BPKB motor dan mobil bersama Marketing Resmi AXI Adira Finance.',
+  alternates: { canonical: '/faq' },
 };
 
-export default function FAQPage() {
+export default async function FAQPage() {
+  const config = await getConfig();
+  const noHp = config.whatsapp_pusat || "6287724039666";
+
   const faqs = [
     {
       q: "Apa itu fasilitas Gadai BPKB di Adira Finance?",
@@ -39,8 +44,25 @@ export default function FAQPage() {
     }
   ];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map((faq) => ({
+      "@type": "Question",
+      "name": faq.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.a,
+      },
+    })),
+  };
+
   return (
     <main className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="max-w-3xl mx-auto">
         <Link href="/" className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium mb-8">
           <ArrowLeft className="w-4 h-4 mr-2" /> Kembali ke Beranda
@@ -64,7 +86,7 @@ export default function FAQPage() {
           <div className="mt-12 bg-yellow-50 rounded-xl p-6 text-center border border-yellow-200">
             <h4 className="font-bold text-slate-800 mb-2">Masih punya pertanyaan lain?</h4>
             <p className="text-slate-600 mb-4">Jangan ragu untuk berkonsultasi langsung dengan tim Marketing kami (Gratis!).</p>
-            <a href="https://wa.me/6287724039666" className="inline-flex items-center justify-center bg-green-700 hover:bg-green-800 text-white font-bold py-2.5 px-6 rounded-full transition-colors">
+            <a href={`https://wa.me/${noHp.replace('+', '')}`} className="inline-flex items-center justify-center bg-green-700 hover:bg-green-800 text-white font-bold py-2.5 px-6 rounded-full transition-colors">
               Hubungi via WhatsApp
             </a>
           </div>

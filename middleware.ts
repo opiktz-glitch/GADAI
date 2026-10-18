@@ -16,7 +16,9 @@ export function middleware(req: NextRequest) {
       const validPassword = process.env.ADMIN_PASSWORD || 'admin@123';
 
       if (user === validUser && pwd === validPassword) {
-        return NextResponse.next();
+        const res = NextResponse.next();
+        res.headers.set('X-Robots-Tag', 'noindex, nofollow');
+        return res;
       }
     }
 
@@ -25,6 +27,7 @@ export function middleware(req: NextRequest) {
       status: 401,
       headers: {
         'WWW-Authenticate': 'Basic realm="Secure Admin Area"',
+        'X-Robots-Tag': 'noindex, nofollow',
       },
     });
   }

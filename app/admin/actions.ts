@@ -236,7 +236,7 @@ Sebagai gantinya, Anda WAJIB menggunakan variabel kode persis seperti ini (terma
 Gunakan kata kunci SEO seperti "gadai BPKB [NAMA_KOTA]", "simulasi gadai BPKB [NAMA_KOTA]" secara natural.`;
   }
 
-  const prompt = `Buatkan/revisi konten halaman web untuk Gadai BPKB Syariah, dengan penekanan sebagai Marketing Resmi AXI Adira Finance, dengan ketentuan berikut:
+  const prompt = `Buatkan/revisi konten halaman web untuk Gadai Pojok Berkah (gadai.pojokberkah.online), dengan penekanan sebagai Marketing Resmi AXI Adira Finance, dengan ketentuan berikut:
 
 Positioning (wajib, tidak bisa ditawar):
 - Identitas utama adalah sebagai Marketing Resmi AXI Adira Finance, BUKAN lembaga pemberi pinjaman yang mencairkan dana secara langsung.

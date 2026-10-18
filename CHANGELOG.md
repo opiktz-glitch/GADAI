@@ -1,6 +1,6 @@
 # Changelog
 
-Semua perubahan penting pada proyek **Gadai BPKB Syariah — PSEO Platform** dicatat di sini.
+Semua perubahan penting pada proyek **Gadai Pojok Berkah — PSEO Platform** dicatat di sini.
 
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/) dan [Semantic Versioning](https://semver.org/lang/id/).
 Tanggal memakai zona `Asia/Jakarta` (WIB).
@@ -10,17 +10,26 @@ Tanggal memakai zona `Asia/Jakarta` (WIB).
 ## [Unreleased]
 
 ### Ditambahkan
-- —
+- **`app/admin/layout.tsx`**: Layout proteksi SEO khusus rute admin dengan metadata `robots: { index: false, follow: false, nocache: true }` (`<meta name="robots" content="noindex, nofollow, noarchive" />`).
+- **HTTP Header `X-Robots-Tag: noindex, nofollow`** di `middleware.ts` untuk respons halaman `/admin` (baik status 401 maupun login valid), memastikan bot pencari membaca arahan noindex langsung pada level HTTP header.
+- **`app/faq/page.tsx`**: Menambahkan Schema.org JSON-LD `FAQPage` terstruktur untuk 7 pertanyaan umum, mendukung Google Rich Snippets / SERP Accordion, menambahkan canonical `/faq`, serta membuat nomor WhatsApp dinamis dari `config`.
+- **OpenGraph & Twitter Card Image (`public/og-image.jpg`)**: Memasang thumbnail banner resmi AXI Adira Beraxi di `app/layout.tsx` dan `app/page.tsx` dengan resolusi 1200×630px untuk kartu pratinjau sosial media & WhatsApp.
+- **Floating WhatsApp Hub (`app/simulasi-gadai-bpkb/page.tsx`)**: Memasang tombol melayang WhatsApp dinamis untuk mempermudah calon nasabah berkonsultasi langsung saat memilih wilayah.
+- **Schema.org `WebSite` (`app/layout.tsx`)**: Menambahkan structured data `WebSite` dengan nama resmi "Gadai Pojok Berkah" untuk memunculkan Google Site Name resmi di hasil pencarian.
+- **Pencarian Cepat Kota & Provinsi (`app/simulasi-gadai-bpkb/ProvinsiSearchGrid.tsx`)**: Menyediakan fitur pencarian instan (*live search filter*) di halaman hub `/simulasi-gadai-bpkb` lengkap dengan chip navigasi langsung ke halaman kota dan filter dinamis kartu provinsi.
 
 ### Diubah
-- **Dokumentasi disinkronkan ulang (2026-10-12):** `README.md` dan `DATABASE.md` ditulis ulang penuh agar sesuai aplikasi Firebase-only saat ini (Next.js 15 App Router, Firestore Admin SDK, Gemini `gemini-2.5-flash-lite`, SEO Silo, ISR 86400, Admin 2-tab, `middleware.ts` Basic Auth, `scripts/migrate.js`, Docker `standalone`).
+- **Rebranding Domain & Identitas Website**: Domain resmi beralih ke `https://gadai.pojokberkah.online` dan nama website diselaraskan menjadi **`Gadai Pojok Berkah`** (`layout.tsx`, `page.tsx`, `actions.ts` prompt AI, Breadcrumbs JSON-LD).
+- **`app/robots.ts`**: Menghapus direktif `disallow: '/admin/'` dan menerapkan `allow: '/'` penuh sesuai panduan resmi Google Search Central agar Googlebot dapat merayapi dan membaca arahan `noindex`.
+- **`app/sitemap.ts`**: Menghapus rute lama yang 404 (`/produk/kredit-kendaraan-bekas`), menambahkan 5 landing page produk aktual dan 3 rute layanan dengan prioritas & `changeFrequency` proporsional.
+- **Pembersihan Aset Eksternal**: Mengganti URL tekstur pihak ketiga `transparenttextures.com` di halaman detail kota menjadi pola murni CSS dot grid pattern.
 
 ### Diperbaiki
-- —
+- Sinkronisasi sitemap 100% bebas dari broken links / 404, seluruh URL menghasilkan HTTP 200.
 
-### Catatan Rilis Mendatang
-- `app/sitemap.ts` masih memetakan static routes lama (`/produk/kredit-kendaraan-bekas`) — perlu disinkronkan ke 5 slug produk aktual (`gadai-bpkb-mobil`, `gadai-bpkb-motor`, `kredit-baru`, `kredit-bekas`, `take-over-top-up`) dan 3 slug layanan (`syarat-dan-proses`, `cara-pengajuan`, `simulasi-angsuran`).
-- `lib/kota.ts` — `getCitiesByProvinsiSlug` / `getUniqueProvinsi` masih filter in-memory (`collection.get()` full scan); untuk >1k kota pertimbangkan `where("provinsi","==",…)` + composite index.
+### Catatan & Rekomendasi Rilis Mendatang
+- **Google Analytics 4 & Event Tracking**: Pelacakan impresi dan klik tombol WhatsApp konversi leads per kota.
+- **Optimasi Query Firestore (>1.000 Kota)**: Query Firestore berindeks `collection.where("provinsi", "==", ...)` untuk skala besar.
 
 ---
 
@@ -67,7 +76,7 @@ Tanggal memakai zona `Asia/Jakarta` (WIB).
 - `DATABASE.md` & `README.md` awal (arsitektur Silo, ISR, AI placeholder, WhatsApp CTA, Basic Auth, Vercel deploy).
 
 ### Diubah
-- Rebranding penuh **Pojok Berkah → GadaiBPKBSyariah.com** / **AXI Marketing Adira Beraxi**: domain `gadaibpkbsyariah.com` di `layout.tsx` `metadataBase`, `sitemap.ts` `BASE_URL`, `robots.ts`, Header/Footer, homepage hero.
+- Rebranding domain ke `gadai.pojokberkah.online` / **AXI Marketing Adira Beraxi**: domain `gadai.pojokberkah.online` di `layout.tsx` `metadataBase`, `sitemap.ts` `BASE_URL`, `robots.ts`, Header/Footer, homepage hero.
 - Homepage `app/page.tsx` — hero kuning, artikel perkenalan marketing, cabang utama Pungkur Bandung, FAQ homepage, floating CTA `WhatsAppButton`.
 - `app/components/TabelAngsuran.tsx` interaktif + modal simulasi.
 

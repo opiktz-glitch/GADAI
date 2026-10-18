@@ -1,7 +1,8 @@
-import { MapPin, ChevronRight, Map } from "lucide-react";
-import Link from "next/link";
+import { Map } from "lucide-react";
 import { Metadata } from "next";
-import { getUniqueProvinsi } from "@/lib/kota";
+import { getUniqueProvinsi, getAllKota, getConfig, slugify } from "@/lib/kota";
+import WhatsAppButton from "@/app/components/WhatsAppButton";
+import ProvinsiSearchGrid from "./ProvinsiSearchGrid";
 
 export const revalidate = 86400;
 
@@ -12,14 +13,28 @@ export const metadata: Metadata = {
 };
 
 export default async function HubProvinsiPage() {
-  const provinsiList = await getUniqueProvinsi();
+  const [provinsiList, allKota, config] = await Promise.all([
+    getUniqueProvinsi(),
+    getAllKota(),
+    getConfig(),
+  ]);
+
+  const waNumber = config.whatsapp_pusat || "6287724039666";
+  const waTemplate = "Halo Admin AXI Adira, saya ingin konsultasi simulasi gadai BPKB untuk wilayah saya.";
+
+  const kotaItems = allKota.map((k) => ({
+    nama_kota: k.nama_kota,
+    slug: k.slug,
+    provinsi: k.provinsi,
+    provinsiSlug: slugify(k.provinsi),
+  }));
   
   return (
     <div className="bg-slate-50 min-h-screen py-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header Section */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center p-3 bg-yellow-100 text-amber-700 rounded-full mb-4">
             <Map className="w-8 h-8" />
           </div>
@@ -27,37 +42,18 @@ export default async function HubProvinsiPage() {
             Jaringan Layanan Nasional
           </h1>
           <p className="text-slate-600 max-w-2xl mx-auto text-lg leading-relaxed">
-            Kami hadir di berbagai provinsi di seluruh Indonesia untuk memberikan solusi dana tunai cepat dengan jaminan BPKB kendaraan Anda. Pilih provinsi Anda di bawah ini:
+            Kami hadir di berbagai provinsi di seluruh Indonesia untuk memberikan solusi dana tunai cepat dengan jaminan BPKB kendaraan Anda. Pilih provinsi atau cari kota Anda di bawah ini:
           </p>
         </div>
 
-        {/* Grid Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {provinsiList.map((prov, index) => (
-            <Link 
-              href={`/simulasi-gadai-bpkb/${prov.slug}`} 
-              key={index}
-              className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-400 hover:-translate-y-1 transition-all group flex flex-col h-full items-center text-center"
-            >
-              {/* Card Header */}
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-blue-500 mb-4 group-hover:scale-110 transition-transform">
-                <MapPin className="w-6 h-6" />
-              </div>
-              
-              {/* Card Body */}
-              <div className="flex-grow w-full">
-                <h2 className="text-xl font-bold text-slate-900 mb-2">{prov.nama}</h2>
-                <p className="text-slate-500 text-sm">Lihat Layanan & Cabang</p>
-              </div>
-
-              {/* Card Footer */}
-              <div className="mt-6 pt-4 border-t border-slate-100 w-full flex justify-center text-blue-600">
-                <ChevronRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
-              </div>
-            </Link>
-          ))}
-        </div>
+        {/* Interactive Search & Grid Cards */}
+        <ProvinsiSearchGrid provinsiList={provinsiList} kotaList={kotaItems} />
         
+      </div>
+
+      {/* Floating CTA */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 p-4 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] sm:bg-transparent sm:border-none sm:shadow-none sm:p-0 sm:bottom-8 sm:right-8 sm:left-auto">
+        <WhatsAppButton noWa={waNumber} messageTemplate={waTemplate} buttonText="Konsultasi CS (Gratis)" />
       </div>
     </div>
   );

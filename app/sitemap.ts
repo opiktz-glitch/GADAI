@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllKota, getUniqueProvinsi, slugify } from "@/lib/kota";
 
-const BASE_URL = "https://gadaibpkbsyariah.com";
+const BASE_URL = "https://gadai.pojokberkah.online";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const kotaList = await getAllKota();
@@ -23,22 +23,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  // Halaman statis
+  // Halaman statis & landing page utama
   const staticPages = [
-    "/",
-    "/simulasi-gadai-bpkb",
-    "/tentang-kami",
-    "/faq",
-    "/kebijakan-privasi",
-    "/layanan/syarat-dan-proses",
-    "/layanan/simulasi-angsuran",
-    "/produk/kredit-kendaraan-bekas",
-    "/produk/take-over-top-up",
-  ].map((route) => ({
-    url: `${BASE_URL}${route === "/" ? "" : route}`,
+    { route: "/", priority: 1.0, changeFrequency: "daily" as const },
+    { route: "/simulasi-gadai-bpkb", priority: 0.9, changeFrequency: "weekly" as const },
+    { route: "/produk/gadai-bpkb-mobil", priority: 0.85, changeFrequency: "weekly" as const },
+    { route: "/produk/gadai-bpkb-motor", priority: 0.85, changeFrequency: "weekly" as const },
+    { route: "/produk/kredit-baru", priority: 0.8, changeFrequency: "monthly" as const },
+    { route: "/produk/kredit-bekas", priority: 0.8, changeFrequency: "monthly" as const },
+    { route: "/produk/take-over-top-up", priority: 0.8, changeFrequency: "monthly" as const },
+    { route: "/layanan/syarat-dan-proses", priority: 0.75, changeFrequency: "monthly" as const },
+    { route: "/layanan/cara-pengajuan", priority: 0.75, changeFrequency: "monthly" as const },
+    { route: "/layanan/simulasi-angsuran", priority: 0.75, changeFrequency: "monthly" as const },
+    { route: "/tentang-kami", priority: 0.7, changeFrequency: "monthly" as const },
+    { route: "/faq", priority: 0.7, changeFrequency: "monthly" as const },
+    { route: "/kebijakan-privasi", priority: 0.5, changeFrequency: "yearly" as const },
+  ].map((item) => ({
+    url: `${BASE_URL}${item.route === "/" ? "" : item.route}`,
     lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: route === "/" ? 1.0 : (route === "/simulasi-gadai-bpkb" ? 0.9 : 0.7),
+    changeFrequency: item.changeFrequency,
+    priority: item.priority,
   }));
 
   return [...staticPages, ...provinsiPages, ...kotaPages];

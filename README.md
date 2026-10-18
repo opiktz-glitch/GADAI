@@ -1,8 +1,8 @@
-# 🚀 Gadai BPKB Syariah — Programmatic SEO (PSEO) Platform
+# 🚀 Gadai Pojok Berkah — Programmatic SEO (PSEO) Platform
 
 Website rujukan & simulasi **Gadai BPKB** berskala PSEO untuk mendominasi pencarian *local SEO* di ratusan kota/provinsi Indonesia. Dibangun dengan **Next.js 15 (App Router)**, **Firebase Firestore (Admin SDK)**, **Tailwind CSS**, dan **Google Gemini AI**.
 
-**Domain Live:** [https://gadaibpkbsyariah.com](https://gadaibpkbsyariah.com)
+**Domain Live:** [https://gadai.pojokberkah.online](https://gadai.pojokberkah.online)
 
 ---
 
@@ -41,10 +41,8 @@ Website rujukan & simulasi **Gadai BPKB** berskala PSEO untuk mendominasi pencar
 | `/kebijakan-privasi` | Kebijakan privasi | statis |
 | `/lokasi` | `redirect("/simulasi-gadai-bpkb")` | — |
 | `/sitemap.xml` | `app/sitemap.ts` — static + provinsi + kota | Firestore |
-| `/robots.txt` | `app/robots.ts` — `Allow:/`, `Disallow:/admin/` | — |
+| `/robots.txt` | `app/robots.ts` — `Allow: /`, deklarasi Sitemap resmi | — |
 | `/api/track-view` | `POST {location}` → `FieldValue.increment(1)` | Firestore |
-
-> **Catatan:** `app/sitemap.ts` saat ini masih memetakan static routes lama (`/produk/kredit-kendaraan-bekas`). Sinkronisasi ke 5 slug produk & 3 slug layanan terbaru ada di CHANGELOG — Unreleased.
 
 ---
 
@@ -62,7 +60,7 @@ Website rujukan & simulasi **Gadai BPKB** berskala PSEO untuk mendominasi pencar
 
 ```
 app/
-  admin/            # CMS (page.tsx, actions.ts, AIGenerator, ArticleTable, AllArticlesTable, …)
+  admin/            # CMS (layout.tsx with noindex, page.tsx, actions.ts, AIGenerator, ArticleTable, …)
   api/track-view/   # POST increment views (config/kota)
   components/       # Header (client, dropdown Produk/Layanan), Footer (banner OJK), TabelAngsuran, WhatsAppButton, ViewTracker
   simulasi-gadai-bpkb/
@@ -146,6 +144,17 @@ Alternatif Docker: `docker build -t pseo . && docker run -p 3000:3000 pseo` (run
 - `/admin` dilindungi **Basic Auth** via `middleware.ts` (`WWW-Authenticate: Basic realm="Secure Admin Area"`). Ganti kredensial sebelum production.
 - Spark (gratis) 50k reads / 20k writes / hari — aman karena **ISR + `cache()`** (hit Firestore hanya saat build/revalidate). Satu-satunya write per visit adalah `/api/track-view`.
 - Jangan commit `.env.local` / `firebase-service-account.json`.
+
+---
+
+## 📌 Rekomendasi & Roadmap Pengembangan Selanjutnya
+
+1. **OpenGraph & Twitter Card Image (`og:image`)**: Menambahkan banner kartu pratinjau sosial media di `app/layout.tsx` (1200×630px) agar tautan yang dibagikan ke WhatsApp/sosmed otomatis menampilkan thumbnail resmi dan meningkatkan CTR.
+2. **Floating WhatsApp CTA Global**: Memasang tombol melayang WhatsApp di halaman hub wilayah `/simulasi-gadai-bpkb` agar calon nasabah di ponsel dapat berkonsultasi langsung kapan saja.
+3. **Pencarian Cepat / Live Filter Kota**: Menyediakan kotak pencarian instan di halaman hub `/simulasi-gadai-bpkb` untuk memudahkan pengunjung langsung menemukan kota tanpa harus membuka daftar provinsi terlebih dahulu.
+4. **Schema.org `WebSite` (Google Site Name)**: Menambahkan skema `WebSite` dengan nama resmi "Gadai Pojok Berkah" di `app/layout.tsx` agar Google menampilkan nama brand secara rapi di atas cuplikan SERP.
+5. **Google Analytics 4 & Event Tracking**: Mengintegrasikan GA4 / Google Tag Manager untuk melacak impresi serta event klik tombol WhatsApp per halaman kota (mengukur konversi leads).
+6. **Optimasi Query Firestore (>1.000 Kota)**: Mengoptimalkan `getCitiesByProvinsiSlug` menggunakan query Firestore berindeks `collection.where("provinsi", "==", ...)` menggantikan pemfilteran in-memory saat data kota bertambah besar.
 
 ---
 
