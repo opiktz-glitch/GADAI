@@ -155,7 +155,7 @@ export default async function HomePage() {
               <p className="text-slate-700 font-semibold mb-4">📞 Hubungi saya sekarang untuk konsultasi <span className="text-amber-700">GRATIS</span></p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <a
-                  href={`https://wa.me/${cabangUtama.noHp.replace('+', '')}`}
+                  href={`https://wa.me/${cabangUtama.noHp.replace('+', '')}?text=${encodeURIComponent(waMessageTemplate)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"

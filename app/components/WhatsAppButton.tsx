@@ -12,7 +12,7 @@ export default function WhatsAppButton({
   messageTemplate: string,
   buttonText?: string
 }) {
-  const [url, setUrl] = useState(`https://wa.me/${noWa}`);
+  const [url, setUrl] = useState(`https://wa.me/${noWa}?text=${encodeURIComponent(messageTemplate.replace("[host]", ""))}`);
 
   useEffect(() => {
     // Mendapatkan URL domain secara dinamis
