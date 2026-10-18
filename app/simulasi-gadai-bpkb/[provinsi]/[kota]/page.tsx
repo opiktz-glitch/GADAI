@@ -8,7 +8,8 @@ import remarkGfm from "remark-gfm";
 import ViewTracker from "@/app/components/ViewTracker";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
 
-export const revalidate = 86400; // ISR: 1 hari (24 jam)
+// Perbarui data marketing dari Firestore paling lambat setiap 5 menit.
+export const revalidate = 300;
 
 type Props = {
   params: Promise<{ provinsi: string; kota: string }>;
