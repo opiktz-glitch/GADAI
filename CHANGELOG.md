@@ -9,6 +9,8 @@ Tanggal memakai zona `Asia/Jakarta` (WIB).
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-10-18
+
 ### Ditambahkan
 - **`app/admin/layout.tsx`**: Layout proteksi SEO khusus rute admin dengan metadata `robots: { index: false, follow: false, nocache: true }` (`<meta name="robots" content="noindex, nofollow, noarchive" />`).
 - **HTTP Header `X-Robots-Tag: noindex, nofollow`** di `middleware.ts` untuk respons halaman `/admin` (baik status 401 maupun login valid), memastikan bot pencari membaca arahan noindex langsung pada level HTTP header.

@@ -107,6 +107,7 @@ export type Article = {
 ### Placeholder (wajib dipahami)
 - `[NAMA_KOTA]` → diganti `nama_kota` / `provinsiName` saat render (`replace(/\[NAMA_KOTA\]/gi, ...)`).
 - `[JUMLAH_CABANG]` → diganti `jumlah_cabang` / `jumlah kota di provinsi`.
+- `cleanMetaDesc(metaDesc, kota, cabang)` (`lib/kota.ts`) → fungsi otomatis untuk membersihkan `metaDesc` dari kurung siku luar (`[...]`), tanda kutip, dan me-replace variabel placeholder `[NAMA_KOTA]` (menjadi "seluruh Indonesia" jika di homepage) serta `[JUMLAH_CABANG]` agar pratinjau media sosial (WhatsApp Web, WhatsApp Mobile, Twitter/X) selalu rapi tanpa placeholder mentah.
 - Di halaman kota/provinsi/homepage, link `wa.me` dan wrapper `[...](wa.me)` di-strip dari Markdown sebelum render agar tidak duplikat CTA (lihat `replace` chain di `app/simulasi-gadai-bpkb/[provinsi]/[kota]/page.tsx`).
 
 ---

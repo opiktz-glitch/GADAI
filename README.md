@@ -12,11 +12,14 @@ Website rujukan & simulasi **Gadai BPKB** berskala PSEO untuk mendominasi pencar
 |---|---|
 | **Arsitektur SEO Silo** | `/simulasi-gadai-bpkb` (hub) → `/simulasi-gadai-bpkb/[provinsi]` → `/simulasi-gadai-bpkb/[provinsi]/[kota]` — distribusi *link juice* + internal linking antar kota se-provinsi |
 | **SSG + ISR** | Semua halaman silo & produk/layanan `revalidate = 86400` (24 jam) + `cache()` React — Firestore hanya di-hit saat build/revalidate |
+| **Rich OpenGraph & WhatsApp Preview** | Banner resmi 1200×630px (`public/og-image.jpg`), sanitasi otomatis `cleanMetaDesc()` (bebas kurung siku `[...]` dan placeholder mentah) untuk pratinjau sempurna di WhatsApp Web, WhatsApp Mobile, dan medsos |
+| **Live Search Kota & Provinsi** | Pencarian instan (*live search filter*) di hub `/simulasi-gadai-bpkb` (`ProvinsiSearchGrid.tsx`) dengan chip navigasi langsung ke halaman kota |
+| **Structured Data & Google Site Name** | Schema.org `WebSite` ("Gadai Pojok Berkah") di `layout.tsx`, `FAQPage` di `/faq`, `LocalBusiness` + `BreadcrumbList` di halaman kota |
 | **AI Article Generator** | Gemini `gemini-2.5-flash-lite` — batch Markdown + placeholder `[NAMA_KOTA]`/`[JUMLAH_CABANG]` yang di-replace saat render |
 | **Catatan Lokal AI** | `generateCatatanLokalAI()` — 3–4 kalimat hiperlokal per kota (keyword wajib `Layanan gadai BPKB {kota}`) |
-| **Smart WhatsApp CTA** | Nomor pusat `config.main.whatsapp_pusat` + template konteks (homepage/provinsi/kota/produk/layanan) |
+| **Smart WhatsApp CTA & Branding** | Salam ramah "Halo", identifikasi rujukan website `Gadai Pojok Berkah (gadai.pojokberkah.online)` di semua tombol & tabel angsuran, plus Floating CTA di hub wilayah |
 | **Admin CMS** | 2 tab (`pengaturan` & `artikel`) — CRUD kota, assign/acak artikel, bank artikel, generate AI, tracking views |
-| **Secure Admin** | `middleware.ts` — Basic Auth (`ADMIN_USERNAME`/`ADMIN_PASSWORD`), matcher `/admin/:path*` |
+| **Proteksi SEO Multi-Lapis Admin** | Basic Auth (`middleware.ts`), HTTP Header `X-Robots-Tag: noindex, nofollow`, dan `<meta name="robots" content="noindex, nofollow, noarchive" />` di `admin/layout.tsx` |
 
 ---
 
@@ -148,13 +151,10 @@ Alternatif Docker: `docker build -t pseo . && docker run -p 3000:3000 pseo` (run
 ---
 
 ## 📌 Rekomendasi & Roadmap Pengembangan Selanjutnya
-
-1. **OpenGraph & Twitter Card Image (`og:image`)**: Menambahkan banner kartu pratinjau sosial media di `app/layout.tsx` (1200×630px) agar tautan yang dibagikan ke WhatsApp/sosmed otomatis menampilkan thumbnail resmi dan meningkatkan CTR.
-2. **Floating WhatsApp CTA Global**: Memasang tombol melayang WhatsApp di halaman hub wilayah `/simulasi-gadai-bpkb` agar calon nasabah di ponsel dapat berkonsultasi langsung kapan saja.
-3. **Pencarian Cepat / Live Filter Kota**: Menyediakan kotak pencarian instan di halaman hub `/simulasi-gadai-bpkb` untuk memudahkan pengunjung langsung menemukan kota tanpa harus membuka daftar provinsi terlebih dahulu.
-4. **Schema.org `WebSite` (Google Site Name)**: Menambahkan skema `WebSite` dengan nama resmi "Gadai Pojok Berkah" di `app/layout.tsx` agar Google menampilkan nama brand secara rapi di atas cuplikan SERP.
-5. **Google Analytics 4 & Event Tracking**: Mengintegrasikan GA4 / Google Tag Manager untuk melacak impresi serta event klik tombol WhatsApp per halaman kota (mengukur konversi leads).
-6. **Optimasi Query Firestore (>1.000 Kota)**: Mengoptimalkan `getCitiesByProvinsiSlug` menggunakan query Firestore berindeks `collection.where("provinsi", "==", ...)` menggantikan pemfilteran in-memory saat data kota bertambah besar.
+ 
+1. **Google Analytics 4 & Event Tracking**: Mengintegrasikan GA4 / Google Tag Manager untuk melacak impresi serta event klik tombol WhatsApp per halaman kota (mengukur konversi leads).
+2. **Optimasi Query Firestore (>1.000 Kota)**: Mengoptimalkan `getCitiesByProvinsiSlug` menggunakan query Firestore berindeks `collection.where("provinsi", "==", ...)` menggantikan pemfilteran in-memory saat data kota bertambah besar.
+3. **PWA (Progressive Web App)**: Dukungan manifest PWA dan service worker untuk pengalaman aplikasi mobile yang lebih cepat dan offline caching pada halaman simulasi.
 
 ---
 
