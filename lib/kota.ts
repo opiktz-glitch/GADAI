@@ -98,3 +98,33 @@ export function formatRupiah(angka: number): string {
     maximumFractionDigits: 0,
   }).format(angka);
 }
+
+export function cleanMetaDesc(rawDesc?: string | null, kota?: string, cabang?: number): string {
+  if (!rawDesc) return "";
+  let clean = rawDesc.trim();
+  // Strip outer quotes or brackets: [...] or "..."
+  clean = clean.replace(/^\[\s*/, "").replace(/\s*\]$/, "");
+  clean = clean.replace(/^"\s*/, "").replace(/\s*"$/, "");
+  
+  if (kota) {
+    clean = clean.replace(/\[NAMA_KOTA\]/gi, kota);
+    clean = clean.replace(/\[NAMA_KOTA_KAPITAL\]/gi, kota.toUpperCase());
+  } else {
+    clean = clean.replace(/di\s+\[NAMA_KOTA\]/gi, "seluruh Indonesia");
+    clean = clean.replace(/\[NAMA_KOTA\]/gi, "Seluruh Indonesia");
+    clean = clean.replace(/\[NAMA_KOTA_KAPITAL\]/gi, "SELURUH INDONESIA");
+  }
+
+  if (cabang !== undefined) {
+    clean = clean.replace(/\[JUMLAH_CABANG\]/gi, cabang.toString());
+  } else {
+    clean = clean.replace(/\[JUMLAH_CABANG\]/gi, "berbagai");
+  }
+
+  // Remove any remaining bracket placeholders like [APA_SAJA]
+  clean = clean.replace(/\[[^\]]+\]/g, "");
+  // Clean up any double spaces
+  clean = clean.replace(/\s{2,}/g, " ").trim();
+  return clean;
+}
+

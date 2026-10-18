@@ -271,9 +271,9 @@ ${kotaInstruksi}
 Target pembaca: ${targetPembaca}
 Panjang artikel: ${panjang}
 
-PENTING! Berikan respons Anda dengan format baku seperti ini:
-META_DESC: [isi meta description di sini, maks 160 karakter]
-CONTENT: [isi artikel lengkap format Markdown di sini]`;
+PENTING! Berikan respons Anda dengan format baku seperti ini (JANGAN menyertakan tanda kurung siku [] pada meta description):
+META_DESC: Tulis ringkasan meta description menarik di sini, tanpa tanda kurung siku (maks 160 karakter)
+CONTENT: isi artikel lengkap format Markdown di sini`;
 
   let text = "";
   try {
@@ -298,6 +298,7 @@ CONTENT: [isi artikel lengkap format Markdown di sini]`;
     if (text.includes("META_DESC:") && text.includes("CONTENT:")) {
       const parts = text.split("CONTENT:");
       meta = parts[0].replace("META_DESC:", "").trim();
+      meta = meta.replace(/^\[\s*/, "").replace(/\s*\]$/, "").replace(/^"\s*/, "").replace(/\s*"$/, "").trim();
       content = parts[1].trim();
     }
     

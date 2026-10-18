@@ -26,6 +26,7 @@ Tanggal memakai zona `Asia/Jakarta` (WIB).
 - **Pembersihan Aset Eksternal**: Mengganti URL tekstur pihak ketiga `transparenttextures.com` di halaman detail kota menjadi pola murni CSS dot grid pattern.
 
 ### Diperbaiki
+- **Pembersihan Pratinjau Link WhatsApp & Media Sosial**: Memperbaiki deskripsi metadata OpenGraph (`og:description`, `meta description`, `twitter:description`) agar tidak lagi memunculkan tanda kurung siku `[...]` maupun variabel placeholder mentah `[NAMA_KOTA]`. Mengimplementasikan fungsi sanitasi otomatis `cleanMetaDesc()`, memperbarui instruksi prompt AI di admin, dan membersihkan data artikel di Firestore sehingga tautan yang di-share ke WhatsApp Web dan WhatsApp HP selalu bersih, rapi, dan profesional.
 - Sinkronisasi sitemap 100% bebas dari broken links / 404, seluruh URL menghasilkan HTTP 200.
 
 ### Catatan & Rekomendasi Rilis Mendatang

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getUniqueProvinsi, getCitiesByProvinsiSlug, getConfig, slugify, getArticleById } from "@/lib/kota";
+import { getUniqueProvinsi, getCitiesByProvinsiSlug, getConfig, slugify, getArticleById, cleanMetaDesc } from "@/lib/kota";
 import { MapPin, ChevronRight, Building } from "lucide-react";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
 import ReactMarkdown from "react-markdown";
@@ -30,15 +30,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const assignedArticle = assignedArticleId ? await getArticleById(assignedArticleId) : null;
   
   const descriptionTemplate = assignedArticle?.metaDesc || `Daftar cabang dan layanan gadai BPKB mobil/motor di wilayah ${provinsiName}. Tersedia di ${cities.length} kota. Ajukan sekarang untuk dana tunai cepat!`;
-  
-  const description = descriptionTemplate
-    .replace(/\[NAMA_KOTA\]/gi, provinsiName)
-    .replace(/\[JUMLAH_CABANG\]/gi, cities.length.toString());
+  const title = `Layanan Gadai BPKB di ${provinsiName} - Dana Cepat Cair`;
+  const description = cleanMetaDesc(descriptionTemplate, provinsiName, cities.length);
 
   return {
-    title: `Layanan Gadai BPKB di ${provinsiName} - Dana Cepat Cair`,
+    title,
     description,
     alternates: { canonical: `/simulasi-gadai-bpkb/${p.provinsi}` },
+    openGraph: {
+      title,
+      description,
+      images: [
+        {
+          url: "/og-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: `Gadai BPKB di ${provinsiName}`,
+        },
+      ],
+    },
   };
 }
 

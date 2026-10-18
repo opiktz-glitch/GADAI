@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAllKota, getConfig, getArticleById } from "@/lib/kota";
+import { getAllKota, getConfig, getArticleById, cleanMetaDesc } from "@/lib/kota";
 import { ChevronRight, ShieldCheck, Banknote, Clock, MapPin, MapPinned } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -10,14 +10,15 @@ import { Metadata } from "next";
 export async function generateMetadata(): Promise<Metadata> {
   const config = await getConfig();
   const assignedArticle = config.assignedArticleId ? await getArticleById(config.assignedArticleId) : null;
+  const description = cleanMetaDesc(assignedArticle?.metaDesc) || "Layanan resmi pengajuan simulasi gadai BPKB motor dan mobil seluruh Indonesia bersama marketing AXI Adira Finance. Proses cepat, pencairan tinggi.";
 
   return {
     title: "Gadai Pojok Berkah - Marketing Resmi AXI Adira Finance",
-    description: assignedArticle?.metaDesc || "Layanan resmi pengajuan simulasi gadai BPKB motor dan mobil seluruh Indonesia bersama marketing AXI Adira Finance. Proses cepat, pencairan tinggi.",
+    description,
     alternates: { canonical: "/" },
     openGraph: {
       title: "Gadai Pojok Berkah - Marketing Resmi AXI Adira Finance",
-      description: assignedArticle?.metaDesc || "Layanan resmi pengajuan simulasi gadai BPKB motor dan mobil seluruh Indonesia bersama marketing AXI Adira Finance. Proses cepat, pencairan tinggi.",
+      description,
       images: [
         {
           url: "/og-image.jpg",
@@ -26,7 +27,13 @@ export async function generateMetadata(): Promise<Metadata> {
           alt: "Gadai Pojok Berkah - Marketing Resmi AXI Adira Finance",
         },
       ],
-    }
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Gadai Pojok Berkah - Marketing Resmi AXI Adira Finance",
+      description,
+      images: ["/og-image.jpg"],
+    },
   };
 }
 

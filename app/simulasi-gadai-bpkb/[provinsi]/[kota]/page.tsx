@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllKota, getKotaBySlug, formatRupiah, getConfig, getArticleById, slugify } from "@/lib/kota";
+import { getAllKota, getKotaBySlug, formatRupiah, getConfig, getArticleById, slugify, cleanMetaDesc } from "@/lib/kota";
 import { MapPin, Clock, CheckCircle2, MessageCircle, Map, Quote } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -33,15 +33,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     kota.estimasi_pencairan_min
   )} hingga ${formatRupiah(kota.estimasi_pencairan_max)}.`;
   
-  const description = descriptionTemplate
-    .replace(/\[NAMA_KOTA\]/gi, kota.nama_kota)
-    .replace(/\[JUMLAH_CABANG\]/gi, kota.jumlah_cabang.toString());
+  const description = cleanMetaDesc(descriptionTemplate, kota.nama_kota, kota.jumlah_cabang);
 
   return {
     title,
     description,
     alternates: { canonical: `/simulasi-gadai-bpkb/${p.provinsi}/${kota.slug}` },
-    openGraph: { title, description },
+    openGraph: { 
+      title, 
+      description,
+      images: [
+        {
+          url: "/og-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: `Gadai BPKB di ${kota.nama_kota}`,
+        },
+      ],
+    },
   };
 }
 
