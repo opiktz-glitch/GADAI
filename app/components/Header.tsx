@@ -84,7 +84,7 @@ export default function Header() {
           {/* CTA Button */}
           <div className="flex items-center">
             <a 
-              href={`https://wa.me/6287724039666?text=${encodeURIComponent("Halo Admin AXI Adira, saya ingin konsultasi pengajuan Gadai BPKB.")}`}
+              href={`https://wa.me/6287724039666?text=${encodeURIComponent("Halo Admin, saya menghubungi melalui website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin konsultasi pengajuan Gadai BPKB.")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-3 sm:py-2.5 sm:px-6 rounded-md transition-colors shadow-sm tracking-wide text-[11px] sm:text-sm flex items-center gap-1.5 sm:gap-2"

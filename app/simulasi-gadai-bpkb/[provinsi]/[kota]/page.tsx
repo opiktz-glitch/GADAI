@@ -100,7 +100,7 @@ export default async function KotaPage({ params }: Props) {
     }
   ];
 
-  const waMessageTemplate = `Halo ${kota.nama_marketing_lokal} [host], saya ingin simulasi gadai BPKB untuk wilayah ${kota.nama_kota}.`;
+  const waMessageTemplate = `Halo ${kota.nama_marketing_lokal}, saya menemukan kontak Anda di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin simulasi gadai BPKB untuk wilayah ${kota.nama_kota}.`;
 
   return (
     <main className="min-h-screen bg-slate-50 font-sans pb-24">

@@ -174,7 +174,7 @@ export default async function ProvinsiPage({ params }: Props) {
       
       {/* Floating CTA */}
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 p-4 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] sm:bg-transparent sm:border-none sm:shadow-none sm:p-0 sm:bottom-8 sm:right-8 sm:left-auto">
-        <WhatsAppButton noWa={config.whatsapp_pusat} messageTemplate={`Halo, saya ingin info gadai BPKB untuk wilayah ${provinsiName}.`} buttonText="Tanya CS (Gratis)" />
+        <WhatsAppButton noWa={config.whatsapp_pusat} messageTemplate={`Halo Admin, saya membaca info di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin info gadai BPKB untuk wilayah ${provinsiName}.`} buttonText="Tanya CS (Gratis)" />
       </div>
     </main>
   );

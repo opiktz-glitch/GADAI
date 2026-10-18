@@ -32,7 +32,7 @@ export const TableMotor = () => {
 
   const handleAjukan = (e: React.FormEvent) => {
     e.preventDefault();
-    const message = `Halo Admin AXI Adira,\n\nNama saya *${nama}*.\nSaya tertarik mengajukan Gadai BPKB Motor.\n\n- Rencana Pinjaman: *Rp ${selectedPinjaman}*\n- Info Kendaraan: *${kendaraan}*\n\nMohon info detail persyaratan dan prosesnya. Terima kasih.`;
+    const message = `Halo Admin Gadai Pojok Berkah,\n\nNama saya *${nama}*.\nSaya tertarik mengajukan Gadai BPKB Motor melalui website gadai.pojokberkah.online.\n\n- Rencana Pinjaman: *Rp ${selectedPinjaman}*\n- Info Kendaraan: *${kendaraan}*\n\nMohon info detail persyaratan dan prosesnya. Terima kasih.`;
     window.open(`https://wa.me/${noWa}?text=${encodeURIComponent(message)}`, "_blank");
     setSelectedPinjaman(null);
     setNama("");
@@ -168,7 +168,7 @@ export const TableMobil = () => {
 
   const handleAjukan = (e: React.FormEvent) => {
     e.preventDefault();
-    const message = `Halo Admin AXI Adira,\n\nNama saya *${nama}*.\nSaya tertarik mengajukan Gadai BPKB Mobil.\n\n- Rencana Pinjaman: *Rp ${selectedPinjaman}*\n- Info Kendaraan: *${kendaraan}*\n\nMohon info detail persyaratan dan prosesnya. Terima kasih.`;
+    const message = `Halo Admin Gadai Pojok Berkah,\n\nNama saya *${nama}*.\nSaya tertarik mengajukan Gadai BPKB Mobil melalui website gadai.pojokberkah.online.\n\n- Rencana Pinjaman: *Rp ${selectedPinjaman}*\n- Info Kendaraan: *${kendaraan}*\n\nMohon info detail persyaratan dan prosesnya. Terima kasih.`;
     window.open(`https://wa.me/${noWa}?text=${encodeURIComponent(message)}`, "_blank");
     setSelectedPinjaman(null);
     setNama("");

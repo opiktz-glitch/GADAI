@@ -8,7 +8,7 @@ const layananData: Record<string, { title: string, subtitle: string, waText: str
   "syarat-dan-proses": {
     title: "Syarat & Proses Gadai BPKB",
     subtitle: "Persiapan yang Anda butuhkan sebelum mengajukan pinjaman.",
-    waText: "Halo Admin AXI Adira, saya ingin bertanya lebih lanjut tentang syarat Gadai BPKB.",
+    waText: "Halo Admin, saya membaca panduan di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin bertanya lebih lanjut tentang syarat Gadai BPKB.",
     content: (
       <>
         <h2 className="text-2xl font-bold text-[#0B1E36] mb-4">Persyaratan Dokumen Umum</h2>
@@ -67,7 +67,7 @@ const layananData: Record<string, { title: string, subtitle: string, waText: str
   "cara-pengajuan": {
     title: "Cara Pengajuan Gadai BPKB",
     subtitle: "Langkah mudah mendapatkan dana tunai dari rumah.",
-    waText: "Halo Admin AXI Adira, saya ingin mulai melakukan pengajuan Gadai BPKB.",
+    waText: "Halo Admin, saya membaca panduan di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin mulai melakukan pengajuan Gadai BPKB.",
     content: (
       <>
         <h2 className="text-2xl font-bold text-[#0B1E36] mb-4">Langkah-Langkah Pengajuan</h2>
@@ -111,7 +111,7 @@ const layananData: Record<string, { title: string, subtitle: string, waText: str
   "simulasi-angsuran": {
     title: "Tabel Simulasi Angsuran",
     subtitle: "Estimasi angsuran bulanan untuk pengajuan Gadai BPKB Motor & Mobil.",
-    waText: "Halo Admin AXI Adira, saya sudah melihat tabel simulasi angsuran dan ingin bertanya lebih lanjut.",
+    waText: "Halo Admin, saya sudah melihat tabel simulasi di website Gadai Pojok Berkah (gadai.pojokberkah.online) dan ingin bertanya lebih lanjut.",
     content: (
       <>
         <p className="text-base leading-relaxed mb-8 text-center text-slate-600">

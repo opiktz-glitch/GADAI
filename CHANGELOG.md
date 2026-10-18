@@ -19,6 +19,7 @@ Tanggal memakai zona `Asia/Jakarta` (WIB).
 - **Pencarian Cepat Kota & Provinsi (`app/simulasi-gadai-bpkb/ProvinsiSearchGrid.tsx`)**: Menyediakan fitur pencarian instan (*live search filter*) di halaman hub `/simulasi-gadai-bpkb` lengkap dengan chip navigasi langsung ke halaman kota dan filter dinamis kartu provinsi.
 
 ### Diubah
+- **Template Pesan WhatsApp**: Memperbarui seluruh link dan tombol WhatsApp di seluruh halaman (`Header`, `Beranda`, `Simulasi Kota & Provinsi`, `Produk`, `Layanan`, `Tentang Kami`, `FAQ`, dan `Tabel Angsuran`) dengan salam pembuka "Halo" serta mencantumkan nama website **Gadai Pojok Berkah (gadai.pojokberkah.online)** secara eksplisit agar admin dapat langsung mengenali asal rujukan nasabah.
 - **Rebranding Domain & Identitas Website**: Domain resmi beralih ke `https://gadai.pojokberkah.online` dan nama website diselaraskan menjadi **`Gadai Pojok Berkah`** (`layout.tsx`, `page.tsx`, `actions.ts` prompt AI, Breadcrumbs JSON-LD).
 - **`app/robots.ts`**: Menghapus direktif `disallow: '/admin/'` dan menerapkan `allow: '/'` penuh sesuai panduan resmi Google Search Central agar Googlebot dapat merayapi dan membaca arahan `noindex`.
 - **`app/sitemap.ts`**: Menghapus rute lama yang 404 (`/produk/kredit-kendaraan-bekas`), menambahkan 5 landing page produk aktual dan 3 rute layanan dengan prioritas & `changeFrequency` proporsional.

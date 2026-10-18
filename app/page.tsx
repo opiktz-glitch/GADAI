@@ -34,7 +34,7 @@ export default async function HomePage() {
   const semuaKota = await getAllKota();
   const config = await getConfig();
   const assignedArticle = config.assignedArticleId ? await getArticleById(config.assignedArticleId) : null;
-  const waMessageTemplate = "Halo Admin AXI Adira, saya ingin bertanya mengenai prosedur gadai BPKB / Kredit Kendaraan.";
+  const waMessageTemplate = "Halo Admin, saya membaca informasi di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin bertanya mengenai prosedur gadai BPKB / Kredit Kendaraan.";
 
   // Data Spesifik Cabang dari Gambar
   const cabangUtama = {

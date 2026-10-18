@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default async function TentangKami() {
   const config = await getConfig();
   const noHp = config.whatsapp_pusat || "+6287724039666";
-  const waMessageTemplate = "Halo Admin AXI Adira, saya ingin bertanya seputar layanan Adira Finance.";
+  const waMessageTemplate = "Halo Admin, saya membaca profil di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin bertanya seputar layanan pembiayaan Adira Finance.";
 
   return (
     <div className="min-h-screen bg-slate-50 py-12 pb-24">

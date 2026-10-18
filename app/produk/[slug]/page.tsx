@@ -110,33 +110,33 @@ const productData: Record<string, { title: string, subtitle: string, desc: strin
     title: "Gadai BPKB Mobil",
     subtitle: "Pencairan tinggi untuk kebutuhan dana besar Anda.",
     desc: "Butuh dana cepat dalam jumlah besar? Gadai BPKB Mobil adalah solusi tepat untuk Anda. Kami menawarkan nilai pencairan tinggi dengan suku bunga yang kompetitif. Kendaraan tetap bisa Anda gunakan karena hanya BPKB yang kami tahan. Proses survei dilakukan dengan cepat dan transparan.",
-    waText: "Halo Admin AXI Adira, saya ingin konsultasi pengajuan Gadai BPKB Mobil.",
+    waText: "Halo Admin, saya melihat produk di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin konsultasi pengajuan Gadai BPKB Mobil.",
     table: tableMobil
   },
   "gadai-bpkb-motor": {
     title: "Gadai BPKB Motor",
     subtitle: "Proses kilat, dana cair tanpa potong biaya survei.",
     desc: "Dapatkan dana tunai kilat hanya dengan jaminan BPKB Motor. Kami memproses pengajuan Anda dengan sangat cepat tanpa potongan biaya survei. Syarat mudah dan kendaraan tetap bisa dipakai untuk aktivitas Anda sehari-hari.",
-    waText: "Halo Admin AXI Adira, saya ingin konsultasi pengajuan Gadai BPKB Motor.",
+    waText: "Halo Admin, saya melihat produk di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin konsultasi pengajuan Gadai BPKB Motor.",
     table: tableMotor
   },
   "kredit-baru": {
     title: "Kredit Motor dan Mobil Baru",
     subtitle: "Fasilitas kredit kendaraan baru dengan DP ringan.",
     desc: "Ingin membeli mobil atau motor baru impian Anda? Kami menyediakan fasilitas kredit kendaraan baru dari berbagai merek dengan cicilan ringan, syarat mudah, dan proses cepat. Dapatkan kendaraan baru Anda sekarang juga bersama Adira Finance.",
-    waText: "Halo Admin AXI Adira, saya ingin konsultasi mengenai Kredit Kendaraan Baru."
+    waText: "Halo Admin, saya melihat produk di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin konsultasi mengenai Kredit Kendaraan Baru."
   },
   "kredit-bekas": {
     title: "Kredit Motor dan Mobil Bekas",
     subtitle: "Fasilitas kredit motor dan mobil bekas terpercaya.",
     desc: "Ingin membeli mobil atau motor impian tapi budget terbatas? Kami menyediakan fasilitas kredit kendaraan bekas berkualitas. Dengan Adira Finance, Anda bisa mendapatkan kendaraan impian dengan cicilan ringan, syarat mudah, dan BPKB yang aman.",
-    waText: "Halo Admin AXI Adira, saya ingin konsultasi mengenai Kredit Kendaraan Bekas."
+    waText: "Halo Admin, saya melihat produk di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin konsultasi mengenai Kredit Kendaraan Bekas."
   },
   "take-over-top-up": {
     title: "Take Over & Top Up",
     subtitle: "Pindahkan kredit Anda atau tambah limit dengan mudah.",
     desc: "Merasa cicilan kendaraan Anda di tempat lain terlalu berat? Lakukan Take Over ke Adira Finance untuk mendapatkan cicilan yang lebih ringan (Gratis Biaya Take Over). Selain itu, jika Anda adalah nasabah aktif kami yang membutuhkan dana tambahan, Anda bisa melakukan Top Up pinjaman tanpa harus mengganti kontrak lama.",
-    waText: "Halo Admin AXI Adira, saya ingin konsultasi mengenai fasilitas Take Over / Top Up."
+    waText: "Halo Admin, saya melihat info di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin konsultasi mengenai fasilitas Take Over / Top Up."
   }
 };
 

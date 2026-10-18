@@ -20,7 +20,7 @@ export default async function HubProvinsiPage() {
   ]);
 
   const waNumber = config.whatsapp_pusat || "6287724039666";
-  const waTemplate = "Halo Admin AXI Adira, saya ingin konsultasi simulasi gadai BPKB untuk wilayah saya.";
+  const waTemplate = "Halo Admin, saya membaca info di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin konsultasi simulasi gadai BPKB untuk wilayah saya.";
 
   const kotaItems = allKota.map((k) => ({
     nama_kota: k.nama_kota,
