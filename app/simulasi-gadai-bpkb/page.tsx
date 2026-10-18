@@ -9,7 +9,16 @@ export const revalidate = 86400;
 export const metadata: Metadata = {
   title: "Simulasi Gadai BPKB Seluruh Provinsi di Indonesia",
   description: "Layanan Gadai BPKB resmi dan terpercaya. Temukan simulasi angsuran dan daftar cabang di berbagai provinsi seluruh Indonesia.",
-  alternates: { canonical: "/simulasi-gadai-bpkb" }
+  alternates: { canonical: "/simulasi-gadai-bpkb" },
+  openGraph: {
+    title: "Simulasi Gadai BPKB Seluruh Provinsi di Indonesia",
+    description: "Layanan Gadai BPKB resmi dan terpercaya di seluruh provinsi Indonesia.",
+    url: "https://gadai.pojokberkah.online/simulasi-gadai-bpkb",
+    siteName: "Gadai Pojok Berkah",
+    locale: "id_ID",
+    type: "website",
+    images: [{ url: "https://gadai.pojokberkah.online/og-image.jpg", width: 1200, height: 630, alt: "Simulasi Gadai BPKB" }],
+  },
 };
 
 export default async function HubProvinsiPage() {

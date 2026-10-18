@@ -17,6 +17,7 @@ export type Kota = {
   assignedArticleId?: string;
   views?: number;
   allowRandom?: boolean;
+  updatedAt?: number;
 };
 
 export type Config = {
@@ -34,15 +35,22 @@ export type Article = {
   metaDesc?: string;
   source?: string;
   createdAt?: number;
+  updatedAt?: number;
   shortId?: string;
 };
 
+function isDbReady(): boolean {
+  return !!db && typeof (db as any).collection === "function";
+}
+
 export const getAllKota = cache(async (): Promise<Kota[]> => {
+  if (!isDbReady()) return [];
   const snapshot = await db.collection('kota').get();
   return snapshot.docs.map(doc => doc.data() as Kota);
 });
 
 export const getKotaBySlug = cache(async (slug: string): Promise<Kota | undefined> => {
+  if (!isDbReady()) return undefined;
   const doc = await db.collection('kota').doc(slug).get();
   if (!doc.exists) return undefined;
   return doc.data() as Kota;
@@ -74,18 +82,20 @@ export const getCitiesByProvinsiSlug = cache(async (provinsiSlug: string): Promi
 });
 
 export const getConfig = cache(async (): Promise<Config> => {
+  if (!isDbReady()) return { whatsapp_pusat: "6287724039666" };
   const doc = await db.collection('config').doc('main').get();
   if (!doc.exists) return { whatsapp_pusat: "6287724039666" };
   return doc.data() as Config;
 });
 
 export async function getAllArticles(): Promise<Article[]> {
+  if (!isDbReady()) return [];
   const snapshot = await db.collection('articles').get();
   return snapshot.docs.map(doc => doc.data() as Article);
 }
 
 export async function getArticleById(id: string): Promise<Article | undefined> {
-  if (!id) return undefined;
+  if (!id || !isDbReady()) return undefined;
   const doc = await db.collection('articles').doc(id).get();
   if (!doc.exists) return undefined;
   return doc.data() as Article;

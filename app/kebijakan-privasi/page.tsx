@@ -5,6 +5,16 @@ import { ArrowLeft } from 'lucide-react';
 export const metadata: Metadata = {
   title: 'Kebijakan Privasi - Gadai BPKB Adira Finance',
   description: 'Kebijakan privasi dan keamanan data untuk pelanggan yang mengajukan fasilitas pembiayaan melalui website mitra Adira Finance.',
+  alternates: { canonical: '/kebijakan-privasi' },
+  openGraph: {
+    title: 'Kebijakan Privasi - Gadai BPKB Adira Finance',
+    description: 'Kebijakan privasi dan keamanan data pelanggan Gadai Pojok Berkah.',
+    url: 'https://gadai.pojokberkah.online/kebijakan-privasi',
+    siteName: 'Gadai Pojok Berkah',
+    locale: 'id_ID',
+    type: 'website',
+    images: [{ url: 'https://gadai.pojokberkah.online/og-image.jpg', width: 1200, height: 630, alt: 'Kebijakan Privasi' }],
+  },
 };
 
 export default function PrivacyPolicyPage() {

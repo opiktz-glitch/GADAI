@@ -10,29 +10,33 @@ import { Metadata } from "next";
 export async function generateMetadata(): Promise<Metadata> {
   const config = await getConfig();
   const assignedArticle = config.assignedArticleId ? await getArticleById(config.assignedArticleId) : null;
-  const description = cleanMetaDesc(assignedArticle?.metaDesc) || "Layanan resmi pengajuan simulasi gadai BPKB motor dan mobil seluruh Indonesia bersama marketing AXI Adira Finance. Proses cepat, pencairan tinggi.";
+  const description = cleanMetaDesc(assignedArticle?.metaDesc) || "Gadai BPKB mobil & motor cepat cair seluruh Indonesia bersama marketing resmi AXI Adira Finance. Proses cepat, aman, pencairan tinggi hingga ratusan juta.";
 
   return {
-    title: "Gadai Pojok Berkah - Marketing Resmi AXI Adira Finance",
+    title: "Gadai BPKB Mobil & Motor Cepat Cair - Marketing Resmi AXI Adira Finance",
     description,
     alternates: { canonical: "/" },
     openGraph: {
-      title: "Gadai Pojok Berkah - Marketing Resmi AXI Adira Finance",
+      title: "Gadai BPKB Mobil & Motor Cepat Cair - Marketing Resmi AXI Adira Finance",
       description,
+      url: "https://gadai.pojokberkah.online/",
+      siteName: "Gadai Pojok Berkah",
+      locale: "id_ID",
+      type: "website",
       images: [
         {
-          url: "/og-image.jpg",
+          url: "https://gadai.pojokberkah.online/og-image.jpg",
           width: 1200,
           height: 630,
-          alt: "Gadai Pojok Berkah - Marketing Resmi AXI Adira Finance",
+          alt: "Gadai BPKB Mobil & Motor - Gadai Pojok Berkah Marketing Resmi AXI Adira Finance",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Gadai Pojok Berkah - Marketing Resmi AXI Adira Finance",
+      title: "Gadai BPKB Mobil & Motor Cepat Cair - Marketing Resmi AXI Adira Finance",
       description,
-      images: ["/og-image.jpg"],
+      images: ["https://gadai.pojokberkah.online/og-image.jpg"],
     },
   };
 }
@@ -54,14 +58,17 @@ export default async function HomePage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "AXI Marketing Adira Beraxi",
+    name: "Gadai Pojok Berkah - AXI Marketing Adira Beraxi",
+    url: "https://gadai.pojokberkah.online",
+    logo: "https://gadai.pojokberkah.online/logo-axi-v3-web.png",
+    telephone: cabangUtama.noHp,
     contactPoint: {
       "@type": "ContactPoint",
       telephone: cabangUtama.noHp,
       contactType: "Customer Service",
       areaServed: "ID",
-      availableLanguage: "Indonesian"
-    }
+      availableLanguage: "Indonesian",
+    },
   };
 
   return (
@@ -76,7 +83,7 @@ export default async function HomePage() {
       <section className="bg-yellow-400 px-6 py-12 text-slate-900 border-b-4 border-slate-900">
         <div className="mx-auto max-w-5xl text-center">
           <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl lg:text-5xl uppercase">
-            Butuh Dana Cepat Atau Kredit Kendaraan?
+            Gadai BPKB Mobil & Motor — Butuh Dana Cepat Atau Kredit Kendaraan?
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg font-medium text-slate-800 sm:text-xl">
             Solusi tepat dari Marketing Resmi AXI Adira Finance. Kami bantu proses Anda sampai tuntas!

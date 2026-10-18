@@ -40,17 +40,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: { canonical: `/simulasi-gadai-bpkb/${p.provinsi}/${kota.slug}` },
-    openGraph: { 
-      title, 
+    openGraph: {
+      title,
       description,
+      url: `https://gadai.pojokberkah.online/simulasi-gadai-bpkb/${p.provinsi}/${kota.slug}`,
+      siteName: "Gadai Pojok Berkah",
+      locale: "id_ID",
+      type: "website",
       images: [
         {
-          url: "/og-image.jpg",
+          url: "https://gadai.pojokberkah.online/og-image.jpg",
           width: 1200,
           height: 630,
           alt: `Gadai BPKB di ${kota.nama_kota}`,
         },
       ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["https://gadai.pojokberkah.online/og-image.jpg"],
     },
   };
 }
@@ -63,25 +73,25 @@ export default async function KotaPage({ params }: Props) {
   const config = await getConfig();
   const assignedArticle = kota.assignedArticleId ? await getArticleById(kota.assignedArticleId) : null;
 
-  // Internal Linking Logic
   const semuaKota = await getAllKota();
-  const otherCities = semuaKota.filter(k => k.slug !== kota.slug);
-  // Prioritaskan provinsi yang sama
-  let sameProvince = otherCities.filter(k => k.provinsi === kota.provinsi);
+  const otherCities = semuaKota.filter((k) => k.slug !== kota.slug);
+  let sameProvince = otherCities.filter((k) => k.provinsi === kota.provinsi);
   let relatedCities = sameProvince.length > 0 ? sameProvince : otherCities;
-  // Acak dan ambil maksimal 4 kota
-  relatedCities = relatedCities.sort(() => 0.5 - Math.random()).slice(0, 4);
+  relatedCities = relatedCities.sort((a, b) => a.slug.localeCompare(b.slug)).slice(0, 4);
 
   const jsonLd = [
     {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       name: `Gadai BPKB - Cabang ${kota.nama_kota}`,
+      url: `https://gadai.pojokberkah.online/simulasi-gadai-bpkb/${p.provinsi}/${kota.slug}`,
+      telephone: config.whatsapp_pusat,
       address: {
         "@type": "PostalAddress",
         streetAddress: kota.alamat_cabang_utama,
         addressLocality: kota.nama_kota,
         addressRegion: kota.provinsi,
+        addressCountry: "ID",
       },
     },
     {
@@ -174,12 +184,19 @@ export default async function KotaPage({ params }: Props) {
             </div>
           ) : (
             <>
-              <h2 className="text-2xl font-bold text-slate-900 mb-4">Layanan Gadai BPKB Terpercaya di {kota.nama_kota}, {kota.provinsi}</h2>
+              <h2 className="text-2xl font-bold text-slate-900 mb-4">Gadai BPKB Terpercaya di {kota.nama_kota}, {kota.provinsi} — Pencairan Cepat & Aman</h2>
               <p className="text-slate-700 mb-4 leading-relaxed">
-                Mencari tempat pinjaman dana tunai dengan jaminan BPKB di wilayah <strong>{kota.nama_kota}</strong> kini semakin mudah. Kami memahami bahwa kebutuhan finansial bisa datang kapan saja, baik untuk modal usaha bagi warga {kota.nama_kota}, biaya pendidikan, atau kebutuhan mendesak lainnya. Kami siap memberikan pelayanan terbaik dengan proses yang aman dan transparan.
+                Butuh dana tunai cepat di <strong>{kota.nama_kota}</strong>, {kota.provinsi}? Layanan <strong>Gadai BPKB Mobil & Motor</strong> kami hadir untuk warga {kota.nama_kota} dengan proses yang aman, transparan, dan diawasi OJK. Cocok untuk modal usaha, biaya pendidikan, renovasi rumah, hingga kebutuhan mendesak lainnya — dengan estimasi pencairan mulai {formatRupiah(kota.estimasi_pencairan_min)} hingga {formatRupiah(kota.estimasi_pencairan_max)} dan proses secepat {kota.waktu_proses_jam} jam.
               </p>
-              <p className="text-slate-700 leading-relaxed">
-                Silakan ajukan pinjaman Anda sekarang juga atau buat artikel melalui Panel Admin untuk menggantikan teks bawaan ini.
+              <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">Keunggulan Gadai BPKB di {kota.nama_kota}</h3>
+              <ul className="list-disc pl-5 space-y-1 text-slate-700">
+                <li>BPKB aman disimpan Adira Finance, kendaraan tetap Anda pakai sehari-hari.</li>
+                <li>{kota.jumlah_cabang} cabang aktif melayani wilayah {kota.nama_kota} dan sekitarnya — alamat cabang utama: {kota.alamat_cabang_utama}.</li>
+                <li>Konsultasi gratis & simulasi angsuran transparan sebelum pengajuan.</li>
+                <li>Jemput dokumen ke rumah/kantor — tidak perlu antre di cabang.</li>
+              </ul>
+              <p className="text-slate-700 leading-relaxed mt-4">
+                Hubungi marketing resmi AXI Adira Finance untuk simulasi angsuran sesuai tenor dan plafon yang Anda butuhkan. Artikel unik per kota tersedia via Panel Admin untuk hasil SEO maksimal.
               </p>
             </>
           )}

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
 import Link from "next/link";
@@ -139,6 +140,34 @@ const productData: Record<string, { title: string, subtitle: string, desc: strin
     waText: "Halo Admin, saya melihat info di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin konsultasi mengenai fasilitas Take Over / Top Up."
   }
 };
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const product = productData[slug];
+  if (!product) return {};
+  const title = `${product.title} - Pencairan Tinggi & Proses Cepat`;
+  const description = product.desc.slice(0, 155);
+  return {
+    title,
+    description,
+    alternates: { canonical: `/produk/${slug}` },
+    openGraph: {
+      title,
+      description,
+      url: `https://gadai.pojokberkah.online/produk/${slug}`,
+      siteName: "Gadai Pojok Berkah",
+      locale: "id_ID",
+      type: "website",
+      images: [{ url: "https://gadai.pojokberkah.online/og-image.jpg", width: 1200, height: 630, alt: product.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["https://gadai.pojokberkah.online/og-image.jpg"],
+    },
+  };
+}
 
 export default async function ProdukPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;

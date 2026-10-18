@@ -5,6 +5,16 @@ import { getConfig } from "@/lib/kota";
 export const metadata: Metadata = {
   title: 'Tentang Kami - Marketing Resmi AXI Adira Finance',
   description: 'Kami adalah Marketing Resmi AXI Adira Finance yang siap membantu memfasilitasi pengajuan Gadai BPKB Motor & Mobil dengan proses cepat, aman, dan transparan.',
+  alternates: { canonical: '/tentang-kami' },
+  openGraph: {
+    title: 'Tentang Kami - Marketing Resmi AXI Adira Finance',
+    description: 'Marketing Resmi AXI Adira Finance — fasilitator Gadai BPKB Motor & Mobil terpercaya.',
+    url: 'https://gadai.pojokberkah.online/tentang-kami',
+    siteName: 'Gadai Pojok Berkah',
+    locale: 'id_ID',
+    type: 'website',
+    images: [{ url: 'https://gadai.pojokberkah.online/og-image.jpg', width: 1200, height: 630, alt: 'Tentang Kami - Gadai Pojok Berkah' }],
+  },
 };
 
 export default async function TentangKami() {

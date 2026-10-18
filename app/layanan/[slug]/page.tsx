@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
 import Link from "next/link";
@@ -123,6 +124,34 @@ const layananData: Record<string, { title: string, subtitle: string, waText: str
     )
   }
 };
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const layanan = layananData[slug];
+  if (!layanan) return {};
+  const title = `${layanan.title} | Gadai Pojok Berkah`;
+  const description = layanan.subtitle;
+  return {
+    title,
+    description,
+    alternates: { canonical: `/layanan/${slug}` },
+    openGraph: {
+      title,
+      description,
+      url: `https://gadai.pojokberkah.online/layanan/${slug}`,
+      siteName: "Gadai Pojok Berkah",
+      locale: "id_ID",
+      type: "website",
+      images: [{ url: "https://gadai.pojokberkah.online/og-image.jpg", width: 1200, height: 630, alt: layanan.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["https://gadai.pojokberkah.online/og-image.jpg"],
+    },
+  };
+}
 
 export default async function LayananPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;

@@ -9,13 +9,13 @@ const inter = Inter({ subsets: ["latin"], display: "swap" });
 export const metadata: Metadata = {
   metadataBase: new URL("https://gadai.pojokberkah.online"),
   title: {
-    default: "Gadai BPKB Kendaraan | Gadai Pojok Berkah",
+    default: "Gadai BPKB Mobil & Motor Cepat Cair | Gadai Pojok Berkah",
     template: "%s | Gadai Pojok Berkah",
   },
   description: "Layanan gadai BPKB mobil dan motor terpercaya, proses cepat, aman, dan pencairan maksimal. Temukan simulasi dan cabang terdekat di kota Anda.",
   keywords: ["gadai bpkb", "pinjaman dana tunai", "gadai bpkb mobil", "gadai bpkb motor", "pinjaman cepat cair", "dana tunai", "gadai bpkb terdekat"],
     openGraph: {
-    title: "Gadai BPKB Kendaraan Proses Cepat & Aman",
+    title: "Gadai BPKB Mobil & Motor Cepat Cair | Gadai Pojok Berkah",
     description: "Proses pencairan dana kilat, tanpa ribet, dan dijamin aman. Temukan cabang terdekat di kota Anda sekarang.",
     url: "https://gadai.pojokberkah.online",
     siteName: "Gadai Pojok Berkah",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "https://gadai.pojokberkah.online/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Gadai Pojok Berkah - Marketing Resmi AXI Adira Finance",
@@ -32,9 +32,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gadai BPKB Kendaraan Proses Cepat & Aman",
+    title: "Gadai BPKB Mobil & Motor Cepat Cair | Gadai Pojok Berkah",
     description: "Proses pencairan dana kilat, tanpa ribet, dan dijamin aman. Temukan cabang terdekat di kota Anda sekarang.",
-    images: ["/og-image.jpg"],
+    images: ["https://gadai.pojokberkah.online/og-image.jpg"],
   },
 };
 
@@ -44,6 +44,12 @@ const websiteJsonLd = {
   name: "Gadai Pojok Berkah",
   alternateName: ["Pojok Berkah", "Gadai BPKB Adira AXI"],
   url: "https://gadai.pojokberkah.online",
+  inLanguage: "id-ID",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: "https://gadai.pojokberkah.online/simulasi-gadai-bpkb?q={search_term_string}",
+    "query-input": "required name=search_term_string",
+  },
 };
 
 export default function RootLayout({
