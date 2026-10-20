@@ -38,7 +38,6 @@ function formatRupiah(num: number): string {
 function calculateAngsuran(tipe: "motor" | "mobil", plafon: number, tenor: number): number {
   const anchors = tipe === "motor" ? MOTOR_ANCHORS : MOBIL_ANCHORS;
 
-  // Temukan segmen interpolasi
   if (plafon <= anchors[0].plafon) {
     const base = anchors[0].rates[tenor] || (anchors[0].plafon / tenor) * 1.3;
     return Math.round((plafon / anchors[0].plafon) * base);
@@ -55,7 +54,6 @@ function calculateAngsuran(tipe: "motor" | "mobil", plafon: number, tenor: numbe
     }
   }
 
-  // Jika di atas batas maksimum anchor
   const last = anchors[anchors.length - 1];
   const lastRate = last.rates[tenor];
   return Math.round((plafon / last.plafon) * lastRate);
@@ -72,7 +70,6 @@ export default function KalkulatorSimulasi({ noWa, namaKota, className = "" }: K
   const namaInputId = useId();
   const kendaraanInputId = useId();
 
-  // Pengaturan dinamis sesuai tipe kendaraan
   const config = kendaraanType === "motor"
     ? {
         min: 3_000_000,
@@ -102,7 +99,6 @@ export default function KalkulatorSimulasi({ noWa, namaKota, className = "" }: K
 
   const estimasiCicilan = calculateAngsuran(kendaraanType, plafon, tenor);
 
-  // Buat pesan WhatsApp yang informatif dan terstruktur
   const generateWaMessage = () => {
     const kotaText = namaKota ? ` di *${namaKota}*` : "";
     const namaText = nama.trim() ? `Nama: *${nama.trim()}*\n` : "";
@@ -129,33 +125,33 @@ export default function KalkulatorSimulasi({ noWa, namaKota, className = "" }: K
   return (
     <div
       id="kalkulator-simulasi"
-      className={`bg-white rounded-3xl shadow-xl shadow-slate-200/70 border border-slate-200 overflow-hidden ${className}`}
+      className={`not-prose bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden ${className}`}
     >
-      {/* Header Widget */}
-      <div className="bg-gradient-to-r from-slate-900 via-[#0B1E36] to-slate-900 text-white p-6 sm:p-8">
+      {/* Header Widget — Terang & Minimalis */}
+      <div className="bg-slate-50/80 border-b border-slate-200/80 p-5 sm:p-7">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-yellow-400/20 text-yellow-300 rounded-full text-xs font-semibold mb-2 tracking-wide uppercase">
-              <Sparkles className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-amber-100 text-amber-800 rounded-full text-xs font-semibold mb-2">
+              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
               Kalkulator Interaktif
             </div>
-            <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight m-0">
               Simulasi Cicilan Gadai BPKB {namaKota ? `di ${namaKota}` : ""}
             </h3>
-            <p className="text-slate-300 text-sm mt-1">
-              Geser plafon dan tentukan tenor untuk melihat estimasi angsuran bulanan secara instan.
+            <p className="text-slate-500 text-xs sm:text-sm mt-1 mb-0">
+              Geser nominal dan pilih tenor untuk melihat perkiraan cicilan bulanan.
             </p>
           </div>
 
-          {/* Toggle Motor / Mobil */}
-          <div className="inline-flex p-1.5 bg-slate-800/90 rounded-2xl border border-slate-700/60 shadow-inner self-start sm:self-center">
+          {/* Toggle Motor / Mobil — Segmented Control Terang */}
+          <div className="inline-flex p-1 bg-slate-200/70 rounded-xl border border-slate-200 self-start sm:self-center">
             <button
               type="button"
               onClick={() => switchType("motor")}
-              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2 ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 ${
                 kendaraanType === "motor"
-                  ? "bg-yellow-400 text-slate-900 shadow-md scale-100"
-                  : "text-slate-300 hover:text-white scale-95"
+                  ? "bg-yellow-400 text-slate-900 shadow-sm"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
             >
               <span>🛵</span> BPKB Motor
@@ -163,10 +159,10 @@ export default function KalkulatorSimulasi({ noWa, namaKota, className = "" }: K
             <button
               type="button"
               onClick={() => switchType("mobil")}
-              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2 ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 ${
                 kendaraanType === "mobil"
-                  ? "bg-yellow-400 text-slate-900 shadow-md scale-100"
-                  : "text-slate-300 hover:text-white scale-95"
+                  ? "bg-yellow-400 text-slate-900 shadow-sm"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
             >
               <span>🚗</span> BPKB Mobil
@@ -176,17 +172,17 @@ export default function KalkulatorSimulasi({ noWa, namaKota, className = "" }: K
       </div>
 
       {/* Body Grid: Controls & Results */}
-      <div className="p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Kolom Kiri: Slider & Pilihan (7 Kolom) */}
-        <div className="lg:col-span-7 space-y-6">
+      <div className="p-5 sm:p-7 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+        {/* Kolom Kiri: Slider & Tenor (7 Kolom) */}
+        <div className="lg:col-span-7 space-y-5">
           {/* Plafon Pinjaman Slider */}
           <div>
-            <div className="flex items-center justify-between mb-3">
-              <label htmlFor={plafonInputId} className="text-sm font-bold text-slate-700 flex items-center gap-2">
+            <div className="flex items-center justify-between mb-2">
+              <label htmlFor={plafonInputId} className="text-xs sm:text-sm font-bold text-slate-700 flex items-center gap-1.5 m-0">
                 <Calculator className="w-4 h-4 text-amber-600" />
                 Rencana Pinjaman (Plafon)
               </label>
-              <span className="text-xl sm:text-2xl font-black text-slate-900 bg-amber-50 px-3 py-1 rounded-xl border border-amber-200">
+              <span className="text-base sm:text-xl font-extrabold text-slate-900 bg-amber-50 px-2.5 py-0.5 rounded-lg border border-amber-200">
                 {formatRupiah(plafon)}
               </span>
             </div>
@@ -200,26 +196,26 @@ export default function KalkulatorSimulasi({ noWa, namaKota, className = "" }: K
               value={plafon}
               onChange={(e) => setPlafon(Number(e.target.value))}
               aria-label="Nominal Plafon Pinjaman"
-              className="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-amber-500 focus:outline-none"
+              className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-amber-500 focus:outline-none"
             />
 
-            <div className="flex justify-between text-xs text-slate-600 font-semibold mt-2">
+            <div className="flex justify-between text-[11px] text-slate-500 font-medium mt-1.5">
               <span>{formatRupiah(config.min)}</span>
               <span>{formatRupiah(config.max)}</span>
             </div>
 
             {/* Quick Plafon Pills */}
-            <div className="flex flex-wrap gap-2 mt-3">
-              <span className="text-xs text-slate-600 self-center font-medium">Pilihan cepat:</span>
+            <div className="flex flex-wrap items-center gap-1.5 mt-2.5">
+              <span className="text-[11px] text-slate-500 font-medium mr-1">Pilihan cepat:</span>
               {config.quickPlafon.map((nominal) => (
                 <button
                   key={nominal}
                   type="button"
                   onClick={() => setPlafon(nominal)}
-                  className={`text-xs px-2.5 py-1 rounded-lg border font-semibold transition-all ${
+                  className={`text-xs px-2.5 py-1 rounded-md border font-medium transition-all ${
                     plafon === nominal
-                      ? "bg-slate-900 text-white border-slate-900 shadow-sm"
-                      : "bg-white text-slate-600 border-slate-200 hover:bg-slate-100"
+                      ? "bg-slate-900 text-white border-slate-900 shadow-xs"
+                      : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
                   }`}
                 >
                   {formatRupiah(nominal)}
@@ -230,31 +226,31 @@ export default function KalkulatorSimulasi({ noWa, namaKota, className = "" }: K
 
           {/* Tenor Chips */}
           <div>
-            <label className="block text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
+            <label className="block text-xs sm:text-sm font-bold text-slate-700 mb-2 flex items-center gap-1.5">
               <Clock className="w-4 h-4 text-amber-600" />
               Pilih Jangka Waktu (Tenor)
             </label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2.5">
+            <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
               {config.tenorOptions.map((t) => (
                 <button
                   key={t}
                   type="button"
                   onClick={() => setTenor(t)}
-                  className={`py-3 px-3 rounded-2xl border text-center transition-all ${
+                  className={`py-2 px-2 rounded-xl border text-center transition-all ${
                     tenor === t
-                      ? "bg-amber-400 text-slate-950 border-amber-500 font-extrabold shadow-md scale-102 ring-2 ring-amber-300"
-                      : "bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:bg-slate-50 font-semibold"
+                      ? "bg-yellow-400 text-slate-950 border-yellow-400 font-bold shadow-xs ring-2 ring-yellow-200"
+                      : "bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:bg-slate-50 font-medium"
                   }`}
                 >
-                  <div className="text-base font-black">{t}</div>
-                  <div className="text-[11px] uppercase tracking-wider text-slate-600">Bulan</div>
+                  <div className="text-sm sm:text-base font-extrabold">{t}</div>
+                  <div className="text-[10px] uppercase tracking-wider text-slate-600">Bulan</div>
                 </button>
               ))}
             </div>
           </div>
 
           {/* Input Opsional Identitas Kendaraan */}
-          <div className="pt-2 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="pt-3 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label htmlFor={namaInputId} className="block text-xs font-semibold text-slate-600 mb-1">
                 Nama Anda (Opsional):
@@ -265,7 +261,7 @@ export default function KalkulatorSimulasi({ noWa, namaKota, className = "" }: K
                 placeholder="Contoh: Budi Santoso"
                 value={nama}
                 onChange={(e) => setNama(e.target.value)}
-                className="w-full text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                className="w-full text-xs sm:text-sm px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-amber-400"
               />
             </div>
             <div>
@@ -278,70 +274,70 @@ export default function KalkulatorSimulasi({ noWa, namaKota, className = "" }: K
                 placeholder={kendaraanType === "motor" ? "Contoh: Vario 150 2021" : "Contoh: Avanza G 2019"}
                 value={modelKendaraan}
                 onChange={(e) => setModelKendaraan(e.target.value)}
-                className="w-full text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-400"
+                className="w-full text-xs sm:text-sm px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-amber-400"
               />
             </div>
           </div>
         </div>
 
         {/* Kolom Kanan: Hasil Perhitungan & Tombol CTA (5 Kolom) */}
-        <div className="lg:col-span-5 flex flex-col justify-between bg-gradient-to-br from-slate-50 to-amber-50/40 p-6 rounded-2xl border border-amber-200/60 shadow-inner">
+        <div className="lg:col-span-5 flex flex-col justify-between bg-slate-50/90 p-5 rounded-2xl border border-slate-200">
           <div>
-            <div className="flex items-center justify-between pb-3 border-b border-amber-200/50">
-              <span className="text-xs font-bold text-amber-900 tracking-wider uppercase">
-                Hasil Estimasi Cicilan
+            <div className="flex items-center justify-between pb-2.5 border-b border-slate-200">
+              <span className="text-[11px] font-bold text-slate-600 tracking-wider uppercase">
+                Estimasi Angsuran
               </span>
-              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-green-700 bg-green-100 px-2.5 py-0.5 rounded-full">
-                <CheckCircle2 className="w-3 h-3" /> Resmi Adira
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-green-800 bg-green-100 px-2 py-0.5 rounded-full">
+                <CheckCircle2 className="w-3 h-3 text-green-600" /> Resmi Adira
               </span>
             </div>
 
-            <div className="my-5 text-center">
+            <div className="my-4 text-center">
               <span className="text-xs text-slate-500 font-medium block mb-1">
-                Angsuran Bulanan (Tenor {tenor} Bulan)
+                Cicilan per Bulan ({tenor} Bulan)
               </span>
-              <div className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                 {formatRupiah(estimasiCicilan)}
-                <span className="text-sm font-semibold text-slate-500"> /bln</span>
+                <span className="text-xs sm:text-sm font-semibold text-slate-500"> /bln</span>
               </div>
-              <p className="text-[11px] text-slate-600 mt-1.5">
-                *Sudah termasuk asuransi perlindungan & biaya administrasi.
+              <p className="text-[11px] text-slate-500 mt-1 mb-0">
+                *Termasuk asuransi perlindungan & biaya administrasi.
               </p>
             </div>
 
             {/* Rincian Fitur */}
-            <ul className="space-y-2.5 text-xs text-slate-700 border-t border-b border-amber-200/40 py-4 my-2">
+            <ul className="space-y-2 text-xs text-slate-700 border-t border-b border-slate-200 py-3 my-2 list-none p-0">
               <li className="flex items-center justify-between">
-                <span className="text-slate-500">Plafon Pinjaman:</span>
+                <span className="text-slate-500">Plafon:</span>
                 <span className="font-bold text-slate-900">{formatRupiah(plafon)}</span>
               </li>
               <li className="flex items-center justify-between">
-                <span className="text-slate-500">Pencairan Dana:</span>
+                <span className="text-slate-500">Pencairan:</span>
                 <span className="font-bold text-green-700">Hingga 90% Taksiran</span>
               </li>
               <li className="flex items-center justify-between">
-                <span className="text-slate-500">Durasi Proses:</span>
-                <span className="font-bold text-slate-900">2 – 24 Jam Kerja</span>
+                <span className="text-slate-500">Proses:</span>
+                <span className="font-bold text-slate-800">2 – 24 Jam Kerja</span>
               </li>
               <li className="flex items-center justify-between">
-                <span className="text-slate-500">Status Kendaraan:</span>
-                <span className="font-bold text-amber-700">Tetap Anda Pakai</span>
+                <span className="text-slate-500">Kendaraan:</span>
+                <span className="font-bold text-slate-800">Tetap Anda Gunakan</span>
               </li>
             </ul>
           </div>
 
           {/* Tombol CTA WhatsApp */}
-          <div className="mt-5">
+          <div className="mt-4">
             <button
               type="button"
               onClick={handleAjukan}
-              className="w-full bg-green-700 hover:bg-green-800 text-white font-extrabold py-3.5 px-6 rounded-2xl transition-all shadow-lg shadow-green-700/25 flex items-center justify-center gap-2 group text-base hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full bg-green-700 hover:bg-green-800 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 group text-sm sm:text-base cursor-pointer"
             >
               <span>💬</span>
-              <span>Ajukan Simulasi via WhatsApp</span>
+              <span>Ajukan via WhatsApp</span>
               <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </button>
-            <div className="flex items-center justify-center gap-4 mt-3 text-[11px] text-slate-500">
+            <div className="flex items-center justify-center gap-4 mt-2.5 text-[11px] text-slate-500">
               <span className="inline-flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-amber-600" /> Diawasi OJK
               </span>
