@@ -15,7 +15,10 @@ export default function ViewTracker({ location }: { location: string }) {
       body: JSON.stringify({ location })
     })
     .then(res => {
-      if (res.ok) {
+      // Tandai sudah tracked untuk semua respons non-5xx (sukses, 400, 404, 429).
+      // Tujuannya: mencegah retry-loop tak terbatas saat user refresh halaman.
+      // 5xx dibiarkan agar bisa dicoba lagi (kegagalan sementara).
+      if (res.status < 500) {
         sessionStorage.setItem(trackedKey, 'true');
       }
     })

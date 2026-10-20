@@ -4,13 +4,14 @@ import WhatsAppButton from "@/app/components/WhatsAppButton";
 import Link from "next/link";
 import { TableMotor, TableMobil } from "@/app/components/TabelAngsuran";
 import { getConfig } from "@/lib/kota";
+import { waLink } from "@/lib/wa";
 
-const layananData: Record<string, { title: string, subtitle: string, waText: string, content: React.ReactNode }> = {
+const layananData: Record<string, { title: string, subtitle: string, waText: string, content: (noWa: string) => React.ReactNode }> = {
   "syarat-dan-proses": {
     title: "Syarat & Proses Gadai BPKB",
     subtitle: "Persiapan yang Anda butuhkan sebelum mengajukan pinjaman.",
     waText: "Halo Admin, saya membaca panduan di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin bertanya lebih lanjut tentang syarat Gadai BPKB.",
-    content: (
+    content: () => (
       <>
         <h2 className="text-2xl font-bold text-[#0B1E36] mb-4">Persyaratan Dokumen Umum</h2>
         <p className="text-base leading-relaxed mb-6">
@@ -69,7 +70,7 @@ const layananData: Record<string, { title: string, subtitle: string, waText: str
     title: "Cara Pengajuan Gadai BPKB",
     subtitle: "Langkah mudah mendapatkan dana tunai dari rumah.",
     waText: "Halo Admin, saya membaca panduan di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin mulai melakukan pengajuan Gadai BPKB.",
-    content: (
+    content: () => (
       <>
         <h2 className="text-2xl font-bold text-[#0B1E36] mb-4">Langkah-Langkah Pengajuan</h2>
         <p className="text-base leading-relaxed mb-6">
@@ -113,13 +114,13 @@ const layananData: Record<string, { title: string, subtitle: string, waText: str
     title: "Tabel Simulasi Angsuran",
     subtitle: "Estimasi angsuran bulanan untuk pengajuan Gadai BPKB Motor & Mobil.",
     waText: "Halo Admin, saya sudah melihat tabel simulasi di website Gadai Pojok Berkah (gadai.pojokberkah.online) dan ingin bertanya lebih lanjut.",
-    content: (
+    content: (noWa: string) => (
       <>
         <p className="text-base leading-relaxed mb-8 text-center text-slate-600">
           Gunakan tabel di bawah ini sebagai referensi untuk menghitung estimasi angsuran bulanan Anda. Silakan hubungi kami untuk perhitungan yang lebih presisi sesuai tahun dan tipe kendaraan Anda.
         </p>
-        <TableMotor />
-        <TableMobil />
+        <TableMotor noWa={noWa} />
+        <TableMobil noWa={noWa} />
       </>
     )
   }
@@ -182,12 +183,12 @@ export default async function LayananPage({ params }: { params: Promise<{ slug: 
       <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 -mt-6 relative z-10 mb-16">
         <div className="bg-white rounded-[2rem] p-6 sm:p-10 shadow-xl shadow-slate-200/60 ring-1 ring-slate-100">
           <article className="prose prose-slate max-w-none text-slate-700">
-            {layanan.content}
+            {layanan.content(config.whatsapp_pusat)}
 
             <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center mt-10">
               <p className="text-slate-700 font-semibold mb-4">Siap untuk mengajukan pinjaman Anda hari ini?</p>
               <a
-                href={`https://wa.me/6287724039666?text=${encodeURIComponent(layanan.waText)}`}
+                href={waLink(config.whatsapp_pusat, layanan.waText)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
@@ -218,7 +219,7 @@ export default async function LayananPage({ params }: { params: Promise<{ slug: 
       </section>
 
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 p-4 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] sm:bg-transparent sm:border-none sm:shadow-none sm:p-0 sm:bottom-8 sm:right-8 sm:left-auto">
-        <WhatsAppButton noWa={config.whatsapp_pusat || "6287724039666"} messageTemplate={layanan.waText} buttonText="Konsultasi Marketing" />
+        <WhatsAppButton noWa={config.whatsapp_pusat} messageTemplate={layanan.waText} buttonText="Konsultasi Marketing" />
       </div>
     </main>
   );

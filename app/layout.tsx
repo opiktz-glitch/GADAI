@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { getConfig } from "@/lib/kota";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
@@ -52,11 +53,16 @@ const websiteJsonLd = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Header adalah client component sehingga tidak bisa memanggil getConfig()
+  // (butuh Firebase Admin SDK). Nomor diteruskan lewat prop agar tetap
+  // mengikuti nilai config di Firestore (sumber kebenaran tunggal).
+  const config = await getConfig();
+
   return (
     <html lang="id">
       <body className={`${inter.className} bg-white text-slate-900 antialiased flex flex-col min-h-screen`}>
@@ -64,7 +70,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
-        <Header />
+        <Header noWa={config.whatsapp_pusat} />
         <main className="flex-grow">
           {children}
         </main>

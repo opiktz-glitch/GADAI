@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getConfig } from "@/lib/kota";
+import { telNumber } from "@/lib/wa";
 
 export default async function Footer() {
   const config = await getConfig();
@@ -53,7 +54,7 @@ export default async function Footer() {
               <div className="grid grid-cols-[auto_auto_1fr] gap-x-2 gap-y-3 text-sm">
                 <span>Nama AXi</span><span>:</span><span>Leni Suherman</span>
                 <span>Id AXI</span><span>:</span><span>000019002675</span>
-                <span>Telepon / WA</span><span>:</span><span>+{config.whatsapp_pusat}</span>
+                <span>Telepon / WA</span><span>:</span><span>{telNumber(config.whatsapp_pusat)}</span>
                 <span className="col-span-3 mt-1">Layanan Seluruh Indonesia</span>
               </div>
             </address>

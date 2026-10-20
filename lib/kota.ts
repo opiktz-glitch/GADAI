@@ -1,5 +1,6 @@
 import { db } from "@/lib/firebase";
 import { cache } from "react";
+import { DEFAULT_WHATSAPP, normalizeWaNumber } from "@/lib/wa";
 
 export type Kota = {
   slug: string;
@@ -82,10 +83,11 @@ export const getCitiesByProvinsiSlug = cache(async (provinsiSlug: string): Promi
 });
 
 export const getConfig = cache(async (): Promise<Config> => {
-  if (!isDbReady()) return { whatsapp_pusat: "6287724039666" };
+  if (!isDbReady()) return { whatsapp_pusat: DEFAULT_WHATSAPP };
   const doc = await db.collection('config').doc('main').get();
-  if (!doc.exists) return { whatsapp_pusat: "6287724039666" };
-  return doc.data() as Config;
+  if (!doc.exists) return { whatsapp_pusat: DEFAULT_WHATSAPP };
+  const data = doc.data() as Config;
+  return { ...data, whatsapp_pusat: normalizeWaNumber(data.whatsapp_pusat) };
 });
 
 export async function getAllArticles(): Promise<Article[]> {

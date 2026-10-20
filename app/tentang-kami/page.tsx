@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import WhatsAppButton from "@/app/components/WhatsAppButton";
 import { getConfig } from "@/lib/kota";
+import { waLink } from "@/lib/wa";
 
 export const metadata: Metadata = {
   title: 'Tentang Kami - Marketing Resmi AXI Adira Finance',
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 
 export default async function TentangKami() {
   const config = await getConfig();
-  const noHp = config.whatsapp_pusat || "+6287724039666";
+  const noHp = config.whatsapp_pusat;
   const waMessageTemplate = "Halo Admin, saya membaca profil di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin bertanya seputar layanan pembiayaan Adira Finance.";
 
   return (
@@ -86,7 +87,7 @@ export default async function TentangKami() {
             </p>
             
             <a 
-              href={`https://wa.me/${noHp.replace('+', '')}?text=${encodeURIComponent(waMessageTemplate)}`}
+              href={waLink(noHp, waMessageTemplate)}
               target="_blank" 
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"

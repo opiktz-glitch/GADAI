@@ -1,0 +1,35 @@
+# ── Dependencies & build output ──
+node_modules/
+.next/
+out/
+build/
+coverage/
+.vercel/
+.firebase/
+
+# ── Lockfile & build info ──
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+*.tsbuildinfo
+
+# ── Secrets ──
+.env*
+!.env.example
+!.env.sample
+*service-account*.json
+serviceAccount*.json
+
+# ── Aset binari ──
+public/
+*.png
+*.jpg
+*.jpeg
+*.ico
+*.webp
+*.svg
+
+# ── Git & log ──
+.git/
+*.log
+npm-debug.log*

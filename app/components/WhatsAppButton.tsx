@@ -2,6 +2,7 @@
 
 import { MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
+import { normalizeWaNumber } from "@/lib/wa";
 
 export default function WhatsAppButton({ 
   noWa, 
@@ -12,14 +13,16 @@ export default function WhatsAppButton({
   messageTemplate: string,
   buttonText?: string
 }) {
-  const [url, setUrl] = useState(`https://wa.me/${noWa}?text=${encodeURIComponent(messageTemplate.replace("[host]", ""))}`);
+  // Normalisasi: wa.me hanya menerima digit (tanpa "+"/spasi).
+  const digits = normalizeWaNumber(noWa);
+  const [url, setUrl] = useState(`https://wa.me/${digits}?text=${encodeURIComponent(messageTemplate.replace("[host]", ""))}`);
 
   useEffect(() => {
     // Mendapatkan URL domain secara dinamis
     const host = window.location.host;
     const finalMessage = messageTemplate.replace("[host]", host);
-    setUrl(`https://wa.me/${noWa}?text=${encodeURIComponent(finalMessage)}`);
-  }, [noWa, messageTemplate]);
+    setUrl(`https://wa.me/${digits}?text=${encodeURIComponent(finalMessage)}`);
+  }, [digits, messageTemplate]);
 
   return (
     <a

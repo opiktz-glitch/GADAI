@@ -4,19 +4,27 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { Kota, Config, Article } from "@/lib/kota";
 import { db } from "@/lib/firebase";
+import { normalizeWaNumber } from "@/lib/wa";
 
 export async function updateConfig(formData: FormData) {
-  const noWa = formData.get("whatsapp_pusat")?.toString() || "";
+  const rawNoWa = formData.get("whatsapp_pusat")?.toString() || "";
   const artikel_homepage = formData.get("artikel_homepage")?.toString() || "";
-  
-  if (!noWa) throw new Error("Nomor tidak boleh kosong");
+
+  // Normalisasi ke digit saja: user boleh mengetik "+62 812-3456-7890",
+  // "+" atau spasi akan merusak link wa.me dan link tel:.
+  const digits = rawNoWa.replace(/\D/g, "");
+
+  if (!digits) throw new Error("Nomor WhatsApp tidak boleh kosong");
+  if (digits.length < 10) throw new Error("Nomor WhatsApp terlalu pendek (minimal 10 digit)");
+
+  const noWa = normalizeWaNumber(digits);
 
   const currentConfig = await db.collection('config').doc('main').get();
   const oldConfig = currentConfig.exists ? currentConfig.data() : {};
 
   const newConfig: Config = { ...oldConfig, whatsapp_pusat: noWa, artikel_homepage } as Config;
   await db.collection('config').doc('main').set(newConfig);
-  
+
   revalidatePath("/", "layout");
   redirect("/admin?tab=pengaturan&success=Pengaturan%20global%20berhasil%20disimpan!");
 }

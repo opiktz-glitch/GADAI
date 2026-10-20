@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { getConfig } from '@/lib/kota';
+import { waLink } from '@/lib/wa';
 
 export const metadata: Metadata = {
   title: 'FAQ - Pertanyaan Seputar Gadai BPKB',
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 
 export default async function FAQPage() {
   const config = await getConfig();
-  const noHp = config.whatsapp_pusat || "6287724039666";
+  const noHp = config.whatsapp_pusat;
 
   const faqs = [
     {
@@ -86,7 +87,7 @@ export default async function FAQPage() {
           <div className="mt-12 bg-yellow-50 rounded-xl p-6 text-center border border-yellow-200">
             <h4 className="font-bold text-slate-800 mb-2">Masih punya pertanyaan lain?</h4>
             <p className="text-slate-600 mb-4">Jangan ragu untuk berkonsultasi langsung dengan tim Marketing kami (Gratis!).</p>
-            <a href={`https://wa.me/${noHp.replace('+', '')}?text=${encodeURIComponent("Halo Admin, saya membaca panduan FAQ di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin bertanya lebih lanjut seputar Gadai BPKB.")}`} className="inline-flex items-center justify-center bg-green-700 hover:bg-green-800 text-white font-bold py-2.5 px-6 rounded-full transition-colors">
+            <a href={waLink(noHp, "Halo Admin, saya membaca panduan FAQ di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin bertanya lebih lanjut seputar Gadai BPKB.")} className="inline-flex items-center justify-center bg-green-700 hover:bg-green-800 text-white font-bold py-2.5 px-6 rounded-full transition-colors">
               Hubungi via WhatsApp
             </a>
           </div>

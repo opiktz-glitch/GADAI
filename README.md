@@ -45,7 +45,7 @@ Website rujukan & simulasi **Gadai BPKB** berskala PSEO untuk mendominasi pencar
 | `/lokasi` | `redirect("/simulasi-gadai-bpkb")` | — |
 | `/sitemap.xml` | `app/sitemap.ts` — static + provinsi + kota | Firestore |
 | `/robots.txt` | `app/robots.ts` — `Allow: /`, deklarasi Sitemap resmi | — |
-| `/api/track-view` | `POST {location}` → `FieldValue.increment(1)` | Firestore |
+| `/api/track-view` | `POST {location}` → `FieldValue.increment(1)` — validasi slug + rate limit | Firestore |
 
 ---
 
@@ -145,7 +145,11 @@ Alternatif Docker: `docker build -t pseo . && docker run -p 3000:3000 pseo` (run
 ## 🔒 Keamanan & Kuota
 
 - `/admin` dilindungi **Basic Auth** via `middleware.ts` (`WWW-Authenticate: Basic realm="Secure Admin Area"`). Ganti kredensial sebelum production.
-- Spark (gratis) 50k reads / 20k writes / hari — aman karena **ISR + `cache()`** (hit Firestore hanya saat build/revalidate). Satu-satunya write per visit adalah `/api/track-view`.
+- Spark (gratis) 50k reads / 20k writes / hari — aman karena **ISR + `cache()`** (hit Firestore hanya saat build/revalidate). Write per visit hanya `/api/track-view` (2 write: budget harian + counter view).
+- **`/api/track-view` dilindungi 2 lapis** (`lib/rate-limit.ts`):
+  - **L1 (in-memory, nol biaya Firestore)** — maks **20 request/jam per IP**. Diblokir sebelum menyentuh Firestore sehingga kuota read tidak terbakar oleh scraper. State disimpan di `globalThis` agar tidak ter-reset saat module di-evaluasi ulang.
+  - **L2 (budget global, Firestore)** — maks **5.000 view/hari** di seluruh traffic (`rateLimit/daily_YYYYMMDD`). Ini yang menutup celah botnet multi-IP dan membatasi biaya saat plan naik ke Blaze.
+  - **Validasi input** — `location` harus cocok `/^[a-z0-9-]{1,120}$/` (mencegah path traversal ke dokumen di luar koleksi `kota` & doc ID made-up). Lokasi tidak dikenal → **404** (bukan 500).
 - Jangan commit `.env.local` / `firebase-service-account.json`.
 
 ---

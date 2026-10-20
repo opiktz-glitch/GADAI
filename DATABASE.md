@@ -120,7 +120,7 @@ Singleton — hanya `config/main` yang dipakai.
 
 ```ts
 export type Config = {
-  whatsapp_pusat: string;                    // "6287724039666" — dipakai Header/Footer/CTA
+  whatsapp_pusat: string;                    // "628xxxxxxxxxx" (digit saja, TANPA "+") — sumber tunggal nomor WA
   artikel_homepage?: string;                 // legacy: teks manual homepage (sebelum bank artikel)
   assignedArticleId?: string;                // FK → articles.id untuk homepage "/"
   views?: number;                            // increment via POST /api/track-view {location: "pusat"}
@@ -128,6 +128,23 @@ export type Config = {
   provinsiArticles?: Record<string, string>; // { "jawa-barat": "art-111", "dki-jakarta": "art-222" }
 };
 ```
+
+> **Format `whatsapp_pusat`:** simpan **digit saja** (tanpa `+`, tanpa spasi), contoh `6287724039666`.
+> Admin CMS membersihkannya otomatis (`app/admin/actions.ts` → `updateConfig`), dan `getConfig()`
+> juga menormalkan saat membaca. Untuk membangun link & JSON-LD, gunakan helper di **`lib/wa.ts`**:
+>
+> | Helper | Keluaran | Dipakai untuk |
+> |---|---|---|
+> | `normalizeWaNumber(no)` | `6287724039666` | digit bersih (wa.me) |
+> | `waLink(no, pesan)` | `https://wa.me/6287724039666?text=...` | link WhatsApp |
+> | `telNumber(no)` | `+6287724039666` | JSON-LD `telephone`, link `tel:` |
+>
+> Komponen **client** (`Header`, `TabelAngsuran`, `WhatsAppButton`) tidak bisa memanggil `getConfig()`
+> (butuh Firebase Admin SDK) → nomor diteruskan sebagai **prop** dari server component
+> (`app/layout.tsx` → `<Header noWa={...} />`).
+>
+> `lib/wa.ts` sengaja terpisah dari `lib/kota.ts` agar aman di-import di client component
+> (module `lib/kota.ts` meng-import `firebase-admin` yang server-only).
 
 ### Contoh Dokumen
 
@@ -179,6 +196,24 @@ Semua relasi diselesaikan **server-side** (Server Components / Server Actions) �
 
 ---
 
+## 4. Koleksi `rateLimit` — Budget & Rate Limit Tracking
+
+Dibuat otomatis oleh `lib/rate-limit.ts` (tidak perlu seeding).
+
+| Doc | Isi | Fungsi |
+|---|---|---|
+| `rateLimit/daily_YYYYMMDD` | `{ day: "YYYYMMDD", count: number, expireAt: Timestamp }` | Budget global harian — maks **5.000 view/hari** di seluruh traffic. Melewati batas → view tidak dihitung (respons tetap 200, agar client tidak retry-loop). |
+
+> `expireAt` bersifat opsional — butuh **TTL policy** aktif di Firestore Console untuk auto-delete
+> (Firestore → Collection `rateLimit` → Field `expireAt` → TTL). Jika tidak diaktifkan, dokumen
+> tetap aman (1 dokumen per hari,_field `count` di-overwrite per hari via key `daily_YYYYMMDD`).
+
+Counter per-IP **tidak** disimpan di Firestore — semuanya in-memory di `globalThis` (nol biaya
+Firestore, lihat `lib/rate-limit.ts`). IP di-hash SHA-256 sebelum dipakai sebagai kunci, jadi
+alamat IP asli tidak pernah tersimpan.
+
+---
+
 ## Seed & Migrasi Lokal
 
 ```bash
@@ -208,6 +243,8 @@ node scripts/migrate.js
 
 - `lib/firebase.ts` — inisialisasi Admin SDK (env vars → fallback JSON)
 - `lib/kota.ts` — types + `cache()` helpers + `slugify` + `formatRupiah`
+- `lib/wa.ts` — helper format nomor WhatsApp/telepon (pure, aman untuk client component)
+- `lib/rate-limit.ts` — rate limit 2 lapis (in-memory per-IP + budget harian Firestore)
 - `data/kota.json`, `data/config.json`, `data/articles.json` — seed lokal
 - `scripts/migrate.js` — migrasi JSON → Firestore
 - `app/admin/actions.ts` — semua Server Actions tulis

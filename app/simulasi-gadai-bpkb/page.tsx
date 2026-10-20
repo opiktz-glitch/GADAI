@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { getUniqueProvinsi, getAllKota, getConfig, slugify } from "@/lib/kota";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
 import ProvinsiSearchGrid from "./ProvinsiSearchGrid";
+import { DEFAULT_WHATSAPP } from "@/lib/wa";
 
 export const revalidate = 86400;
 
@@ -28,7 +29,7 @@ export default async function HubProvinsiPage() {
     getConfig(),
   ]);
 
-  const waNumber = config.whatsapp_pusat || "6287724039666";
+  const waNumber = config.whatsapp_pusat || DEFAULT_WHATSAPP;
   const waTemplate = "Halo Admin, saya membaca info di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin konsultasi simulasi gadai BPKB untuk wilayah saya.";
 
   const kotaItems = allKota.map((k) => ({

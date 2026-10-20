@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import ViewTracker from "@/app/components/ViewTracker";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
+import { waLink, telNumber } from "@/lib/wa";
 import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -48,9 +49,10 @@ export default async function HomePage() {
   const waMessageTemplate = "Halo Admin, saya membaca informasi di website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin bertanya mengenai prosedur gadai BPKB / Kredit Kendaraan.";
 
   // Data Spesifik Cabang dari Gambar
+  // noHp memakai format E.164 ("+62...") untuk JSON-LD `telephone` & link `tel:`.
   const cabangUtama = {
     nama: "Adira Finance Cabang Pungkur Bandung",
-    noHp: "+6287724039666",
+    noHp: telNumber(config.whatsapp_pusat),
     deskripsi: "Adira terdekat di dekat kamu yaitu Adira Finance Cabang Pungkur Bandung, siap melayani gadai BPKB motor & mobil, kredit motor & mobil bekas, top up, dan take over untuk warga Kota Bandung dan sekitarnya.",
     patokan: "Kantor Cabang Adira Finance Bandung 6 - Pungkur patokan jalan dekat dengan Toko listrik sinar kencana."
   };
@@ -169,7 +171,7 @@ export default async function HomePage() {
               <p className="text-slate-700 font-semibold mb-4">📞 Hubungi saya sekarang untuk konsultasi <span className="text-amber-700">GRATIS</span></p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <a
-                  href={`https://wa.me/${cabangUtama.noHp.replace('+', '')}?text=${encodeURIComponent(waMessageTemplate)}`}
+                  href={waLink(config.whatsapp_pusat, waMessageTemplate)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"
@@ -289,7 +291,7 @@ export default async function HomePage() {
 
       {/* Floating CTA (Original Style from App) */}
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200 p-4 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] sm:bg-transparent sm:border-none sm:shadow-none sm:p-0 sm:bottom-8 sm:right-8 sm:left-auto">
-        <WhatsAppButton noWa={config.whatsapp_pusat || "6287724039666"} messageTemplate={waMessageTemplate} buttonText="Chat Marketing Adira" />
+        <WhatsAppButton noWa={config.whatsapp_pusat} messageTemplate={waMessageTemplate} buttonText="Chat Marketing Adira" />
       </div>
     </main>
   );

@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import ViewTracker from "@/app/components/ViewTracker";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
+import { waLink, telNumber } from "@/lib/wa";
 
 // Perbarui data marketing dari Firestore paling lambat setiap 5 menit.
 export const revalidate = 300;
@@ -85,7 +86,7 @@ export default async function KotaPage({ params }: Props) {
       "@type": "LocalBusiness",
       name: `Gadai BPKB - Cabang ${kota.nama_kota}`,
       url: `https://gadai.pojokberkah.online/simulasi-gadai-bpkb/${p.provinsi}/${kota.slug}`,
-      telephone: config.whatsapp_pusat,
+      telephone: telNumber(config.whatsapp_pusat),
       address: {
         "@type": "PostalAddress",
         streetAddress: kota.alamat_cabang_utama,
@@ -215,7 +216,7 @@ export default async function KotaPage({ params }: Props) {
             <p className="text-slate-700 font-semibold mb-4">📞 Hubungi saya sekarang untuk konsultasi <span className="text-amber-700">GRATIS</span></p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a
-                href={`https://wa.me/${config.whatsapp_pusat.replace('+', '')}?text=${encodeURIComponent(waMessageTemplate)}`}
+                href={waLink(config.whatsapp_pusat, waMessageTemplate)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"

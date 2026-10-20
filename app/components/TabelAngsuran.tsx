@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import { X } from "lucide-react";
+import { waLink } from "@/lib/wa";
 
-export const TableMotor = () => {
+export const TableMotor = ({ noWa }: { noWa: string }) => {
   const [selectedPinjaman, setSelectedPinjaman] = useState<string | null>(null);
   const [nama, setNama] = useState("");
   const [kendaraan, setKendaraan] = useState("");
-  const noWa = "6287724039666";
 
   const data = [
     ["3.000.000", "493.000", "367.000", "310.000", "278.000", "259.000"],
@@ -33,7 +33,7 @@ export const TableMotor = () => {
   const handleAjukan = (e: React.FormEvent) => {
     e.preventDefault();
     const message = `Halo Admin Gadai Pojok Berkah,\n\nNama saya *${nama}*.\nSaya tertarik mengajukan Gadai BPKB Motor melalui website gadai.pojokberkah.online.\n\n- Rencana Pinjaman: *Rp ${selectedPinjaman}*\n- Info Kendaraan: *${kendaraan}*\n\nMohon info detail persyaratan dan prosesnya. Terima kasih.`;
-    window.open(`https://wa.me/${noWa}?text=${encodeURIComponent(message)}`, "_blank");
+    window.open(waLink(noWa, message), "_blank");
     setSelectedPinjaman(null);
     setNama("");
     setKendaraan("");
@@ -139,11 +139,10 @@ export const TableMotor = () => {
   );
 };
 
-export const TableMobil = () => {
+export const TableMobil = ({ noWa }: { noWa: string }) => {
   const [selectedPinjaman, setSelectedPinjaman] = useState<string | null>(null);
   const [nama, setNama] = useState("");
   const [kendaraan, setKendaraan] = useState("");
-  const noWa = "6287724039666";
 
   const data = [
     ["30.000.000", "3.660.000", "1.998.000", "1.562.000", "1.293.000"],
@@ -169,7 +168,7 @@ export const TableMobil = () => {
   const handleAjukan = (e: React.FormEvent) => {
     e.preventDefault();
     const message = `Halo Admin Gadai Pojok Berkah,\n\nNama saya *${nama}*.\nSaya tertarik mengajukan Gadai BPKB Mobil melalui website gadai.pojokberkah.online.\n\n- Rencana Pinjaman: *Rp ${selectedPinjaman}*\n- Info Kendaraan: *${kendaraan}*\n\nMohon info detail persyaratan dan prosesnya. Terima kasih.`;
-    window.open(`https://wa.me/${noWa}?text=${encodeURIComponent(message)}`, "_blank");
+    window.open(waLink(noWa, message), "_blank");
     setSelectedPinjaman(null);
     setNama("");
     setKendaraan("");

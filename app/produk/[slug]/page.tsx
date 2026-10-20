@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
 import Link from "next/link";
 import { getConfig } from "@/lib/kota";
+import { waLink } from "@/lib/wa";
 
 const tableMotor = (
   <div className="mt-10">
@@ -179,7 +180,7 @@ export default async function ProdukPage({ params }: { params: Promise<{ slug: s
   }
 
   const config = await getConfig();
-  const noHp = config.whatsapp_pusat || "6287724039666";
+  const noHp = config.whatsapp_pusat;
 
   return (
     <main className="min-h-screen bg-slate-50 font-sans pb-24">
@@ -226,7 +227,7 @@ export default async function ProdukPage({ params }: { params: Promise<{ slug: s
             <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center">
               <p className="text-slate-700 font-semibold mb-4">Konsultasi gratis sekarang juga!</p>
               <a
-                href={`https://wa.me/${noHp.replace('+', '')}?text=${encodeURIComponent(product.waText)}`}
+                href={waLink(noHp, product.waText)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md text-base"

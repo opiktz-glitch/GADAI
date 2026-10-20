@@ -4,10 +4,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { MessageCircle, Menu, X, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { waLink } from "@/lib/wa";
 
-export default function Header() {
+export default function Header({ noWa }: { noWa: string }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
+  const waHref = waLink(
+    noWa,
+    "Halo Admin, saya menghubungi melalui website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin konsultasi pengajuan Gadai BPKB."
+  );
 
   const toggleDropdown = (name: string) => {
     setOpenDropdown(openDropdown === name ? null : name);
@@ -84,7 +90,7 @@ export default function Header() {
           {/* CTA Button */}
           <div className="flex items-center">
             <a 
-              href={`https://wa.me/6287724039666?text=${encodeURIComponent("Halo Admin, saya menghubungi melalui website Gadai Pojok Berkah (gadai.pojokberkah.online), saya ingin konsultasi pengajuan Gadai BPKB.")}`}
+              href={waHref}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-3 sm:py-2.5 sm:px-6 rounded-md transition-colors shadow-sm tracking-wide text-[11px] sm:text-sm flex items-center gap-1.5 sm:gap-2"
