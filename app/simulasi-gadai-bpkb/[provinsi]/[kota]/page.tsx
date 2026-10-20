@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import ViewTracker from "@/app/components/ViewTracker";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
+import KalkulatorSimulasi from "@/app/components/KalkulatorSimulasi";
 import { waLink, telNumber } from "@/lib/wa";
 
 // Perbarui data marketing dari Firestore paling lambat setiap 5 menit.
@@ -210,6 +211,9 @@ export default async function KotaPage({ params }: Props) {
               </p>
             </div>
           )}
+
+          {/* Interactive Calculator Section */}
+          <KalkulatorSimulasi noWa={config.whatsapp_pusat} namaKota={kota.nama_kota} className="mt-12" />
 
           {/* CTA Hubungi */}
           <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center mt-12">

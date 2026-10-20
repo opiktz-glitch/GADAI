@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
 import Link from "next/link";
 import { TableMotor, TableMobil } from "@/app/components/TabelAngsuran";
+import KalkulatorSimulasi from "@/app/components/KalkulatorSimulasi";
 import { getConfig } from "@/lib/kota";
 import { waLink } from "@/lib/wa";
 
@@ -111,16 +112,20 @@ const layananData: Record<string, { title: string, subtitle: string, waText: str
     )
   },
   "simulasi-angsuran": {
-    title: "Tabel Simulasi Angsuran",
-    subtitle: "Estimasi angsuran bulanan untuk pengajuan Gadai BPKB Motor & Mobil.",
-    waText: "Halo Admin, saya sudah melihat tabel simulasi di website Gadai Pojok Berkah (gadai.pojokberkah.online) dan ingin bertanya lebih lanjut.",
+    title: "Simulasi Angsuran & Kalkulator Gadai BPKB",
+    subtitle: "Hitung perkiraan angsuran bulanan Gadai BPKB Motor & Mobil secara instan dan akurat.",
+    waText: "Halo Admin, saya sudah mencoba simulasi di website Gadai Pojok Berkah (gadai.pojokberkah.online) dan ingin bertanya lebih lanjut.",
     content: (noWa: string) => (
       <>
-        <p className="text-base leading-relaxed mb-8 text-center text-slate-600">
-          Gunakan tabel di bawah ini sebagai referensi untuk menghitung estimasi angsuran bulanan Anda. Silakan hubungi kami untuk perhitungan yang lebih presisi sesuai tahun dan tipe kendaraan Anda.
-        </p>
-        <TableMotor noWa={noWa} />
-        <TableMobil noWa={noWa} />
+        <KalkulatorSimulasi noWa={noWa} className="mb-12" />
+        <div className="pt-8 border-t border-slate-200">
+          <h3 className="text-xl font-bold text-center text-slate-800 mb-2">Tabel Referensi Angsuran Lengkap</h3>
+          <p className="text-sm leading-relaxed mb-6 text-center text-slate-600">
+            Gunakan tabel di bawah ini sebagai panduan referensi cepat untuk berbagai nominal plafon dan tenor. Hubungi marketing kami untuk perhitungan yang lebih spesifik sesuai tahun dan tipe unit kendaraan Anda.
+          </p>
+          <TableMotor noWa={noWa} />
+          <TableMobil noWa={noWa} />
+        </div>
       </>
     )
   }

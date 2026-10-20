@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { getUniqueProvinsi, getAllKota, getConfig, slugify } from "@/lib/kota";
 import WhatsAppButton from "@/app/components/WhatsAppButton";
 import ProvinsiSearchGrid from "./ProvinsiSearchGrid";
+import KalkulatorSimulasi from "@/app/components/KalkulatorSimulasi";
 import { DEFAULT_WHATSAPP } from "@/lib/wa";
 
 export const revalidate = 86400;
@@ -55,6 +56,9 @@ export default async function HubProvinsiPage() {
             Kami hadir di berbagai provinsi di seluruh Indonesia untuk memberikan solusi dana tunai cepat dengan jaminan BPKB kendaraan Anda. Pilih provinsi atau cari kota Anda di bawah ini:
           </p>
         </div>
+
+        {/* Interactive Calculator Section */}
+        <KalkulatorSimulasi noWa={waNumber} className="mb-14" />
 
         {/* Interactive Search & Grid Cards */}
         <ProvinsiSearchGrid provinsiList={provinsiList} kotaList={kotaItems} />
