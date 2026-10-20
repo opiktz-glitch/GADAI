@@ -23,6 +23,8 @@ export type Kota = {
 
 export type Config = {
   whatsapp_pusat: string;
+  nama_marketing?: string;
+  id_axi?: string;
   artikel_homepage?: string;
   assignedArticleId?: string;
   views?: number;
@@ -83,11 +85,21 @@ export const getCitiesByProvinsiSlug = cache(async (provinsiSlug: string): Promi
 });
 
 export const getConfig = cache(async (): Promise<Config> => {
-  if (!isDbReady()) return { whatsapp_pusat: DEFAULT_WHATSAPP };
+  const fallback: Config = {
+    whatsapp_pusat: DEFAULT_WHATSAPP,
+    nama_marketing: "Leni Suherman",
+    id_axi: "000019002675",
+  };
+  if (!isDbReady()) return fallback;
   const doc = await db.collection('config').doc('main').get();
-  if (!doc.exists) return { whatsapp_pusat: DEFAULT_WHATSAPP };
+  if (!doc.exists) return fallback;
   const data = doc.data() as Config;
-  return { ...data, whatsapp_pusat: normalizeWaNumber(data.whatsapp_pusat) };
+  return {
+    ...data,
+    whatsapp_pusat: normalizeWaNumber(data.whatsapp_pusat),
+    nama_marketing: data.nama_marketing || "Leni Suherman",
+    id_axi: data.id_axi || "000019002675",
+  };
 });
 
 export async function getAllArticles(): Promise<Article[]> {

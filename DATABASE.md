@@ -121,6 +121,8 @@ Singleton — hanya `config/main` yang dipakai.
 ```ts
 export type Config = {
   whatsapp_pusat: string;                    // "628xxxxxxxxxx" (digit saja, TANPA "+") — sumber tunggal nomor WA
+  nama_marketing?: string;                   // Nama marketing resmi (default: "Leni Suherman")
+  id_axi?: string;                           // ID kemitraan AXI Adira (default: "000019002675")
   artikel_homepage?: string;                 // legacy: teks manual homepage (sebelum bank artikel)
   assignedArticleId?: string;                // FK → articles.id untuk homepage "/"
   views?: number;                            // increment via POST /api/track-view {location: "pusat"}

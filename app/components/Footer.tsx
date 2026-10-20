@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
+import { MessageCircle } from "lucide-react";
 import { getConfig } from "@/lib/kota";
-import { telNumber } from "@/lib/wa";
+import { telNumber, waLink } from "@/lib/wa";
 
 export default async function Footer() {
   const config = await getConfig();
@@ -51,11 +52,26 @@ export default async function Footer() {
             {/* Column 3: Contact */}
             <address className="not-italic">
               <h3 className="text-white text-lg font-bold mb-4">Hubungi Marketing</h3>
-              <div className="grid grid-cols-[auto_auto_1fr] gap-x-2 gap-y-3 text-sm">
-                <span>Nama AXi</span><span>:</span><span>Leni Suherman</span>
-                <span>Id AXI</span><span>:</span><span>000019002675</span>
-                <span>Telepon / WA</span><span>:</span><span>{telNumber(config.whatsapp_pusat)}</span>
-                <span className="col-span-3 mt-1">Layanan Seluruh Indonesia</span>
+              <div className="grid grid-cols-[auto_auto_1fr] gap-x-2 gap-y-3 text-sm items-center">
+                <span className="text-slate-400">Nama AXI</span><span>:</span><span className="text-white font-medium">{config.nama_marketing || "Leni Suherman"}</span>
+                <span className="text-slate-400">Id AXI</span><span>:</span><span className="text-white font-medium">{config.id_axi || "000019002675"}</span>
+                <span className="text-slate-400">Telepon / WA</span><span>:</span>
+                <div>
+                  <a
+                    href={waLink(config.whatsapp_pusat, "Halo Admin, saya menghubungi melalui website Gadai Pojok Berkah, saya ingin konsultasi pengajuan Gadai BPKB.")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-green-400 hover:text-green-300 font-semibold transition-colors group cursor-pointer"
+                    title="Klik untuk Chat WhatsApp"
+                  >
+                    <MessageCircle className="w-4 h-4 text-green-400 group-hover:scale-110 transition-transform" />
+                    <span className="hover:underline">{telNumber(config.whatsapp_pusat)}</span>
+                    <span className="text-[10px] bg-green-950/80 text-green-400 px-1.5 py-0.5 rounded border border-green-700/60 font-bold ml-1">
+                      Chat WA
+                    </span>
+                  </a>
+                </div>
+                <span className="col-span-3 mt-1 text-slate-400">Layanan Seluruh Indonesia</span>
               </div>
             </address>
           </div>

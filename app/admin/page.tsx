@@ -56,13 +56,35 @@ export default async function AdminPage({
                   <h2 className="text-xl font-semibold">Pengaturan Global</h2>
                 </div>
                 <form action={updateConfig} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700">Nama Marketing (AXI)</label>
+                      <input 
+                        type="text" 
+                        name="nama_marketing" 
+                        defaultValue={config.nama_marketing || "Leni Suherman"}
+                        placeholder="Contoh: Leni Suherman"
+                        className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 text-sm" 
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700">ID AXI Adira</label>
+                      <input 
+                        type="text" 
+                        name="id_axi" 
+                        defaultValue={config.id_axi || "000019002675"}
+                        placeholder="Contoh: 000019002675"
+                        className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 text-sm" 
+                      />
+                    </div>
+                  </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700">Nomor WhatsApp Pusat (Awali 62)</label>
+                    <label className="block text-sm font-medium text-slate-700">Nomor WhatsApp / Telepon (Awali 62)</label>
                     <input 
                       type="text" 
                       name="whatsapp_pusat" 
                       defaultValue={config.whatsapp_pusat}
-                      className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500" 
+                      className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 text-sm" 
                     />
                   </div>
                   <div>

@@ -8,6 +8,8 @@ import { normalizeWaNumber } from "@/lib/wa";
 
 export async function updateConfig(formData: FormData) {
   const rawNoWa = formData.get("whatsapp_pusat")?.toString() || "";
+  const nama_marketing = formData.get("nama_marketing")?.toString().trim() || "Leni Suherman";
+  const id_axi = formData.get("id_axi")?.toString().trim() || "000019002675";
   const artikel_homepage = formData.get("artikel_homepage")?.toString() || "";
 
   // Normalisasi ke digit saja: user boleh mengetik "+62 812-3456-7890",
@@ -22,7 +24,13 @@ export async function updateConfig(formData: FormData) {
   const currentConfig = await db.collection('config').doc('main').get();
   const oldConfig = currentConfig.exists ? currentConfig.data() : {};
 
-  const newConfig: Config = { ...oldConfig, whatsapp_pusat: noWa, artikel_homepage } as Config;
+  const newConfig: Config = {
+    ...oldConfig,
+    whatsapp_pusat: noWa,
+    nama_marketing,
+    id_axi,
+    artikel_homepage,
+  } as Config;
   await db.collection('config').doc('main').set(newConfig);
 
   revalidatePath("/", "layout");
